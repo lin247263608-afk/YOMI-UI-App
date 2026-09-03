@@ -1,0 +1,209 @@
+import { useState, type ReactNode } from "react";
+import {
+  BellRing,
+  Check,
+  ChevronRight,
+  FileText,
+  Info,
+  Languages,
+  MapPin,
+  Plane,
+  ShieldCheck,
+} from "lucide-react";
+import bannerAirport from "@/assets/banner-airport.jpg";
+import yomiLogo from "@/assets/yomi-logo.svg";
+import { NavBar } from "@/components/prototype/kit/NavBar";
+import { PrimaryButton } from "@/components/prototype/kit/PrimaryButton";
+import { IconChip } from "@/components/prototype/kit/YomiIcon";
+import { cn } from "@/lib/utils";
+
+/** Figma：p-024-apply-driver、p-029-settings、p-029-about */
+
+const applicationSteps = [
+  "提交基本个人信息",
+  "上传中国/英国有效驾驶证",
+  "填写拟绑定车辆档案",
+  "上传安全资质及背景声明",
+] as const;
+
+const driverAdvantages = [
+  "自由安排接单时间，轻松赚取额外收入",
+  "完善的平台安全保障，接单出行更安心",
+  "专业的司机客服支撑，快速解答日常运营问题",
+] as const;
+
+export function PassengerApplyDriverV7({
+  onBack,
+  onApply,
+}: {
+  onBack?: (() => void) | undefined;
+  onApply?: (() => void) | undefined;
+}) {
+  return (
+    <div className="flex h-full min-h-0 flex-col bg-background">
+      <NavBar title="申请成为司机" onBack={onBack} />
+
+      <div className="no-scrollbar min-h-0 flex-1 space-y-4 overflow-y-auto px-4 py-4">
+        <div className="relative aspect-[343/156] w-full shrink-0 overflow-hidden rounded-2xl border border-ink/[0.06] bg-ink shadow-card">
+          <img
+            src={bannerAirport}
+            alt="有米司机招募计划 · 宣传图"
+            className="absolute inset-0 block size-full object-cover object-[52%_58%] opacity-90"
+            draggable={false}
+          />
+          <span className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/25 to-transparent" />
+          <span className="pointer-events-none absolute -left-12 -top-16 size-40 rounded-full border border-white/15" />
+          <span className="pointer-events-none absolute left-8 top-[92px] h-px w-28 rotate-[-14deg] bg-white/45" />
+          <span className="absolute left-6 top-5 flex size-11 items-center justify-center rounded-xl border border-white/15 bg-white/90 shadow-card backdrop-blur-sm">
+            <img src={yomiLogo} alt="有米出行" className="size-9 object-contain" />
+          </span>
+          <span className="absolute bottom-7 left-7 flex size-7 items-center justify-center rounded-full border border-white/25 bg-ink/65 text-white backdrop-blur-sm">
+            <MapPin className="size-3.5" strokeWidth={2.2} />
+          </span>
+          <span className="absolute bottom-[51px] left-[136px] flex size-7 items-center justify-center rounded-full border border-white/25 bg-brand text-white shadow-sm">
+            <Plane className="size-3.5" strokeWidth={2.2} />
+          </span>
+        </div>
+
+        <section className="rounded-2xl border border-ink/[0.06] bg-card p-4 shadow-card">
+          <h2 className="text-[15px] font-bold text-ink">申请入驻流程</h2>
+          <div className="relative mt-3 space-y-3">
+            <span className="pointer-events-none absolute bottom-3 left-[11.5px] top-3 w-px bg-ink/10" />
+            {applicationSteps.map((step, index) => (
+              <div key={step} className="relative flex items-center gap-3">
+                <span className="z-10 flex size-6 shrink-0 items-center justify-center rounded-full bg-ink font-mono text-[11px] font-bold text-white ring-4 ring-card">
+                  {index + 1}
+                </span>
+                <p className="text-[13px] text-ink-soft">{step}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="rounded-2xl border border-ink/[0.06] bg-card p-4 shadow-card">
+          <h2 className="text-[15px] font-bold text-ink">成为司机的优势</h2>
+          <div className="mt-3 space-y-1.5">
+            {driverAdvantages.map((advantage) => (
+              <p key={advantage} className="flex gap-2 text-[13px] leading-[1.5] text-ink-soft">
+                <span className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full bg-brand-soft text-brand">
+                  <Check className="size-2.5" strokeWidth={3} />
+                </span>
+                {advantage}
+              </p>
+            ))}
+          </div>
+        </section>
+      </div>
+
+      <div className="shrink-0 border-t border-ink/[0.05] bg-card px-4 py-3">
+        <PrimaryButton className="h-12 rounded-xl" onClick={onApply}>
+          立即申请
+        </PrimaryButton>
+      </div>
+    </div>
+  );
+}
+
+function SettingRow({
+  icon,
+  label,
+  value,
+  action,
+  onClick,
+}: {
+  icon: typeof BellRing;
+  label: string;
+  value?: string;
+  action?: ReactNode;
+  onClick?: (() => void) | undefined;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="flex h-14 w-full items-center gap-3 border-b border-ink/[0.06] px-4 text-left last:border-b-0 active:bg-background"
+    >
+      <IconChip icon={icon} size="sm" tone="surface" />
+      <span className="min-w-0 flex-1 text-[14px] font-medium text-ink">{label}</span>
+      {value ? <span className="text-[12.5px] text-ink-soft/75">{value}</span> : null}
+      {action ?? <ChevronRight className="size-4 text-ink-soft/45" />}
+    </button>
+  );
+}
+
+export function PassengerSettingsV7({
+  onBack,
+  onAbout,
+  onLogout,
+}: {
+  onBack?: (() => void) | undefined;
+  onAbout?: (() => void) | undefined;
+  onLogout?: (() => void) | undefined;
+}) {
+  const [notifications, setNotifications] = useState(true);
+
+  return (
+    <div className="flex h-full min-h-0 flex-col bg-background">
+      <NavBar title="设置" onBack={onBack} />
+
+      <div className="min-h-0 flex-1 px-4 py-4">
+        <section className="overflow-hidden rounded-2xl border border-ink/[0.06] bg-card shadow-card">
+          <SettingRow
+            icon={BellRing}
+            label="系统推送通知"
+            onClick={() => setNotifications((value) => !value)}
+            action={
+              <span
+                role="switch"
+                aria-checked={notifications}
+                className={cn(
+                  "flex h-[22px] w-10 shrink-0 items-center rounded-full p-[3px] transition-colors",
+                  notifications ? "justify-end bg-brand" : "justify-start bg-ink/15",
+                )}
+              >
+                <span className="size-4 rounded-full bg-white shadow-sm" />
+              </span>
+            }
+          />
+          <SettingRow icon={Languages} label="系统语言切换" value="简体中文" />
+          <SettingRow icon={ShieldCheck} label="用户隐私政策" />
+          <SettingRow icon={FileText} label="软件服务条款" />
+          <SettingRow icon={Info} label="关于有米出行" onClick={onAbout} />
+          <SettingRow
+            icon={Info}
+            label="当前版本号"
+            value="v1.0.0"
+            action={<span className="w-0" />}
+          />
+        </section>
+      </div>
+
+      <div className="shrink-0 px-4 pb-4 pt-3">
+        <button
+          type="button"
+          onClick={onLogout}
+          className="h-12 w-full rounded-2xl border border-ink/[0.06] bg-card text-[14px] font-semibold text-ink-soft shadow-card active:bg-background"
+        >
+          退出当前账号
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export function PassengerAboutV7({ onBack }: { onBack?: (() => void) | undefined }) {
+  return (
+    <div className="flex h-full min-h-0 flex-col bg-background">
+      <NavBar title="关于有米出行" onBack={onBack} />
+      <div className="flex min-h-0 flex-1 items-center justify-center px-4 pb-28">
+        <div className="flex flex-col items-center text-center">
+          <span className="flex size-[100px] items-center justify-center overflow-hidden rounded-2xl border border-ink/[0.06] bg-card shadow-card">
+            <img src={yomiLogo} alt="有米出行" className="size-[82px] object-contain" />
+          </span>
+          <p className="mt-4 text-[16px] font-semibold text-ink">有米出行</p>
+          <p className="mt-1 font-mono text-[14px] text-ink-soft/80">Version 1.0.0</p>
+        </div>
+      </div>
+    </div>
+  );
+}
