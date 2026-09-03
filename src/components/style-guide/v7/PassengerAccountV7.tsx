@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { NavBar } from "@/components/prototype/kit/NavBar";
 import { IconChip } from "@/components/prototype/kit/YomiIcon";
+import { ChoiceSheetV7 } from "@/components/style-guide/v7/CertificationSheetsV7";
 import {
   feedbackTypeLabel,
   feedbackTypeOptions,
@@ -512,6 +513,7 @@ export function PassengerFeedbackV7({
   const [detail, setDetail] = useState("");
   const [email, setEmail] = useState("");
   const [images, setImages] = useState<FeedbackImage[]>([]);
+  const [typePickerOpen, setTypePickerOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   function appendImages(items: FeedbackImage[]) {
@@ -565,29 +567,21 @@ export function PassengerFeedbackV7({
   }
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col bg-background">
+    <div className="relative flex min-h-0 flex-1 flex-col bg-background">
       <NavBar title="意见反馈" onBack={onBack} />
       <div className="no-scrollbar relative min-h-0 flex-1 overflow-y-auto px-4 py-4">
         <span className="pointer-events-none absolute -right-12 top-16 size-28 rounded-full border border-brand/10" />
-        <label className="relative flex h-14 w-full items-center gap-3 rounded-2xl border border-ink/[0.06] bg-card px-3.5 text-[14px] font-semibold text-ink shadow-card focus-within:border-brand/35 active:bg-background">
+        <button
+          type="button"
+          onClick={() => setTypePickerOpen(true)}
+          className="relative flex h-14 w-full items-center gap-3 rounded-2xl border border-ink/[0.06] bg-card px-3.5 text-[14px] font-semibold text-ink shadow-card active:bg-background"
+        >
           <IconChip icon={MessageSquareText} size="sm" tone="brand" />
           <span className="min-w-0 flex-1 truncate text-left">
             {feedbackTypeLabel(feedbackType)}
           </span>
           <ChevronDown className="size-4 text-ink-soft/65" />
-          <select
-            value={feedbackType}
-            onChange={(event) => setFeedbackType(event.target.value as FeedbackType)}
-            aria-label="选择反馈类型"
-            className="absolute inset-0 size-full cursor-pointer opacity-0"
-          >
-            {feedbackTypeOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </label>
+        </button>
 
         <div className="relative mt-3 overflow-hidden rounded-2xl border border-ink/[0.06] bg-card shadow-card focus-within:border-brand/35">
           <span className="absolute inset-y-4 left-0 w-1 rounded-r-full bg-brand/70" />
@@ -671,6 +665,22 @@ export function PassengerFeedbackV7({
           提交反馈工单
         </button>
       </div>
+      {typePickerOpen ? (
+        <ChoiceSheetV7
+          title="选择反馈类型"
+          subtitle="请选择最符合当前问题的分类"
+          options={feedbackTypeOptions.map((option) => ({
+            value: option.value,
+            label: option.label,
+          }))}
+          selectedValues={[feedbackType]}
+          onClose={() => setTypePickerOpen(false)}
+          onConfirm={(values) => {
+            setFeedbackType((values[0] as FeedbackType | undefined) ?? feedbackType);
+            setTypePickerOpen(false);
+          }}
+        />
+      ) : null}
     </div>
   );
 }

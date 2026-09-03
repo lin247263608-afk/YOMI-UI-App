@@ -15,6 +15,7 @@ import yomiLogo from "@/assets/yomi-logo.svg";
 import { NavBar } from "@/components/prototype/kit/NavBar";
 import { PrimaryButton } from "@/components/prototype/kit/PrimaryButton";
 import { IconChip } from "@/components/prototype/kit/YomiIcon";
+import { ChoiceSheetV7 } from "@/components/style-guide/v7/CertificationSheetsV7";
 import { cn } from "@/lib/utils";
 
 /** Figma：p-024-apply-driver、p-029-settings、p-029-about */
@@ -141,9 +142,11 @@ export function PassengerSettingsV7({
   onLogout?: (() => void) | undefined;
 }) {
   const [notifications, setNotifications] = useState(true);
+  const [language, setLanguage] = useState("简体中文");
+  const [languagePickerOpen, setLanguagePickerOpen] = useState(false);
 
   return (
-    <div className="flex h-full min-h-0 flex-col bg-background">
+    <div className="relative flex h-full min-h-0 flex-col bg-background">
       <NavBar title="设置" onBack={onBack} />
 
       <div className="min-h-0 flex-1 px-4 py-4">
@@ -165,7 +168,12 @@ export function PassengerSettingsV7({
               </span>
             }
           />
-          <SettingRow icon={Languages} label="系统语言切换" value="简体中文" />
+          <SettingRow
+            icon={Languages}
+            label="系统语言切换"
+            value={language}
+            onClick={() => setLanguagePickerOpen(true)}
+          />
           <SettingRow icon={ShieldCheck} label="用户隐私政策" />
           <SettingRow icon={FileText} label="软件服务条款" />
           <SettingRow icon={Info} label="关于有米出行" onClick={onAbout} />
@@ -187,6 +195,22 @@ export function PassengerSettingsV7({
           退出当前账号
         </button>
       </div>
+      {languagePickerOpen ? (
+        <ChoiceSheetV7
+          title="选择系统语言"
+          subtitle="切换后将更新应用内的界面语言"
+          options={[
+            { value: "简体中文", label: "简体中文" },
+            { value: "English", label: "English" },
+          ]}
+          selectedValues={[language]}
+          onClose={() => setLanguagePickerOpen(false)}
+          onConfirm={(values) => {
+            setLanguage(values[0] ?? language);
+            setLanguagePickerOpen(false);
+          }}
+        />
+      ) : null}
     </div>
   );
 }

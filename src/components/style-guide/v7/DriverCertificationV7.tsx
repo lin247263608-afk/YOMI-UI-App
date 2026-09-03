@@ -8,10 +8,16 @@ import {
   Clock3,
   CreditCard,
   FileText,
+  Fuel,
+  Languages,
+  Leaf,
+  Mars,
   Search,
   ShieldCheck,
   UserRound,
+  Venus,
   X,
+  Zap,
 } from "lucide-react";
 import certFront from "@/assets/driver-cert-front.png";
 import certFrontSeat from "@/assets/driver-cert-front-seat.png";
@@ -21,6 +27,13 @@ import certV5c from "@/assets/driver-cert-v5c.png";
 import { NavBar } from "@/components/prototype/kit/NavBar";
 import { PrimaryButton } from "@/components/prototype/kit/PrimaryButton";
 import { YomiIcon } from "@/components/prototype/kit/YomiIcon";
+import {
+  ChoiceSheetV7,
+  DatePickerSheetV7,
+  EnglandAuthoritySheetV7,
+  WheelChoiceSheetV7,
+  type ChoiceOption,
+} from "@/components/style-guide/v7/CertificationSheetsV7";
 import { cn } from "@/lib/utils";
 
 export type DriverCertificationScreen =
@@ -224,6 +237,8 @@ function UploadArea({
   dateField?: {
     label: string;
     placeholder: string;
+    value?: string;
+    onClick?: () => void;
   };
 }) {
   return (
@@ -270,7 +285,13 @@ function UploadArea({
       </div>
       {dateField ? (
         <div className="border-t border-ink/[0.065] bg-background/35 px-3.5">
-          <FormRow label={dateField.label} placeholder={dateField.placeholder} chevron />
+          <FormRow
+            label={dateField.label}
+            value={dateField.value}
+            placeholder={dateField.placeholder}
+            chevron
+            onClick={dateField.onClick}
+          />
         </div>
       ) : null}
     </section>
@@ -284,6 +305,7 @@ function FormScreen({
   onNext,
   nextLabel = "下一步",
   children,
+  overlay,
 }: {
   title: string;
   progress?: ReactNode;
@@ -291,9 +313,10 @@ function FormScreen({
   onNext: () => void;
   nextLabel?: string;
   children: ReactNode;
+  overlay?: ReactNode;
 }) {
   return (
-    <div className="flex h-full min-h-0 flex-col bg-haze-top">
+    <div className="relative flex h-full min-h-0 flex-col bg-background">
       <NavBar title={title} onBack={onBack} />
       {progress ? <div className="shrink-0 px-4 pt-3">{progress}</div> : null}
       <div
@@ -309,13 +332,14 @@ function FormScreen({
           {nextLabel}
         </PrimaryButton>
       </div>
+      {overlay}
     </div>
   );
 }
 
 function CertificationGuide({ onBack, onStart }: { onBack: () => void; onStart: () => void }) {
   return (
-    <div className="flex h-full min-h-0 flex-col bg-haze-top">
+    <div className="flex h-full min-h-0 flex-col bg-background">
       <NavBar title="司机认证" onBack={onBack} />
       <div className="no-scrollbar min-h-0 flex-1 overflow-y-auto px-4 py-4">
         <CertificationProgress currentStep={1} />
@@ -381,6 +405,37 @@ function BasicInfo({
   nextLabel?: string;
   progress?: ReactNode;
 }) {
+  const [activePicker, setActivePicker] = useState<"gender" | "birthday" | "languages" | null>(
+    null,
+  );
+  const [gender, setGender] = useState<string>();
+  const [birthday, setBirthday] = useState<string>();
+  const [languages, setLanguages] = useState<string[]>(["普通话", "英语"]);
+  const genderOptions: ChoiceOption[] = [
+    { value: "男", label: "男", icon: Mars, tone: "blue" },
+    { value: "女", label: "女", icon: Venus, tone: "pink" },
+  ];
+  const languageOptions: ChoiceOption[] = [
+    { value: "英语", label: "英语", icon: Languages },
+    { value: "粤语", label: "粤语", icon: Languages },
+    { value: "普通话", label: "普通话", icon: Languages },
+    { value: "日语", label: "日语", icon: Languages },
+    { value: "韩语", label: "韩语", icon: Languages },
+    { value: "马来语", label: "马来语", icon: Languages },
+    { value: "德语", label: "德语", icon: Languages },
+    { value: "西班牙语", label: "西班牙语", icon: Languages },
+    { value: "法语", label: "法语", icon: Languages },
+    { value: "意大利语", label: "意大利语", icon: Languages },
+    { value: "俄语", label: "俄语", icon: Languages },
+    { value: "泰语", label: "泰语", icon: Languages },
+    { value: "印尼语", label: "印尼语", icon: Languages },
+    { value: "越南语", label: "越南语", icon: Languages },
+    { value: "阿拉伯语", label: "阿拉伯语", icon: Languages },
+    { value: "土耳其语", label: "土耳其语", icon: Languages },
+    { value: "菲律宾语", label: "菲律宾语", icon: Languages },
+    { value: "葡萄牙语", label: "葡萄牙语", icon: Languages },
+  ];
+
   return (
     <FormScreen
       title={title}
@@ -388,6 +443,47 @@ function BasicInfo({
       onBack={onBack}
       onNext={onNext}
       nextLabel={nextLabel}
+      overlay={
+        activePicker === "gender" ? (
+          <WheelChoiceSheetV7
+            title="性别"
+            options={genderOptions}
+            value={gender}
+            onClose={() => setActivePicker(null)}
+            onConfirm={(value) => {
+              setGender(value);
+              setActivePicker(null);
+            }}
+          />
+        ) : activePicker === "birthday" ? (
+          <DatePickerSheetV7
+            title="选择生日"
+            subtitle="请选择与证件一致的出生日期"
+            value={birthday}
+            defaultDate={new Date(1995, 4, 15)}
+            minDate={new Date(1940, 0, 1)}
+            maxDate={new Date()}
+            onClose={() => setActivePicker(null)}
+            onConfirm={(value) => {
+              setBirthday(value);
+              setActivePicker(null);
+            }}
+          />
+        ) : activePicker === "languages" ? (
+          <ChoiceSheetV7
+            title="服务语言"
+            panelClassName="h-[min(680px,84%)]"
+            options={languageOptions}
+            selectedValues={languages}
+            multiple
+            onClose={() => setActivePicker(null)}
+            onConfirm={(values) => {
+              setLanguages(values);
+              setActivePicker(null);
+            }}
+          />
+        ) : null
+      }
     >
       <section className="rounded-2xl border border-ink/[0.06] bg-card p-4 shadow-card">
         <RequiredLabel>个人头像</RequiredLabel>
@@ -405,9 +501,26 @@ function BasicInfo({
         <FormRow label="英文名" placeholder="English Name" />
         <FormRow label="手机号" value="+86" placeholder="请输入手机号" />
         <FormRow label="电子邮箱" placeholder="example@email.com" required={false} />
-        <FormRow label="性别" placeholder="请选择" chevron />
-        <FormRow label="生日" placeholder="请选择" chevron />
-        <FormRow label="服务语言 (多选)" value="普通话, 英语" chevron />
+        <FormRow
+          label="性别"
+          value={gender}
+          placeholder="请选择"
+          chevron
+          onClick={() => setActivePicker("gender")}
+        />
+        <FormRow
+          label="生日"
+          value={birthday}
+          placeholder="请选择"
+          chevron
+          onClick={() => setActivePicker("birthday")}
+        />
+        <FormRow
+          label="服务语言 (多选)"
+          value={languages.join(", ")}
+          chevron
+          onClick={() => setActivePicker("languages")}
+        />
       </section>
     </FormScreen>
   );
@@ -424,12 +537,43 @@ function LicenseInfo({
   title?: string;
   progress?: ReactNode;
 }) {
+  const [expiryDate, setExpiryDate] = useState<string>();
+  const [datePickerOpen, setDatePickerOpen] = useState(false);
+
   return (
-    <FormScreen title={title} progress={progress} onBack={onBack} onNext={onNext}>
+    <FormScreen
+      title={title}
+      progress={progress}
+      onBack={onBack}
+      onNext={onNext}
+      overlay={
+        datePickerOpen ? (
+          <DatePickerSheetV7
+            title="选择驾驶证有效期"
+            subtitle="请选择证件标注的有效结束日期"
+            value={expiryDate}
+            defaultDate={new Date(new Date().getFullYear() + 3, 11, 31)}
+            minDate={new Date()}
+            maxDate={new Date(new Date().getFullYear() + 20, 11, 31)}
+            onClose={() => setDatePickerOpen(false)}
+            onConfirm={(value) => {
+              setExpiryDate(value);
+              setDatePickerOpen(false);
+            }}
+          />
+        ) : null
+      }
+    >
       <UploadArea label="驾驶证主页 (正面)" note="请确保文字清晰，无反光遮挡" />
       <section className="rounded-2xl border border-ink/[0.06] bg-card px-4 shadow-card">
         <FormRow label="驾驶证号" placeholder="请输入驾驶证档案编号" />
-        <FormRow label="有效结束日期" placeholder="选择有效期截止日" chevron />
+        <FormRow
+          label="有效结束日期"
+          value={expiryDate}
+          placeholder="选择有效期截止日"
+          chevron
+          onClick={() => setDatePickerOpen(true)}
+        />
       </section>
     </FormScreen>
   );
@@ -443,22 +587,49 @@ const vehiclePhotos = [
   ["车辆V5C照片", "请按照示例图片拍摄车辆V5C清晰照", certV5c],
 ] as const;
 
-const vehicleBrands = [
+type VehicleBrand = {
+  name: string;
+  englishName: string;
+  models: readonly string[];
+};
+
+const vehicleBrands: readonly { letter: string; items: readonly VehicleBrand[] }[] = [
   {
     letter: "A",
-    items: ["奥迪 (Audi)", "阿斯顿·马丁 (Aston Martin)"],
+    items: [
+      { name: "奥迪", englishName: "Audi", models: ["A4", "A6", "Q5"] },
+      { name: "阿斯顿·马丁", englishName: "Aston Martin", models: ["DBX", "Vantage"] },
+    ],
   },
   {
     letter: "B",
-    items: ["宝马 (BMW)", "比亚迪 (BYD)", "奔驰 (Mercedes-Benz)", "本田 (Honda)", "标致 (Peugeot)"],
+    items: [
+      { name: "宝马", englishName: "BMW", models: ["3系", "5系", "X5"] },
+      { name: "比亚迪", englishName: "BYD", models: ["ATTO 3", "SEAL", "DOLPHIN"] },
+      { name: "奔驰", englishName: "Mercedes-Benz", models: ["E级", "V级", "GLC"] },
+      { name: "本田", englishName: "Honda", models: ["思域", "雅阁", "CR-V"] },
+      { name: "标致", englishName: "Peugeot", models: ["3008", "5008", "Traveller"] },
+    ],
   },
   {
     letter: "C",
-    items: ["长安 (Changan)", "长城 (GWM)"],
+    items: [
+      { name: "长安", englishName: "Changan", models: ["CS55 PLUS", "CS75 PLUS"] },
+      { name: "长城", englishName: "GWM", models: ["ORA 03", "HAVAL H6"] },
+    ],
   },
   {
     letter: "D",
-    items: ["大众 (Volkswagen)", "道奇 (Dodge)"],
+    items: [
+      { name: "大众", englishName: "Volkswagen", models: ["Golf", "Passat", "Tiguan"] },
+      { name: "道奇", englishName: "Dodge", models: ["Journey", "Durango"] },
+    ],
+  },
+  {
+    letter: "T",
+    items: [
+      { name: "丰田", englishName: "Toyota", models: ["卡罗拉", "普拉多", "凯美瑞", "RAV4"] },
+    ],
   },
 ] as const;
 
@@ -467,14 +638,19 @@ function VehicleBrandPicker({
   onSelect,
 }: {
   onBack: () => void;
-  onSelect: (brand: string) => void;
+  onSelect: (brand: VehicleBrand) => void;
 }) {
   const [query, setQuery] = useState("");
   const normalizedQuery = query.trim().toLowerCase();
   const filteredGroups = vehicleBrands
     .map((group) => ({
       ...group,
-      items: group.items.filter((item) => item.toLowerCase().includes(normalizedQuery)),
+      items: group.items.filter(
+        (item) =>
+          item.name.toLowerCase().includes(normalizedQuery) ||
+          item.englishName.toLowerCase().includes(normalizedQuery) ||
+          item.models.some((model) => model.toLowerCase().includes(normalizedQuery)),
+      ),
     }))
     .filter((group) => group.items.length > 0);
 
@@ -504,19 +680,16 @@ function VehicleBrandPicker({
                   <div className="overflow-hidden rounded-2xl border border-ink/[0.055] bg-card shadow-card">
                     {group.items.map((item, index) => (
                       <button
-                        key={item}
+                        key={item.name}
                         type="button"
                         onClick={() => onSelect(item)}
                         className={cn(
-                          "flex min-h-13 w-full items-center gap-3 px-3.5 py-2.5 text-left active:bg-brand-soft/25",
+                          "flex min-h-13 w-full items-center gap-3 px-4 py-2.5 text-left active:bg-brand-soft/25",
                           index > 0 && "border-t border-ink/[0.065]",
                         )}
                       >
-                        <span className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-brand-soft/65 text-brand">
-                          <CarFront className="size-4" strokeWidth={1.9} />
-                        </span>
                         <span className="min-w-0 flex-1 truncate text-[13px] font-medium text-ink">
-                          {item}
+                          {item.name} ({item.englishName})
                         </span>
                         <ChevronRight className="size-4 shrink-0 text-ink-soft/38" />
                       </button>
@@ -541,7 +714,7 @@ function VehicleBrandPicker({
             aria-label="车辆品牌首字母索引"
             className="absolute bottom-3 right-1.5 top-2 flex w-5 flex-col items-center justify-center gap-[3px]"
           >
-            {"ABCDEFGHIJKLMNO".split("").map((letter) => {
+            {"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map((letter) => {
               const enabled = vehicleBrands.some((group) => group.letter === letter);
               return (
                 <a
@@ -549,7 +722,7 @@ function VehicleBrandPicker({
                   href={enabled ? `#vehicle-brand-${letter}` : undefined}
                   aria-disabled={!enabled}
                   className={cn(
-                    "flex size-[15px] items-center justify-center rounded-full text-[8.5px] font-semibold",
+                    "flex size-3 items-center justify-center rounded-full text-[7.5px] font-semibold",
                     enabled ? "text-ink" : "pointer-events-none text-ink-soft/35",
                   )}
                 >
@@ -559,6 +732,72 @@ function VehicleBrandPicker({
             })}
           </nav>
         ) : null}
+      </div>
+    </div>
+  );
+}
+
+function VehicleModelPicker({
+  brand,
+  onBack,
+  onSelect,
+}: {
+  brand: VehicleBrand;
+  onBack: () => void;
+  onSelect: (value: string) => void;
+}) {
+  const [query, setQuery] = useState("");
+  const normalizedQuery = query.trim().toLowerCase();
+  const models = brand.models.filter((model) => model.toLowerCase().includes(normalizedQuery));
+
+  return (
+    <div className="flex h-full min-h-0 flex-col bg-background">
+      <NavBar title="选择车系" onBack={onBack} />
+      <div className="shrink-0 px-4 py-3">
+        <label className="flex h-10 items-center gap-2 rounded-full bg-ink/[0.045] px-3.5 text-ink-soft/55 focus-within:bg-card focus-within:ring-2 focus-within:ring-brand/15">
+          <Search className="size-4 shrink-0" strokeWidth={2.2} />
+          <input
+            type="search"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="搜索车型名称"
+            className="min-w-0 flex-1 bg-transparent text-[13px] text-ink outline-none placeholder:text-ink-soft/45"
+          />
+        </label>
+      </div>
+
+      <div className="no-scrollbar min-h-0 flex-1 overflow-y-auto px-4 pb-5">
+        {models.length > 0 ? (
+          <section className="overflow-hidden rounded-2xl border border-ink/[0.055] bg-card shadow-card">
+            {models.map((model, index) => {
+              const value = `${brand.name}/${model}`;
+              return (
+                <button
+                  key={model}
+                  type="button"
+                  onClick={() => onSelect(value)}
+                  className={cn(
+                    "flex min-h-13 w-full items-center px-4 py-2.5 text-left active:bg-brand-soft/25",
+                    index > 0 && "border-t border-ink/[0.065]",
+                  )}
+                >
+                  <span className="min-w-0 flex-1 truncate text-[13px] font-medium text-ink">
+                    {value}
+                  </span>
+                  <span className="text-[10.5px] font-semibold text-brand">选择</span>
+                </button>
+              );
+            })}
+          </section>
+        ) : (
+          <div className="flex h-48 flex-col items-center justify-center text-center">
+            <span className="flex size-11 items-center justify-center rounded-2xl bg-brand-soft text-brand">
+              <Search className="size-5" />
+            </span>
+            <p className="mt-3 text-[13px] font-semibold text-ink">暂无匹配的车系</p>
+            <p className="mt-1 text-[11px] text-ink-soft/55">请尝试输入其他车型名称</p>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -578,27 +817,98 @@ function VehicleInfo({
   onBrandPickerChange?: ((open: boolean) => void) | undefined;
 }) {
   const [brandPickerOpen, setBrandPickerOpen] = useState(false);
+  const [pickerBrand, setPickerBrand] = useState<VehicleBrand>();
   const [selectedBrand, setSelectedBrand] = useState<string | undefined>();
+  const [activePicker, setActivePicker] = useState<"color" | "fuel" | "authority" | null>(null);
+  const [color, setColor] = useState<string>();
+  const [fuel, setFuel] = useState<string>();
+  const [authority, setAuthority] = useState<string>();
+  const colorOptions: ChoiceOption[] = [
+    ["琥珀金", "#C99545"],
+    ["黑色", "#20242B"],
+    ["蓝色", "#3972B7"],
+    ["棕色", "#765746"],
+    ["青色", "#279A9A"],
+    ["金色", "#D5AA4D"],
+    ["绿色", "#428467"],
+    ["灰色", "#90959D"],
+    ["橙色", "#ED7D31"],
+    ["粉色", "#D88DA4"],
+    ["紫色", "#7566A8"],
+    ["红色", "#C74B4B"],
+    ["银色", "#C4C9CF"],
+    ["白色", "#F7F7F3"],
+    ["黄色", "#E8C84A"],
+  ].map(([value, swatch]) => ({ value, label: value, swatch }));
+  const fuelOptions: ChoiceOption[] = [
+    { value: "燃油车辆", label: "燃油车辆", icon: Fuel, tone: "brand" },
+    { value: "油电混合车辆", label: "油电混合车辆", icon: Leaf, tone: "green" },
+    { value: "纯电动车辆", label: "纯电动车辆", icon: Zap, tone: "blue" },
+  ];
 
   function closeBrandPicker() {
     setBrandPickerOpen(false);
+    setPickerBrand(undefined);
     onBrandPickerChange?.(false);
   }
 
   if (brandPickerOpen) {
-    return (
-      <VehicleBrandPicker
-        onBack={closeBrandPicker}
-        onSelect={(brand) => {
-          setSelectedBrand(brand);
-          closeBrandPicker();
-        }}
-      />
-    );
+    if (pickerBrand) {
+      return (
+        <VehicleModelPicker
+          brand={pickerBrand}
+          onBack={() => setPickerBrand(undefined)}
+          onSelect={(value) => {
+            setSelectedBrand(value);
+            closeBrandPicker();
+          }}
+        />
+      );
+    }
+
+    return <VehicleBrandPicker onBack={closeBrandPicker} onSelect={setPickerBrand} />;
   }
 
   return (
-    <FormScreen title={title} progress={progress} onBack={onBack} onNext={onNext}>
+    <FormScreen
+      title={title}
+      progress={progress}
+      onBack={onBack}
+      onNext={onNext}
+      overlay={
+        activePicker === "color" ? (
+          <ChoiceSheetV7
+            title="车辆颜色"
+            options={colorOptions}
+            selectedValues={color ? [color] : []}
+            onClose={() => setActivePicker(null)}
+            onConfirm={(values) => {
+              setColor(values[0]);
+              setActivePicker(null);
+            }}
+          />
+        ) : activePicker === "fuel" ? (
+          <WheelChoiceSheetV7
+            title="燃油类型"
+            options={fuelOptions}
+            value={fuel}
+            onClose={() => setActivePicker(null)}
+            onConfirm={(value) => {
+              setFuel(value);
+              setActivePicker(null);
+            }}
+          />
+        ) : activePicker === "authority" ? (
+          <EnglandAuthoritySheetV7
+            onClose={() => setActivePicker(null)}
+            onConfirm={(value) => {
+              setAuthority(value);
+              setActivePicker(null);
+            }}
+          />
+        ) : null
+      }
+    >
       <section className="rounded-2xl border border-ink/[0.06] bg-card px-4 shadow-card">
         <FormRow label="车牌号" placeholder="请输入" />
         <FormRow
@@ -611,9 +921,27 @@ function VehicleInfo({
             onBrandPickerChange?.(true);
           }}
         />
-        <FormRow label="车辆颜色" placeholder="请选择" chevron />
-        <FormRow label="燃油类型" placeholder="请选择" chevron />
-        <FormRow label="所属政府" placeholder="请选择" chevron />
+        <FormRow
+          label="车辆颜色"
+          value={color}
+          placeholder="请选择"
+          chevron
+          onClick={() => setActivePicker("color")}
+        />
+        <FormRow
+          label="燃油类型"
+          value={fuel}
+          placeholder="请选择"
+          chevron
+          onClick={() => setActivePicker("fuel")}
+        />
+        <FormRow
+          label="所属政府"
+          value={authority}
+          placeholder="请选择"
+          chevron
+          onClick={() => setActivePicker("authority")}
+        />
       </section>
       {vehiclePhotos.map(([label, note, image]) => (
         <UploadArea key={label} label={label} note={note} image={image} compact />
@@ -647,6 +975,18 @@ function SafetyInfo({
   onOperatorChange?: ((hasOperator: boolean) => void) | undefined;
 }) {
   const [hasOperator, setHasOperator] = useState(true);
+  const [activeDate, setActiveDate] = useState<string>();
+  const [dateValues, setDateValues] = useState<Record<string, string>>({});
+
+  function dateField(key: string, label: string, placeholder: string) {
+    return {
+      label,
+      placeholder,
+      value: dateValues[key],
+      onClick: () => setActiveDate(key),
+    };
+  }
+
   return (
     <FormScreen
       title={title}
@@ -654,6 +994,23 @@ function SafetyInfo({
       onBack={onBack}
       onNext={onNext}
       nextLabel={nextLabel}
+      overlay={
+        activeDate ? (
+          <DatePickerSheetV7
+            title="选择证件日期"
+            subtitle="请按证件或报告上标注的日期填写"
+            value={dateValues[activeDate]}
+            defaultDate={new Date(new Date().getFullYear() + 1, 11, 31)}
+            minDate={new Date(2000, 0, 1)}
+            maxDate={new Date(new Date().getFullYear() + 20, 11, 31)}
+            onClose={() => setActiveDate(undefined)}
+            onConfirm={(value) => {
+              setDateValues((current) => ({ ...current, [activeDate]: value }));
+              setActiveDate(undefined);
+            }}
+          />
+        ) : null
+      }
     >
       <section className="rounded-2xl border border-ink/[0.06] bg-card px-4 shadow-card">
         <div className="flex min-h-13 items-center gap-3 py-3">
@@ -685,10 +1042,7 @@ function SafetyInfo({
             label="Operator(运营商) 牌照"
             note="请上传纸质牌照正页并确保内容清晰"
             compact
-            dateField={{
-              label: "Operator 有效期至",
-              placeholder: "选择有效期截止日",
-            }}
+            dateField={dateField("operator", "Operator 有效期至", "选择有效期截止日")}
           />
         </>
       ) : (
@@ -699,13 +1053,13 @@ function SafetyInfo({
         </section>
       )}
 
-      {safetyDocuments.map(([label, dateLabel, datePlaceholder]) => (
+      {safetyDocuments.map(([label, dateLabel, datePlaceholder], index) => (
         <UploadArea
           key={label}
           label={label}
           note="请上传纸质牌照正页并确保内容清晰"
           compact
-          dateField={{ label: dateLabel, placeholder: datePlaceholder }}
+          dateField={dateField(`safety-${index}`, dateLabel, datePlaceholder)}
         />
       ))}
     </FormScreen>
@@ -724,7 +1078,7 @@ function ReviewResult({
   const isReviewing = status === "reviewing";
   const isApproved = status === "approved";
   return (
-    <div className="flex h-full min-h-0 flex-col bg-haze-top">
+    <div className="flex h-full min-h-0 flex-col bg-background">
       <NavBar title="司导认证审核" onBack={onBack} />
       <div className="no-scrollbar min-h-0 flex-1 overflow-y-auto px-4 py-4 text-center">
         <section
@@ -824,7 +1178,7 @@ function ReviewResult({
 function DataEditReview({ kind, onBack }: { kind: "profile" | "vehicle"; onBack: () => void }) {
   const isProfile = kind === "profile";
   return (
-    <div className="flex h-full min-h-0 flex-col bg-haze-top">
+    <div className="flex h-full min-h-0 flex-col bg-background">
       <NavBar title="资料修改审核" onBack={onBack} />
       <div className="no-scrollbar min-h-0 flex-1 overflow-y-auto px-4 py-4">
         <section className="relative overflow-hidden rounded-[22px] border border-brand/10 bg-brand-soft/55 px-5 py-7 text-center">

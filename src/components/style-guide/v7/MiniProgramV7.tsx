@@ -29,6 +29,7 @@ import { InputShell, TextField } from "@/components/prototype/kit/InputShell";
 import { NavBar } from "@/components/prototype/kit/NavBar";
 import { PrimaryButton } from "@/components/prototype/kit/PrimaryButton";
 import { SelectionCheck, YomiIcon } from "@/components/prototype/kit/YomiIcon";
+import { ChoiceSheetV7 } from "@/components/style-guide/v7/CertificationSheetsV7";
 import { AppUserAvatar } from "./AppUserAvatar";
 import { MiniProgramCapsuleV7 } from "./MiniProgramCapsuleV7";
 import { cn } from "@/lib/utils";
@@ -448,9 +449,10 @@ export function MiniProgramProfileV7({
   onEdit?: (() => void) | undefined;
 }) {
   const [language, setLanguage] = useState<"中文" | "English">("中文");
+  const [languagePickerOpen, setLanguagePickerOpen] = useState(false);
 
   return (
-    <div className="flex h-full min-h-0 flex-col bg-background">
+    <div className="relative flex h-full min-h-0 flex-col bg-background">
       <header className="flex h-12 shrink-0 items-center border-b border-ink/[0.05] bg-haze-status px-4">
         <h1 className="flex-1 text-[17px] font-bold text-ink">个人中心</h1>
         <MiniMenuAction />
@@ -480,7 +482,7 @@ export function MiniProgramProfileV7({
           </button>
           <button
             type="button"
-            onClick={() => setLanguage((value) => (value === "中文" ? "English" : "中文"))}
+            onClick={() => setLanguagePickerOpen(true)}
             className="flex h-[52px] w-full items-center gap-3 px-4 text-left active:bg-background"
           >
             <span className="flex size-8 items-center justify-center rounded-lg bg-ink/[0.045] text-ink-soft">
@@ -494,6 +496,21 @@ export function MiniProgramProfileV7({
       </div>
 
       <MiniBottomNav active="profile" onHome={onHome} />
+      {languagePickerOpen ? (
+        <ChoiceSheetV7
+          title="语言切换"
+          options={[
+            { value: "中文", label: "中文" },
+            { value: "English", label: "English" },
+          ]}
+          selectedValues={[language]}
+          onClose={() => setLanguagePickerOpen(false)}
+          onConfirm={(values) => {
+            setLanguage((values[0] as "中文" | "English" | undefined) ?? language);
+            setLanguagePickerOpen(false);
+          }}
+        />
+      ) : null}
     </div>
   );
 }
