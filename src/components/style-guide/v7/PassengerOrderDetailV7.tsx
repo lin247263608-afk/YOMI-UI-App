@@ -1,5 +1,6 @@
-import { Check, Phone, User } from "lucide-react";
+import { Check, Phone } from "lucide-react";
 import { NavBar } from "@/components/prototype/kit/NavBar";
+import { PersonaAvatarV7 } from "./PersonaAvatarV7";
 import {
   Card,
   DarkButton,
@@ -22,9 +23,7 @@ export function DriverCard({
 }) {
   return (
     <Card className="flex items-center gap-3">
-      <span className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-brand/25 to-brand/10 text-brand ring-1 ring-brand/15">
-        <User className="size-5" strokeWidth={2.2} />
-      </span>
+      <PersonaAvatarV7 name="王师傅" size="lg" className="ring-brand/20" />
       <div className="min-w-0 flex-1">
         <p className="truncate text-[15px] font-semibold text-ink">王师傅 · AB12 CDE</p>
         <p className="mt-1 inline-flex rounded-full bg-background px-2 py-0.5 text-[11.5px] text-ink-soft">

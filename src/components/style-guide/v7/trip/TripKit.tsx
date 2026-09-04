@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { ChevronRight, MessagesSquare, Sparkles, ShieldCheck, Users, X } from "lucide-react";
+import { PersonaAvatarV7 } from "@/components/style-guide/v7/PersonaAvatarV7";
 import { cn } from "@/lib/utils";
 
 /** P-008 ~ P-014 共用的订单/行程组件与数据（Soft Business token） */
@@ -327,9 +328,7 @@ export function GroupChatSheet({ onClose }: { onClose?: (() => void) | undefined
               </p>
             ) : (
               <>
-                <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-ink/[0.08] text-[12px] font-semibold text-ink-soft">
-                  {m.name.slice(0, 1)}
-                </span>
+                <PersonaAvatarV7 name={m.name} size="sm" />
                 <div className="max-w-[74%]">
                   <p className={cn("mb-1 text-[11px] text-ink-soft/80", m.me ? "text-right" : "")}>
                     {m.name}
@@ -403,14 +402,7 @@ export function MembersCard({
               m.me ? "bg-brand-soft/60 ring-1 ring-brand/12" : "bg-background",
             )}
           >
-            <span
-              className={cn(
-                "flex size-7 shrink-0 items-center justify-center rounded-full text-[12px] font-semibold",
-                m.me ? "bg-brand text-brand-foreground" : "bg-ink/[0.08] text-ink-soft",
-              )}
-            >
-              {m.name.slice(0, 1)}
-            </span>
+            <PersonaAvatarV7 name={m.name} size="sm" className={cn(m.me && "ring-brand/35")} />
             <p className="shrink-0 text-[14px] font-semibold text-ink">
               {m.name}
               {m.me ? " (我)" : ""}

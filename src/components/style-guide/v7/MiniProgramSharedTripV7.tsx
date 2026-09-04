@@ -1,4 +1,4 @@
-import { AlertTriangle, Check, Home, MapPin, Share2 } from "lucide-react";
+import { AlertTriangle, Check, Home, Share2 } from "lucide-react";
 import { DriverCard } from "./PassengerOrderDetailV7";
 import { MiniProgramCapsuleV7 } from "./MiniProgramCapsuleV7";
 import {
@@ -9,6 +9,7 @@ import {
   TripCard,
   type Member,
 } from "./trip/TripKit";
+import { RouteMapVisualV7 } from "./trip/RouteMapVisualV7";
 
 export type MiniSharedTripStage = "success" | "departing" | "pickup" | "dropoff" | "completed";
 
@@ -113,27 +114,14 @@ function SharedTransitContent() {
   const content = stageContent.dropoff;
   return (
     <div className="no-scrollbar min-h-0 flex-1 overflow-y-auto">
-      <div className="relative h-[300px] bg-gradient-to-b from-background to-ink/[0.1]">
-        <div
-          className="pointer-events-none absolute inset-0 opacity-60"
-          style={{
-            backgroundImage:
-              "linear-gradient(to right, rgba(15,23,42,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(15,23,42,0.05) 1px, transparent 1px)",
-            backgroundSize: "28px 28px",
-          }}
-        />
+      <RouteMapVisualV7>
         <Card className="absolute inset-x-4 top-4 z-10 flex items-center justify-between gap-3 py-3">
           <p className="text-[15px] font-semibold text-ink">{content.title}</p>
           <p className="shrink-0 rounded-full bg-brand-soft px-2 py-0.5 text-[11px] font-medium text-brand">
             剩余: 15.4km · 约30分钟
           </p>
         </Card>
-        <div className="flex h-full items-center justify-center">
-          <span className="flex size-12 items-center justify-center rounded-full bg-card text-brand shadow-card ring-1 ring-brand/15">
-            <MapPin className="size-6" strokeWidth={2.2} />
-          </span>
-        </div>
-      </div>
+      </RouteMapVisualV7>
 
       <div className="space-y-3 bg-card px-4 pb-6 pt-4">
         <SharedByBanner />

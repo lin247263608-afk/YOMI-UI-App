@@ -1,6 +1,7 @@
-import { Check, UserRound } from "lucide-react";
+import { Check } from "lucide-react";
 import { NavBar } from "@/components/prototype/kit/NavBar";
 import { PrimaryButton } from "@/components/prototype/kit/PrimaryButton";
+import { PersonaAvatarV7 } from "./PersonaAvatarV7";
 import { Card, MembersCard, RouteLine, TripTag } from "./trip/TripKit";
 
 /** Figma 还原：P-016 订单详情已完成（339:11043） */
@@ -46,9 +47,7 @@ export function PassengerCompletedOrderV7({
         />
 
         <Card className="flex items-center gap-3">
-          <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand-soft text-brand">
-            <UserRound className="size-5" strokeWidth={2.2} />
-          </span>
+          <PersonaAvatarV7 name="王师傅" size="lg" className="ring-brand/20" />
           <div className="min-w-0 flex-1">
             <p className="truncate text-[14px] font-bold text-ink">王师傅 · AB12 CDE</p>
             <p className="mt-1 text-[12px] text-ink-soft">车型：7座商务 (黑色)</p>

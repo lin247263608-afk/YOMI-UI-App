@@ -9,12 +9,12 @@ import {
   UsersRound,
   type LucideIcon,
 } from "lucide-react";
-import avatarSprite from "@/assets/chat-avatar-sprite.jpg";
 import summerBanner from "@/assets/announcement-summer-airport.jpg";
 import birminghamBanner from "@/assets/announcement-birmingham-airport.jpg";
 import termsBanner from "@/assets/announcement-terms.jpg";
 import { IconChip } from "@/components/prototype/kit/YomiIcon";
 import { cn } from "@/lib/utils";
+import { GroupAvatarV7, PersonaAvatarV7 } from "./PersonaAvatarV7";
 
 /** Figma：P-019-001 ~ P-019-005、P-020、P-021 */
 
@@ -223,47 +223,7 @@ export function MessageRow({
 }
 
 function AvatarFace({ index, className }: { index: number; className?: string }) {
-  const column = index % 3;
-  const row = Math.floor(index / 3);
-  return (
-    <span
-      aria-hidden="true"
-      className={cn("block bg-cover bg-no-repeat", className)}
-      style={{
-        backgroundImage: `url(${avatarSprite})`,
-        backgroundPosition: `${column * 50}% ${row * 50}%`,
-        backgroundSize: "300% 300%",
-      }}
-    />
-  );
-}
-
-function GroupAvatar({ members }: { members: readonly number[] }) {
-  const visibleMembers = members.slice(0, 9);
-  const tileSize =
-    visibleMembers.length === 1
-      ? "size-[38px]"
-      : visibleMembers.length <= 4
-        ? "size-[18px]"
-        : "size-[12px]";
-  return (
-    <span
-      aria-label={`${visibleMembers.length}人群聊头像`}
-      className="flex size-11 shrink-0 flex-wrap content-center justify-center gap-px overflow-hidden rounded-[10px] bg-ink/[0.06] p-[3px]"
-    >
-      {visibleMembers.map((member, index) => (
-        <AvatarFace
-          key={`${member}-${index}`}
-          index={member}
-          className={cn(
-            "aspect-square rounded-[2px]",
-            tileSize,
-            visibleMembers.length === 1 && "rounded-lg",
-          )}
-        />
-      ))}
-    </span>
-  );
+  return <PersonaAvatarV7 index={index} size="xs" className={className} />;
 }
 
 function AnnouncementVisual({
@@ -324,7 +284,7 @@ export function PassengerSystemNoticeV7({
                 body={item.body}
                 time={item.time}
                 unread={item.unread}
-                visual={<GroupAvatar members={item.members} />}
+                visual={<GroupAvatarV7 members={item.members} />}
                 onClick={index === 0 ? onOpenGroupChat : undefined}
               />
             ))}

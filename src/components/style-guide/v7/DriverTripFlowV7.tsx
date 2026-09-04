@@ -1,11 +1,11 @@
 import { useRef, useState } from "react";
 import type { KeyboardEvent, PointerEvent } from "react";
 import { AlertTriangle, Check, ChevronRight, Clock3, Navigation, Phone, X } from "lucide-react";
-import avatarSprite from "@/assets/chat-avatar-sprite.jpg";
 import { NavBar } from "@/components/prototype/kit/NavBar";
 import { PrimaryButton } from "@/components/prototype/kit/PrimaryButton";
 import { YomiIcon } from "@/components/prototype/kit/YomiIcon";
 import { cn } from "@/lib/utils";
+import { PersonaAvatarV7 } from "./PersonaAvatarV7";
 import { RouteLine, TripTag } from "./trip/TripKit";
 import { DriverServiceLine } from "./DriverOrderCardV7";
 
@@ -39,20 +39,6 @@ const passengers: Passenger[] = [
     destination: "伦敦眼大厦",
   },
 ];
-
-function PassengerAvatar({ index }: { index: number }) {
-  return (
-    <span
-      aria-hidden="true"
-      className="size-7 shrink-0 rounded-full bg-cover bg-no-repeat ring-2 ring-white"
-      style={{
-        backgroundImage: `url(${avatarSprite})`,
-        backgroundPosition: `${(index % 3) * 50}% 50%`,
-        backgroundSize: "300% 300%",
-      }}
-    />
-  );
-}
 
 type PassengerStateTone = "brand" | "success" | "ink" | "muted";
 
@@ -297,7 +283,7 @@ function PassengerCard({
         )}
       />
       <div className="flex items-center gap-2">
-        <PassengerAvatar index={index + 1} />
+        <PersonaAvatarV7 name={passenger.name} size="sm" />
         <strong className="text-[13px] text-ink">{passenger.name}</strong>
         <span className="text-[11px] text-ink-soft/65">
           {passenger.people} · {passenger.luggage}
