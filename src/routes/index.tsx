@@ -189,6 +189,8 @@ type MiniView =
   | "wechat-trip-chat"
   | `shared-${MiniSharedTripStage}`;
 
+type MiniDownloadReturnView = Exclude<MiniView, "download">;
+
 type MessageView =
   { type: "group-chat" } | { type: "support-chat" } | { type: "announcement"; id: AnnouncementId };
 
@@ -259,6 +261,13 @@ function Prototype() {
   const [miniAuthMode, setMiniAuthMode] = useState<MiniAuthMode>("wechat");
   const [miniInputActive, setMiniInputActive] = useState(false);
   const [miniView, setMiniView] = useState<MiniView>("home");
+  const [miniDownloadReturnView, setMiniDownloadReturnView] =
+    useState<MiniDownloadReturnView>("home");
+
+  function openMiniDownload(returnView: MiniDownloadReturnView) {
+    setMiniDownloadReturnView(returnView);
+    setMiniView("download");
+  }
 
   const authCode: Record<AuthScreen, string> = {
     login: "P-001",
@@ -1036,7 +1045,7 @@ function Prototype() {
           <MiniProgramCarpoolV7
             onBack={() => setMiniView("home")}
             onOpenRoute={() => setMiniView("route")}
-            onDownload={() => setMiniView("download")}
+            onDownload={() => openMiniDownload("carpool")}
           />
         );
       }
@@ -1044,13 +1053,13 @@ function Prototype() {
         return (
           <MiniProgramRouteV7
             onBack={() => setMiniView("carpool")}
-            onDownload={() => setMiniView("download")}
+            onDownload={() => openMiniDownload("route")}
             onShare={() => setMiniView("share")}
           />
         );
       }
       if (miniView === "download") {
-        return <MiniProgramDownloadV7 onBack={() => setMiniView("route")} />;
+        return <MiniProgramDownloadV7 onBack={() => setMiniView(miniDownloadReturnView)} />;
       }
       if (miniView === "share") {
         return (
@@ -1107,7 +1116,7 @@ function Prototype() {
         return (
           <MiniProgramChoiceV7
             onHome={() => setMiniView("home")}
-            onJoin={() => setMiniView("download")}
+            onJoin={() => openMiniDownload("choice")}
           />
         );
       }
@@ -1116,7 +1125,7 @@ function Prototype() {
           onProfile={() => setMiniView("profile")}
           onOpenCarpool={() => setMiniView("carpool")}
           onOpenRoute={() => setMiniView("route")}
-          onDownload={() => setMiniView("download")}
+          onDownload={() => openMiniDownload("home")}
         />
       );
     }
@@ -1139,12 +1148,7 @@ function Prototype() {
   return (
     <main className="min-h-screen bg-surface-alt">
       <header className="border-b border-border bg-card px-5 py-5 md:px-10">
-        <h1 className="text-lg font-bold text-ink md:text-2xl">
-          有米出行 YOMI · 可交互原型
-          <span className="ml-2 rounded-lg bg-brand-soft px-2 py-1 text-[12px] font-semibold text-brand">
-            Soft Business
-          </span>
-        </h1>
+        <h1 className="text-lg font-bold text-ink md:text-2xl">有米出行 YOMI</h1>
         <p className="mt-2 max-w-2xl text-[13px] leading-relaxed text-muted-foreground md:text-[14px]">
           375 × 812 真机比例，底部导航、业务入口与主要流程均可交互，页面内容按 Figma 原型逐步同步。
         </p>
@@ -1493,6 +1497,10 @@ function Prototype() {
                 type="button"
                 onClick={() => {
                   setMiniLoggedIn(true);
+                  if (item.id === "download") {
+                    openMiniDownload(miniView === "download" ? "home" : miniView);
+                    return;
+                  }
                   setMiniView(item.id);
                 }}
                 aria-current={miniLoggedIn && miniView === item.id}
