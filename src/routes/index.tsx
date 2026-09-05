@@ -1148,9 +1148,9 @@ function Prototype() {
   return (
     <main className="min-h-screen bg-surface-alt">
       <header className="border-b border-border bg-card px-5 py-5 md:px-10">
-        <h1 className="text-lg font-bold text-ink md:text-2xl">有米出行 YOMI</h1>
+        <h1 className="text-lg font-bold text-ink md:text-2xl">有米出行YOMI-真机UI演示</h1>
         <p className="mt-2 max-w-2xl text-[13px] leading-relaxed text-muted-foreground md:text-[14px]">
-          375 × 812 真机比例，底部导航、业务入口与主要流程均可交互，页面内容按 Figma 原型逐步同步。
+          可交互UI稿，页面内容按 Figma 设计同步。
         </p>
       </header>
 
