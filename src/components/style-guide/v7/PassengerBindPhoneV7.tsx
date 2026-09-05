@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AlertCircle, ShieldCheck } from "lucide-react";
+import { AlertCircle, ShieldCheck } from "@/components/prototype/kit/brand-icons";
 import { InputShell, TextField } from "@/components/prototype/kit/InputShell";
 import { NavBar } from "@/components/prototype/kit/NavBar";
 import { PrimaryButton } from "@/components/prototype/kit/PrimaryButton";
@@ -72,7 +72,7 @@ export function PassengerBindPhoneV7({
 
           {conflict ? (
             <div className="flex gap-2 rounded-xl border border-ink/[0.08] bg-card px-3 py-3 text-[12.5px] leading-[1.45] text-ink-soft shadow-card">
-              <AlertCircle className="mt-0.5 size-4 shrink-0 text-brand" strokeWidth={2.2} />
+              <AlertCircle className="mt-0.5 size-4 shrink-0 text-brand" strokeWidth={2} />
               <p>该手机号已绑定其他账户，继续绑定将解除原账户关联</p>
             </div>
           ) : null}

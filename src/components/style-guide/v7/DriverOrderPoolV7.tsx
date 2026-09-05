@@ -10,9 +10,10 @@ import {
   MessageCircle,
   RefreshCw,
   Share2,
-} from "lucide-react";
+} from "@/components/prototype/kit/brand-icons";
 import { NavBar } from "@/components/prototype/kit/NavBar";
 import { YomiIcon, YomiIconButton } from "@/components/prototype/kit/YomiIcon";
+import { YomiWordmark } from "@/components/prototype/kit/YomiWordmark";
 import { cn } from "@/lib/utils";
 import { DriverActionPill } from "./DriverActionPill";
 import { driverTabs } from "./driverNav";
@@ -163,7 +164,7 @@ function ShareOrderPoolSheet({ onClose }: { onClose: () => void }) {
               height={640}
               className="size-5 rounded-md object-cover"
             />
-            有米出行YOMI
+            <YomiWordmark className="h-6" />
           </p>
         </div>
 
@@ -272,12 +273,14 @@ export function DriverOrderPoolV7({
 
   return (
     <div className="relative flex h-full min-h-0 flex-col bg-background">
-      <header className="flex h-[66px] shrink-0 items-center bg-haze-status px-4">
+      <header className="relative flex h-[66px] shrink-0 items-center bg-haze-status px-4">
         <AppUserAvatar />
-        <h1 className="flex-1 text-center text-[17px] font-bold text-ink">
-          有米出行 <span className="text-brand">YOMI</span>
+        <h1 className="pointer-events-none absolute inset-x-0 flex items-center justify-center">
+          <YomiWordmark className="h-[38px]" />
         </h1>
-        <YomiIconButton icon={Share2} label="分享订单池" onClick={() => setShareOpen(true)} />
+        <span className="ml-auto">
+          <YomiIconButton icon={Share2} label="分享订单池" onClick={() => setShareOpen(true)} />
+        </span>
       </header>
 
       <div className="flex shrink-0 items-center justify-between px-4 py-2.5 text-[11px] text-ink-soft/65">
@@ -359,7 +362,7 @@ export function DriverOrderPoolV7({
 export function DriverPoolSharePreviewV7({ onBack }: { onBack?: (() => void) | undefined }) {
   return (
     <div className="flex h-full min-h-0 flex-col bg-background">
-      <NavBar title="有米出行YOMI" onBack={onBack} />
+      <NavBar title={<YomiWordmark className="h-8" />} onBack={onBack} />
       <div className="no-scrollbar min-h-0 flex-1 space-y-2.5 overflow-y-auto px-3.5 py-3">
         {pool.map((order, index) => (
           <PoolCard key={`${order.route}-preview-${index}`} order={order} compact />

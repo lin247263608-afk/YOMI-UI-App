@@ -1,4 +1,4 @@
-import { Check, Phone } from "lucide-react";
+import { Check, Phone } from "@/components/prototype/kit/brand-icons";
 import { NavBar } from "@/components/prototype/kit/NavBar";
 import { PersonaAvatarV7 } from "./PersonaAvatarV7";
 import {
@@ -37,7 +37,7 @@ export function DriverCard({
           aria-label="联系司机"
           className="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand text-brand-foreground shadow-float active:scale-95"
         >
-          <Phone className="size-4" strokeWidth={2.3} />
+          <Phone className="size-4" strokeWidth={2} />
         </button>
       ) : null}
     </Card>

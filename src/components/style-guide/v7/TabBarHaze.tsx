@@ -1,13 +1,20 @@
-import type { LucideIcon } from "lucide-react";
-import { YomiIcon } from "@/components/prototype/kit/YomiIcon";
+import { YomiIcon, type AnyIcon } from "@/components/prototype/kit/YomiIcon";
+import { YomiDuotone, type DuoName } from "@/components/prototype/kit/DuotoneIcon";
 import { cn } from "@/lib/utils";
+
+export type TabBarItem = {
+  icon: AnyIcon;
+  /** 双色品牌图标（优先渲染）；未提供时自动识别 icon 是否为双色组件 */
+  duo?: DuoName | undefined;
+  label: string;
+};
 
 export function TabBarHaze({
   items,
   active,
   onSelect,
 }: {
-  items: { icon: LucideIcon; label: string }[];
+  items: TabBarItem[];
   active: number;
   onSelect?: ((index: number) => void) | undefined;
 }) {
@@ -24,7 +31,11 @@ export function TabBarHaze({
             i === active ? "text-brand" : "text-ink-soft/70",
           )}
         >
-          <YomiIcon icon={it.icon} size="lg" tone={i === active ? "brand" : "muted"} />
+          {it.duo ? (
+            <YomiDuotone name={it.duo} size="lg" tone={i === active ? "brand" : "muted"} />
+          ) : (
+            <YomiIcon icon={it.icon} size="lg" tone={i === active ? "brand" : "muted"} />
+          )}
           <span>{it.label}</span>
         </button>
       ))}

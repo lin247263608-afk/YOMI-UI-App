@@ -1,4 +1,4 @@
-import { Hourglass } from "lucide-react";
+import { Hourglass } from "@/components/prototype/kit/brand-icons";
 import { NavBar } from "@/components/prototype/kit/NavBar";
 import { PrimaryButton } from "@/components/prototype/kit/PrimaryButton";
 import {

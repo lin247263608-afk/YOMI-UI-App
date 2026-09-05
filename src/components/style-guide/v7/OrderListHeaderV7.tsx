@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 export function OrderListHeaderV7<T extends string>({
@@ -6,7 +7,7 @@ export function OrderListHeaderV7<T extends string>({
   value,
   onChange,
 }: {
-  title: string;
+  title: ReactNode;
   items: readonly { id: T; label: string }[];
   value: T;
   onChange: (value: T) => void;
@@ -14,7 +15,9 @@ export function OrderListHeaderV7<T extends string>({
   return (
     <>
       <header className="flex h-12 shrink-0 items-center justify-center border-b border-ink/[0.06] bg-haze-status px-4">
-        <h1 className="text-[17px] font-bold text-ink">{title}</h1>
+        <div className="flex items-center justify-center text-[17px] font-bold text-ink">
+          {title}
+        </div>
       </header>
       <div className="no-scrollbar flex h-11 shrink-0 items-center gap-5 overflow-x-auto border-b border-ink/[0.06] bg-card px-4">
         {items.map((item) => {

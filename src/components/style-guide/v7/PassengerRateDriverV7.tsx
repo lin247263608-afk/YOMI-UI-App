@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Star } from "lucide-react";
+import { Star } from "@/components/prototype/kit/brand-icons";
 import { NavBar } from "@/components/prototype/kit/NavBar";
 import { Card, RouteLine } from "./trip/TripKit";
 import { cn } from "@/lib/utils";
@@ -54,7 +54,7 @@ export function PassengerRateDriverV7({
                         ? "scale-105 fill-brand text-brand drop-shadow-[0_4px_8px_rgba(217,119,6,0.35)]"
                         : "text-ink/15",
                     )}
-                    strokeWidth={1.8}
+                    strokeWidth={2}
                   />
                 </button>
               ))}

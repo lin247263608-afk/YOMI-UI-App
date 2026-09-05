@@ -18,7 +18,7 @@ import {
   Trash2,
   UserRoundCog,
   X,
-} from "lucide-react";
+} from "@/components/prototype/kit/brand-icons";
 import { NavBar } from "@/components/prototype/kit/NavBar";
 import { IconChip } from "@/components/prototype/kit/YomiIcon";
 import { ChoiceSheetV7 } from "@/components/style-guide/v7/CertificationSheetsV7";
@@ -222,7 +222,7 @@ export function PassengerProfileV7({
               {avatar ? (
                 <img src={avatar} alt="个人头像" className="size-full object-cover" />
               ) : (
-                <Camera className="size-8" strokeWidth={1.8} />
+                <Camera className="size-8" strokeWidth={2} />
               )}
             </span>
             <span className="mt-2 text-[13px] text-ink-soft">点击更换头像</span>
@@ -451,7 +451,7 @@ export function PassengerDeleteAccountV7({
           {["无处于“进行中/派单中”的违约未完结订单", "账户内无未提现余额或待结清款项"].map(
             (item) => (
               <p key={item} className="mt-2 flex items-start gap-2 text-[12px] text-ink-soft/80">
-                <Check className="mt-0.5 size-4 shrink-0 text-go" strokeWidth={2.6} />
+                <Check className="mt-0.5 size-4 shrink-0 text-go" strokeWidth={2} />
                 {item}
               </p>
             ),
@@ -611,7 +611,7 @@ export function PassengerFeedbackV7({
                   aria-label={`删除${image.name}`}
                   className="absolute right-1 top-1 flex size-5 items-center justify-center rounded-full bg-ink/80 text-white shadow-sm backdrop-blur-sm"
                 >
-                  <X className="size-3" strokeWidth={2.6} />
+                  <X className="size-3" strokeWidth={2} />
                 </button>
               </div>
             ))}
@@ -622,7 +622,7 @@ export function PassengerFeedbackV7({
                 className="flex aspect-square items-center justify-center rounded-xl border border-dashed border-brand/25 bg-brand-soft/45 text-brand active:bg-brand-soft"
                 aria-label="选择图片，支持多选"
               >
-                <ImagePlus className="size-5" strokeWidth={1.9} />
+                <ImagePlus className="size-5" strokeWidth={2} />
               </button>
             ) : null}
           </div>
@@ -705,7 +705,7 @@ export function PassengerFeedbackSubmittedV7({
         <section className="relative flex flex-col items-center overflow-hidden rounded-2xl border border-go/10 bg-go-soft/45 py-4 text-center">
           <span className="pointer-events-none absolute -right-8 -top-8 size-24 rounded-full border border-go/10" />
           <span className="flex size-12 items-center justify-center rounded-full bg-card text-go shadow-card">
-            <Check className="size-6" strokeWidth={2.4} />
+            <Check className="size-6" strokeWidth={2} />
           </span>
           <h2 className="mt-2 text-[17px] font-bold text-ink">反馈已提交</h2>
           <p className="mt-1 text-[12.5px] text-ink-soft/70">您的反馈正在处理中，请耐心等待</p>
@@ -763,7 +763,7 @@ export function PassengerFeedbackSubmittedV7({
           ) : (
             <div className="mt-3 flex h-16 items-center gap-3 rounded-xl border border-dashed border-ink/10 bg-background px-3 text-ink-soft/55">
               <span className="flex size-9 items-center justify-center rounded-lg bg-card shadow-sm">
-                <ImagePlus className="size-4" strokeWidth={1.9} />
+                <ImagePlus className="size-4" strokeWidth={2} />
               </span>
               <span className="text-[12px]">未上传图片证明</span>
             </div>

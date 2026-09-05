@@ -11,7 +11,7 @@ import {
   Plus,
   Check,
   AlertCircle,
-} from "lucide-react";
+} from "@/components/prototype/kit/brand-icons";
 import { TripTag } from "./trip/TripKit";
 import { cn } from "@/lib/utils";
 import { AirportPickerV7 } from "./AirportPickerV7";
@@ -83,7 +83,7 @@ function Stepper({
           value >= max ? "bg-ink/30 text-brand-foreground" : "bg-ink text-brand-foreground",
         )}
       >
-        <Plus className="size-3.5" />
+        <Plus className="size-3.5" tone="inverse" />
       </button>
     </div>
   );
@@ -394,7 +394,7 @@ export function PassengerOrderFormV7({
                 onClick={() => setDirection(isPickup ? "dropoff" : "pickup")}
                 className="flex size-7 items-center justify-center rounded-full bg-ink text-brand-foreground transition-transform active:scale-90"
               >
-                <RefreshCw className="size-3.5" />
+                <RefreshCw className="size-3.5" tone="inverse" />
               </button>
             </div>
             {isPickup ? spot : airport}
@@ -486,7 +486,7 @@ export function PassengerOrderFormV7({
                           checked ? "border-brand bg-brand text-brand-foreground" : "border-border",
                         )}
                       >
-                        {checked ? <Check className="size-3" strokeWidth={3} /> : null}
+                        {checked ? <Check className="size-3" strokeWidth={2} /> : null}
                       </span>
                       <p className="text-[14px] text-ink">{s.label}</p>
                       <p className="ml-auto font-mono text-[13px] font-semibold text-ink">

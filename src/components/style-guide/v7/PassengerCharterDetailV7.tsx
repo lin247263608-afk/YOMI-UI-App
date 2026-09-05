@@ -1,4 +1,4 @@
-import { CheckCircle2, Headset } from "lucide-react";
+import { CheckCircle2, Headset } from "@/components/prototype/kit/brand-icons";
 import { NavBar } from "@/components/prototype/kit/NavBar";
 import { PrimaryButton } from "@/components/prototype/kit/PrimaryButton";
 import { charters } from "@/components/prototype/data/charters";
@@ -42,7 +42,7 @@ export function PassengerCharterDetailV7({
           <ul className="flex flex-col gap-2.5">
             {charter.highlights.map((h) => (
               <li key={h} className="flex gap-2 text-[13px] leading-[19px] text-ink-soft/85">
-                <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-brand" strokeWidth={2.2} />
+                <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-brand" strokeWidth={2} />
                 <span>{h}</span>
               </li>
             ))}
@@ -50,7 +50,7 @@ export function PassengerCharterDetailV7({
         </div>
 
         <div className="bg-brand-soft mt-4 flex items-start gap-2 rounded-2xl p-4 text-[12px] leading-[18px] text-ink-soft/85">
-          <Headset className="mt-0.5 size-4 shrink-0 text-brand" strokeWidth={2.2} />
+          <Headset className="mt-0.5 size-4 shrink-0 text-brand" strokeWidth={2} />
           <span>包车行程由专属管家 1 对 1 定制，确认需求后 30 分钟内出报价与行程方案。</span>
         </div>
       </div>

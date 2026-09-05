@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
-import { Building2, Check, MapPinned, type LucideIcon } from "lucide-react";
+import { Building2, Check, MapPinned, type AnyIcon } from "@/components/prototype/kit/brand-icons";
 import { cn } from "@/lib/utils";
 
 export type ChoiceOption = {
   value: string;
   label: string;
   description?: string;
-  icon?: LucideIcon;
+  icon?: AnyIcon;
   badge?: string;
   swatch?: string;
   tone?: "brand" | "blue" | "pink" | "green";
@@ -175,7 +175,7 @@ export function ChoiceSheetV7({
                     active && "bg-card text-brand shadow-[0_3px_10px_rgba(27,58,91,0.07)]",
                   )}
                 >
-                  <OptionIcon className="size-4" strokeWidth={1.9} />
+                  <OptionIcon className="size-4" strokeWidth={2} />
                 </span>
               ) : option.badge ? (
                 <span
@@ -211,11 +211,11 @@ export function ChoiceSheetV7({
                       : "border-ink/15 bg-card text-transparent",
                   )}
                 >
-                  <Check className="size-3" strokeWidth={3} />
+                  <Check className="size-3" strokeWidth={2} />
                 </span>
               ) : active ? (
                 <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-brand text-white shadow-[0_3px_9px_rgba(242,120,53,0.22)]">
-                  <Check className="size-3.5" strokeWidth={3} />
+                  <Check className="size-3.5" strokeWidth={2} />
                 </span>
               ) : (
                 <span className="size-6 shrink-0 rounded-full border border-ink/10 bg-card" />
@@ -359,6 +359,8 @@ export function WheelChoiceSheetV7({
               const option = options[item.value];
               if (!option) return item.label;
               const OptionIcon = option.icon;
+              // 无图标无徽标的选项（如性别）：滚轮中只显示居中文字
+              if (!OptionIcon && !option.badge) return option.label;
               return (
                 <span className="flex w-full items-center justify-center gap-3 px-7">
                   <span
@@ -369,7 +371,7 @@ export function WheelChoiceSheetV7({
                     )}
                   >
                     {OptionIcon ? (
-                      <OptionIcon className="size-[18px]" strokeWidth={2.15} />
+                      <OptionIcon className="size-[18px]" strokeWidth={2} />
                     ) : (
                       <span className="text-[17px] font-semibold">{option.badge}</span>
                     )}
@@ -554,11 +556,11 @@ export function EnglandAuthoritySheetV7({
     >
       <div className="mx-3 mt-2 grid h-10 shrink-0 grid-cols-2 rounded-xl bg-secondary/55 text-[10.5px] font-medium text-ink-soft/65">
         <span className="flex items-center justify-center gap-1.5">
-          <MapPinned className="size-3.5 text-brand" strokeWidth={1.9} />
+          <MapPinned className="size-3.5 text-brand" strokeWidth={2} />
           英格兰地区
         </span>
         <span className="flex items-center justify-center gap-1.5">
-          <Building2 className="size-3.5 text-brand" strokeWidth={1.9} />
+          <Building2 className="size-3.5 text-brand" strokeWidth={2} />
           地方政府
         </span>
       </div>

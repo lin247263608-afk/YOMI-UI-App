@@ -6,10 +6,8 @@ import {
   FileText,
   Info,
   Languages,
-  MapPin,
-  Plane,
   ShieldCheck,
-} from "lucide-react";
+} from "@/components/prototype/kit/brand-icons";
 import bannerAirport from "@/assets/banner-airport.jpg";
 import yomiLogo from "@/assets/yomi-logo.svg";
 import { NavBar } from "@/components/prototype/kit/NavBar";
@@ -45,25 +43,34 @@ export function PassengerApplyDriverV7({
       <NavBar title="申请成为司机" onBack={onBack} />
 
       <div className="no-scrollbar min-h-0 flex-1 space-y-4 overflow-y-auto px-4 py-4">
-        <div className="relative aspect-[343/156] w-full shrink-0 overflow-hidden rounded-2xl border border-ink/[0.06] bg-ink shadow-card">
+        <div className="relative aspect-[343/156] w-full shrink-0 overflow-hidden rounded-2xl bg-ink shadow-card">
           <img
             src={bannerAirport}
             alt="有米司机招募计划 · 宣传图"
-            className="absolute inset-0 block size-full object-cover object-[52%_58%] opacity-90"
+            className="absolute inset-0 block size-full object-cover object-[72%_55%] opacity-50"
             draggable={false}
           />
-          <span className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/25 to-transparent" />
-          <span className="pointer-events-none absolute -left-12 -top-16 size-40 rounded-full border border-white/15" />
-          <span className="pointer-events-none absolute left-8 top-[92px] h-px w-28 rotate-[-14deg] bg-white/45" />
-          <span className="absolute left-6 top-5 flex size-11 items-center justify-center rounded-xl border border-white/15 bg-white/90 shadow-card backdrop-blur-sm">
-            <img src={yomiLogo} alt="有米出行" className="size-9 object-contain" />
+          <span className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink via-ink/80 to-ink/10" />
+          {/* 平面几何装饰：品牌橙圆环 + 实心圆点 */}
+          <span className="pointer-events-none absolute -right-10 -top-14 size-40 rounded-full border-[9px] border-brand/30" />
+          <span className="pointer-events-none absolute right-24 top-9 size-2 rounded-full bg-brand/70" />
+          {/* 品牌角标 */}
+          <span className="absolute left-5 top-5 flex size-9 items-center justify-center rounded-xl border border-white/15 bg-white/10 backdrop-blur-sm">
+            <img src={yomiLogo} alt="有米出行" className="size-7 object-contain" />
           </span>
-          <span className="absolute bottom-7 left-7 flex size-7 items-center justify-center rounded-full border border-white/25 bg-ink/65 text-white backdrop-blur-sm">
-            <MapPin className="size-3.5" strokeWidth={2.2} />
-          </span>
-          <span className="absolute bottom-[51px] left-[136px] flex size-7 items-center justify-center rounded-full border border-white/25 bg-brand text-white shadow-sm">
-            <Plane className="size-3.5" strokeWidth={2.2} />
-          </span>
+          {/* 海报文案区 */}
+          <div className="absolute inset-x-5 bottom-4">
+            <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-brand">
+              Driver Recruiting
+            </p>
+            <p className="mt-1.5 text-[21px] font-extrabold leading-[1.2] tracking-tight text-white">
+              开车接单，轻松增收
+            </p>
+            <p className="mt-2 text-[10.5px] font-medium tracking-wide text-white/70">
+              时间自由 <span className="mx-1 text-brand">·</span> 收入周结
+              <span className="mx-1 text-brand">·</span> 平台保障
+            </p>
+          </div>
         </div>
 
         <section className="rounded-2xl border border-ink/[0.06] bg-card p-4 shadow-card">
@@ -87,7 +94,7 @@ export function PassengerApplyDriverV7({
             {driverAdvantages.map((advantage) => (
               <p key={advantage} className="flex gap-2 text-[13px] leading-[1.5] text-ink-soft">
                 <span className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full bg-brand-soft text-brand">
-                  <Check className="size-2.5" strokeWidth={3} />
+                  <Check className="size-2.5" strokeWidth={2} />
                 </span>
                 {advantage}
               </p>

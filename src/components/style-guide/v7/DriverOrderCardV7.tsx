@@ -1,4 +1,4 @@
-import { Clock3 } from "lucide-react";
+import { Clock3 } from "@/components/prototype/kit/brand-icons";
 import { YomiIcon } from "@/components/prototype/kit/YomiIcon";
 import { cn } from "@/lib/utils";
 

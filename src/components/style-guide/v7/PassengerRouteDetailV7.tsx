@@ -1,4 +1,4 @@
-import { MapPin } from "lucide-react";
+import { MapPin } from "@/components/prototype/kit/brand-icons";
 import { NavBar } from "@/components/prototype/kit/NavBar";
 import { PrimaryButton } from "@/components/prototype/kit/PrimaryButton";
 import { hotRoutes } from "@/components/prototype/data/routes";
@@ -31,7 +31,7 @@ export function PassengerRouteDetailV7({
             className="h-[160px] w-full object-cover"
           />
           <p className="flex items-center justify-center gap-1.5 py-2.5 text-[12px] text-muted-foreground">
-            <MapPin className="size-3.5 text-brand" strokeWidth={2.2} />
+            <MapPin className="size-3.5 text-brand" strokeWidth={2} />
             {route.note}
           </p>
         </div>

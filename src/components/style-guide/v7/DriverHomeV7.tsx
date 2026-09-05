@@ -5,6 +5,7 @@ import { driverTabs } from "./driverNav";
 import { TabBarHaze } from "./TabBarHaze";
 import { AppUserAvatar } from "./AppUserAvatar";
 import { DriverOrderCardV7 } from "./DriverOrderCardV7";
+import { YomiWordmark } from "@/components/prototype/kit/YomiWordmark";
 
 type HomeOrder = {
   no: string;
@@ -77,12 +78,12 @@ export function DriverHomeV7({
 
   return (
     <div className="flex h-full min-h-0 flex-col bg-background">
-      <header className="flex h-[66px] shrink-0 items-center bg-haze-status px-4">
+      <header className="relative flex h-[66px] shrink-0 items-center bg-haze-status px-4">
         <AppUserAvatar />
-        <h1 className="flex-1 text-center text-[17px] font-bold text-ink">
-          有米出行 <span className="text-brand">YOMI</span>
+        <h1 className="pointer-events-none absolute inset-x-0 flex items-center justify-center">
+          <YomiWordmark className="h-[38px]" />
         </h1>
-        <span className="rounded-full border border-ink/[0.08] bg-card/80 px-3 py-1.5 text-[11px] font-semibold text-ink shadow-sm">
+        <span className="ml-auto rounded-full border border-ink/[0.08] bg-card/80 px-3 py-1.5 text-[11px] font-semibold text-ink shadow-sm">
           中 / EN
         </span>
       </header>
@@ -96,21 +97,20 @@ export function DriverHomeV7({
             </p>
           </div>
           {online ? (
-            <button
-              type="button"
+            <DriverActionPill
               onClick={toggleOnline}
               aria-pressed="true"
-              className="ml-3 flex h-10 shrink-0 items-center gap-2 rounded-full bg-background px-4 text-[12px] font-semibold text-ink transition-colors active:bg-ink/[0.08]"
+              className="ml-3 w-[104px]"
             >
-              <span className="size-2 rounded-full bg-emerald-500 shadow-[0_0_0_4px_oklch(0.67_0.15_160/10%)]" />
+              <span className="size-2 rounded-full bg-emerald-400 shadow-[0_0_0_4px_oklch(0.67_0.15_160/10%)]" />
               下线
-            </button>
+            </DriverActionPill>
           ) : (
             <DriverActionPill
               onClick={toggleOnline}
               aria-pressed="false"
               leadingDot
-              className="ml-3"
+              className="ml-3 w-[104px]"
             >
               上线签到
             </DriverActionPill>

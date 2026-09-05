@@ -10,14 +10,12 @@ import {
   FileText,
   Fuel,
   Leaf,
-  Mars,
   Search,
   ShieldCheck,
   UserRound,
-  Venus,
   X,
   Zap,
-} from "lucide-react";
+} from "@/components/prototype/kit/brand-icons";
 import certFront from "@/assets/driver-cert-front.png";
 import certFrontSeat from "@/assets/driver-cert-front-seat.png";
 import certRearSeat from "@/assets/driver-cert-rear-seat.png";
@@ -80,7 +78,7 @@ function CertificationProgress({ currentStep }: { currentStep: 1 | 2 | 3 | 4 }) 
                     !done && !active && "border-ink/[0.05] bg-background text-ink-soft/38",
                   )}
                 >
-                  {done ? <Check className="size-3.5" strokeWidth={2.7} /> : index + 1}
+                  {done ? <Check className="size-3.5" strokeWidth={2} /> : index + 1}
                 </span>
                 <span
                   className={cn(
@@ -134,7 +132,7 @@ function VehicleEditProgress({ currentStep }: { currentStep: 1 | 2 | 3 }) {
                     !done && !active && "border-ink/[0.05] bg-background text-ink-soft/38",
                   )}
                 >
-                  {done ? <Check className="size-3.5" strokeWidth={2.7} /> : index + 1}
+                  {done ? <Check className="size-3.5" strokeWidth={2} /> : index + 1}
                 </span>
                 <span
                   className={cn(
@@ -411,8 +409,8 @@ function BasicInfo({
   const [birthday, setBirthday] = useState<string>();
   const [languages, setLanguages] = useState<string[]>(["普通话", "英语"]);
   const genderOptions: ChoiceOption[] = [
-    { value: "男", label: "男", icon: Mars, tone: "blue" },
-    { value: "女", label: "女", icon: Venus, tone: "pink" },
+    { value: "男", label: "男" },
+    { value: "女", label: "女" },
   ];
   const languageOptions: ChoiceOption[] = [
     { value: "英语", label: "英语" },
@@ -658,7 +656,7 @@ function VehicleBrandPicker({
       <NavBar title="选择品牌车型" onBack={onBack} />
       <div className="shrink-0 px-4 py-3">
         <label className="flex h-10 items-center gap-2 rounded-full bg-ink/[0.045] px-3.5 text-ink-soft/55 focus-within:bg-card focus-within:ring-2 focus-within:ring-brand/15">
-          <Search className="size-4 shrink-0" strokeWidth={2.2} />
+          <Search className="size-4 shrink-0" strokeWidth={2} />
           <input
             type="search"
             value={query}
@@ -754,7 +752,7 @@ function VehicleModelPicker({
       <NavBar title="选择车系" onBack={onBack} />
       <div className="shrink-0 px-4 py-3">
         <label className="flex h-10 items-center gap-2 rounded-full bg-ink/[0.045] px-3.5 text-ink-soft/55 focus-within:bg-card focus-within:ring-2 focus-within:ring-brand/15">
-          <Search className="size-4 shrink-0" strokeWidth={2.2} />
+          <Search className="size-4 shrink-0" strokeWidth={2} />
           <input
             type="search"
             value={query}

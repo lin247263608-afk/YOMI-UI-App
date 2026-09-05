@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Signal, Wifi, BatteryFull } from "lucide-react";
+import { Signal, Wifi, BatteryFull } from "@/components/prototype/kit/brand-icons";
 import { cn } from "@/lib/utils";
 
 /** 375 × 812 的可交互原型外框，内容区采用 flex 布局以便底部导航固定 */
@@ -20,9 +20,9 @@ export function DeviceFrame({
       >
         <span>9:41</span>
         <div className="flex items-center gap-1.5">
-          <Signal className="size-3.5" strokeWidth={2.5} />
-          <Wifi className="size-3.5" strokeWidth={2.5} />
-          <BatteryFull className="size-4" strokeWidth={2.5} />
+          <Signal className="size-3.5" strokeWidth={2} />
+          <Wifi className="size-3.5" strokeWidth={2} />
+          <BatteryFull className="size-4" strokeWidth={2} />
         </div>
       </div>
 

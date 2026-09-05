@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { AlertCircle, Check, ChevronRight, Clock } from "lucide-react";
+import { AlertCircle, Check, Clock } from "@/components/prototype/kit/brand-icons";
 
+import { WeChatLogo } from "@/components/prototype/kit/YomiIcon";
 import { NavBar } from "@/components/prototype/kit/NavBar";
 import { RouteLine, TripTag } from "./trip/TripKit";
 import { cn } from "@/lib/utils";
@@ -8,11 +9,53 @@ import { cn } from "@/lib/utils";
 /** Figma 还原：P-007-001 拼车支付（node 339:10277） / P-007-002 独享支付（node 339:10346） */
 
 const METHODS = [
-  { id: "card", label: "Card" },
-  { id: "wechat", label: "WeChat" },
+  { id: "visa", label: "VISA" },
+  { id: "mastercard", label: "Mastercard" },
+  { id: "wechat", label: "WeChat Pay" },
   { id: "alipay", label: "Alipay" },
-  { id: "apple", label: "Apple" },
+  { id: "applepay", label: "Apple Pay" },
 ];
+
+/** 支付方式品牌标识（VISA / Mastercard / WeChat Pay / Alipay / Apple Pay） */
+function PayMark({ id }: { id: string }) {
+  if (id === "visa") {
+    return (
+      <span className="text-[13px] font-black italic tracking-[-0.02em] text-[#1A1F71]">
+        VISA
+      </span>
+    );
+  }
+  if (id === "mastercard") {
+    return (
+      <svg viewBox="0 0 24 16" className="h-[16px] w-6" aria-hidden="true">
+        <circle cx="8.5" cy="8" r="6.5" fill="#EB001B" />
+        <circle cx="15.5" cy="8" r="6.5" fill="#F79E1B" />
+        <path
+          d="M12 2.9c1.7 1.3 2.8 3.1 2.8 5.1s-1.1 3.8-2.8 5.1c-1.7-1.3-2.8-3.1-2.8-5.1s1.1-3.8 2.8-5.1z"
+          fill="#FF5F00"
+        />
+      </svg>
+    );
+  }
+  if (id === "wechat") {
+    return <WeChatLogo className="h-[18px]" fill="#07C160" />;
+  }
+  if (id === "alipay") {
+    return (
+      <span className="flex h-[18px] w-[18px] items-center justify-center rounded-[5px] bg-[#1677FF] text-[11px] font-bold leading-none text-white">
+        支
+      </span>
+    );
+  }
+  return (
+    <svg viewBox="0 0 24 24" className="h-[18px]" aria-hidden="true">
+      <path
+        d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"
+        fill="#000000"
+      />
+    </svg>
+  );
+}
 
 function Card({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
@@ -124,7 +167,6 @@ export function PassengerPaymentV7({
   const isShare = mode === "share";
   const fare = totalFare ?? 68;
   const pay = amount ?? (isShare ? 20 : Math.max(0, fare + addonFee - couponOff));
-  const [method, setMethod] = useState(METHODS[0]!.id);
   const [left, setLeft] = useState(15 * 60 - 1);
 
   useEffect(() => {
@@ -143,7 +185,7 @@ export function PassengerPaymentV7({
       <div className="no-scrollbar flex-1 space-y-3 overflow-y-auto px-4 pt-4 pb-4">
         {modification ? (
           <div className="flex items-start gap-2 rounded-xl border border-amber-300/70 bg-amber-50 px-3 py-2.5 text-amber-800">
-            <AlertCircle className="mt-0.5 size-4 shrink-0" strokeWidth={2.2} />
+            <AlertCircle className="mt-0.5 size-4 shrink-0" strokeWidth={2} />
             <p className="text-[12px] leading-relaxed">
               修改订单需全额支付，之前的订单金额将会全额退款
             </p>
@@ -230,45 +272,32 @@ export function PassengerPaymentV7({
                 key={s}
                 className="flex items-center gap-1.5 rounded-full bg-brand-soft/60 px-3 py-1.5"
               >
-                <Check className="size-3.5 text-brand" strokeWidth={2.5} />
+                <Check className="size-3.5 text-brand" strokeWidth={2} />
                 <span className="text-[12px] font-medium text-ink">{s}</span>
               </div>
             ))}
           </div>
         </Card>
 
-        {/* 可用支付方式 */}
-        <Card>
+        {/* 可用支付方式（平铺于背景，不套卡片） */}
+        <div>
           <SectionTitle>可用支付方式</SectionTitle>
-          <div className="grid grid-cols-4 gap-2">
-            {METHODS.map((m) => {
-              const active = method === m.id;
-              return (
-                <button
-                  key={m.id}
-                  type="button"
-                  onClick={() => setMethod(m.id)}
-                  className={cn(
-                    "flex h-[52px] flex-col items-center justify-center gap-1 rounded-xl transition-colors",
-                    active ? "bg-brand-soft ring-1 ring-brand/40" : "bg-secondary",
-                  )}
-                >
-                  <span
-                    className={cn("h-[18px] w-7 rounded", active ? "bg-brand/30" : "bg-border")}
-                  />
-                  <span
-                    className={cn(
-                      "text-[11px]",
-                      active ? "font-semibold text-brand" : "text-ink-soft",
-                    )}
-                  >
-                    {m.label}
-                  </span>
-                </button>
-              );
-            })}
+          <div className="grid grid-cols-5 gap-1.5">
+            {METHODS.map((m) => (
+              <div
+                key={m.id}
+                className="flex h-[56px] flex-col items-center justify-center gap-1.5 rounded-xl bg-card ring-1 ring-ink/[0.04]"
+              >
+                <span className="flex h-[18px] items-center justify-center">
+                  <PayMark id={m.id} />
+                </span>
+                <span className="max-w-full truncate px-0.5 text-[9px] leading-none text-ink-soft">
+                  {m.label}
+                </span>
+              </div>
+            ))}
           </div>
-        </Card>
+        </div>
       </div>
 
       {/* 底部支付栏 */}
@@ -286,7 +315,6 @@ export function PassengerPaymentV7({
             className="flex h-12 items-center gap-2 rounded-2xl bg-brand-gradient px-6 text-[15px] font-semibold text-brand-foreground shadow-float active:scale-[0.99]"
           >
             确认支付 £{pay.toFixed(2)}
-            <ChevronRight className="size-4" />
           </button>
         </div>
         <p className="mt-2 text-center text-[10px] text-muted-foreground">

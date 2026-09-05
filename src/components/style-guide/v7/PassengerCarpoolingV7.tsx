@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { MessageCircleMore } from "lucide-react";
 import { NavBar } from "@/components/prototype/kit/NavBar";
-import { YomiIcon } from "@/components/prototype/kit/YomiIcon";
+import { WeChatLogo } from "@/components/prototype/kit/YomiIcon";
 import {
   Card,
   DarkBanner,
@@ -50,7 +49,7 @@ function WeChatShare({ onClick }: { onClick?: (() => void) | undefined }) {
       onClick={onClick}
       className="mt-3 flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-[#07C160] text-[15px] font-semibold text-white active:opacity-90"
     >
-      <YomiIcon icon={MessageCircleMore} size="xl" tone="inverse" />
+      <WeChatLogo className="size-5" fill="#FFFFFF" />
       分享到微信找拼友
     </button>
   );

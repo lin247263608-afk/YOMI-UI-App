@@ -13,7 +13,7 @@ export function LoginFooter({
   onThirdParty?: ((provider: "wechat" | "apple") => void) | undefined;
 }) {
   const providers = [
-    { id: "wechat" as const, label: "微信授权", helper: "WeChat" },
+    { id: "wechat" as const, label: "微信登录", helper: "WeChat" },
     { id: "apple" as const, label: "Apple 登录", helper: "Apple ID" },
   ];
 

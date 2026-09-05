@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { ChevronRight, MessagesSquare, Sparkles, ShieldCheck, Users, X } from "lucide-react";
+import { ChevronRight, MessagesSquare, Sparkles, ShieldCheck, Users, X } from "@/components/prototype/kit/brand-icons";
 import { PersonaAvatarV7 } from "@/components/style-guide/v7/PersonaAvatarV7";
 import { cn } from "@/lib/utils";
 
@@ -56,7 +56,7 @@ export function DarkBanner({ title, lines }: { title: string; lines: string[] })
       <span className="pointer-events-none absolute -right-8 -top-10 size-28 rounded-full bg-brand/25 blur-2xl" />
       <div className="relative">
         <div className="flex items-center gap-2">
-          <ShieldCheck className="size-4 text-brand" strokeWidth={2.2} />
+          <ShieldCheck className="size-4 text-brand" strokeWidth={2} />
           <p className="text-[15px] font-semibold text-brand-foreground">{title}</p>
         </div>
         <div className="mt-2 space-y-1.5">
@@ -279,7 +279,7 @@ export function GroupChatEntry({
       className="flex w-full items-center gap-3 rounded-[18px] bg-card px-4 py-3.5 text-left shadow-card ring-1 ring-ink/[0.04] active:scale-[0.995]"
     >
       <span className="flex size-9 shrink-0 items-center justify-center rounded-2xl bg-brand-soft text-brand">
-        <MessagesSquare className="size-4.5" strokeWidth={2.2} />
+        <MessagesSquare className="size-4.5" strokeWidth={2} />
       </span>
       <div className="min-w-0 flex-1">
         <p className="truncate text-[14px] font-semibold text-ink">进入拼车群聊</p>
@@ -303,7 +303,7 @@ export function GroupChatSheet({ onClose }: { onClose?: (() => void) | undefined
   return (
     <div className="flex min-h-0 flex-1 flex-col bg-background">
       <div className="flex shrink-0 items-center gap-3 border-b border-ink/[0.06] bg-card px-4 py-3">
-        <MessagesSquare className="size-4 text-brand" strokeWidth={2.2} />
+        <MessagesSquare className="size-4 text-brand" strokeWidth={2} />
         <p className="min-w-0 flex-1 truncate text-[15px] font-semibold text-ink">
           拼车群聊 <span className="text-[12px] font-normal text-ink-soft">(3人 · 含司导)</span>
         </p>
@@ -377,7 +377,7 @@ export function MembersCard({
     <Card>
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2">
-          <Users className="size-4 text-brand" strokeWidth={2.2} />
+          <Users className="size-4 text-brand" strokeWidth={2} />
           <p className="text-[14px] font-semibold text-ink">
             拼车成员 <span className="text-[12px] font-normal text-ink-soft">({summary})</span>
           </p>

@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from "react";
-import { Clock3, Users, Car, ClipboardList } from "lucide-react";
+import { Clock3, Users, ClipboardList } from "@/components/prototype/kit/brand-icons";
 import { RouteLine, TripTag } from "./trip/TripKit";
 import { OrderListHeaderV7 } from "./OrderListHeaderV7";
 import { cn } from "@/lib/utils";
@@ -172,8 +172,7 @@ function OrderCard({ order, onOpen }: { order: OrderItem; onOpen?: (() => void) 
                     评分 {order.driver.rating}
                   </span>
                 </p>
-                <p className="mt-0.5 flex items-center gap-1 truncate text-[12px] text-ink-soft/85">
-                  <Car className="size-3.5 shrink-0" strokeWidth={2} />
+                <p className="mt-0.5 truncate text-[12px] text-ink-soft/85">
                   {order.driver.car} · <span className="font-mono">{order.driver.plate}</span>
                 </p>
               </div>
@@ -203,7 +202,7 @@ export function PassengerOrderListV7({
         {list.length === 0 ? (
           <div className="mt-16 flex flex-col items-center gap-3 text-center">
             <span className="shadow-card flex size-16 items-center justify-center rounded-full bg-card text-ink-soft/50 ring-1 ring-ink/[0.05]">
-              <ClipboardList className="size-7" strokeWidth={1.8} />
+              <ClipboardList className="size-7" strokeWidth={2} />
             </span>
             <p className="text-[14px] font-semibold text-ink">暂无该状态的订单</p>
             <p className="text-[12.5px] text-ink-soft/80">去首页看看接送机与包车服务</p>

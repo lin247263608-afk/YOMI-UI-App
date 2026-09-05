@@ -1,4 +1,4 @@
-import { Search } from "lucide-react";
+import { Search } from "@/components/prototype/kit/brand-icons";
 import chatAvatarSprite from "@/assets/chat-avatar-sprite.jpg";
 import userAvatar from "@/assets/user-avatar.png";
 import yomiLogo from "@/assets/yomi-logo.svg";
@@ -71,7 +71,7 @@ export function MiniProgramWechatPickerV7({
             type="button"
             className="flex h-9 w-full items-center justify-center gap-1.5 rounded-md bg-[#f5f5f5] text-[14px] text-[#a7a7a7]"
           >
-            <Search className="size-3.5" strokeWidth={2.5} />
+            <Search className="size-3.5" strokeWidth={2} />
             搜索
           </button>
         </div>

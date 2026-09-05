@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff } from "@/components/prototype/kit/brand-icons";
 import { BrandIntro } from "@/components/prototype/kit/BrandIntro";
 import { InputShell, TextField } from "@/components/prototype/kit/InputShell";
 import { LoginFooter } from "@/components/prototype/kit/LoginFooter";

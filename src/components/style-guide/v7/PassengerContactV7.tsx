@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowLeft, AlertCircle } from "lucide-react";
+import { ArrowLeft, AlertCircle } from "@/components/prototype/kit/brand-icons";
 import { cn } from "@/lib/utils";
 
 export type ContactInfo = {

@@ -8,10 +8,9 @@ import {
   FileCheck2,
   Luggage,
   ShieldCheck,
-  Star,
   UsersRound,
-  type LucideIcon,
-} from "lucide-react";
+  type AnyIcon,
+} from "@/components/prototype/kit/brand-icons";
 import certFront from "@/assets/driver-cert-front.png";
 import certFrontSeat from "@/assets/driver-cert-front-seat.png";
 import certRearSeat from "@/assets/driver-cert-rear-seat.png";
@@ -79,7 +78,7 @@ export function DriverProfileV7({
           <div className="relative mx-auto mt-3 w-fit">
             <AppUserAvatar size="lg" className="ring-4 ring-brand-soft/65 shadow-card" />
             <span className="absolute -bottom-1 -right-1 flex size-7 items-center justify-center rounded-full border-[3px] border-card bg-brand text-white">
-              <Camera className="size-3.5" strokeWidth={2.2} />
+              <Camera className="size-3.5" strokeWidth={2} />
             </span>
           </div>
         </section>
@@ -171,6 +170,18 @@ const ratingRows = [
   ["1星", 1],
 ] as const;
 
+/** 常规纯色评分星（经典五角星，黄色填充） */
+function SolidStar({ opacity = 1 }: { opacity?: number | undefined }) {
+  return (
+    <svg viewBox="0 0 24 24" className="size-[18px]" style={{ opacity }} aria-hidden="true">
+      <path
+        d="M12 2.4l2.92 5.92 6.53.95-4.72 4.6 1.11 6.5L12 17.3l-5.84 3.07 1.11-6.5-4.72-4.6 6.53-.95L12 2.4z"
+        fill="#FFB400"
+      />
+    </svg>
+  );
+}
+
 export function DriverRatingV7({ onBack }: BackProps) {
   return (
     <div className="flex h-full min-h-0 flex-col bg-background">
@@ -181,14 +192,9 @@ export function DriverRatingV7({ onBack }: BackProps) {
           <p className="mt-2 font-mono text-[48px] font-bold leading-none text-ink">
             4.8 <span className="text-[17px] font-normal text-ink-soft/45">/5.0</span>
           </p>
-          <div className="mt-3 flex justify-center gap-1">
+          <div className="mt-3 flex justify-center gap-1" role="img" aria-label="评分 4.8，满分 5.0">
             {[0, 1, 2, 3, 4].map((index) => (
-              <Star
-                key={index}
-                className="size-[18px] text-brand"
-                fill="currentColor"
-                opacity={index === 4 ? 0.35 : 1}
-              />
+              <SolidStar key={index} opacity={index === 4 ? 0.3 : 1} />
             ))}
           </div>
           <p className="mt-2 text-[11px] text-ink-soft/45">总评价数: 2,450次</p>
@@ -433,7 +439,7 @@ function VehicleInfoCard({
 }: {
   title: string;
   action?: string;
-  icon?: LucideIcon;
+  icon?: AnyIcon;
   children: ReactNode;
 }) {
   return (
@@ -552,13 +558,13 @@ export function DriverVehicleV7({
             </div>
           </div>
           <div className="mt-3 grid grid-cols-3 divide-x divide-ink/[0.07] rounded-xl border border-ink/[0.05] bg-background py-2.5">
-            {[
+            {([
               [CarFront, "车型", "5座经济型轿车"],
               [UsersRound, "座位数", "4位"],
               [Luggage, "行李量", "2件"],
-            ].map(([MetricIcon, label, value]) => (
+            ] as [AnyIcon, string, string][]).map(([MetricIcon, label, value]) => (
               <div key={label as string} className="min-w-0 px-2 text-center">
-                <MetricIcon className="mx-auto size-3.5 text-brand" strokeWidth={2.2} />
+                <MetricIcon className="mx-auto size-3.5 text-brand" strokeWidth={2} />
                 <p className="mt-1 text-[9.5px] text-ink-soft/55">{label as string}</p>
                 <p className="mt-0.5 truncate text-[10.5px] font-semibold text-ink">
                   {value as string}

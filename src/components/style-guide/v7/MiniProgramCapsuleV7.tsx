@@ -1,4 +1,4 @@
-import { MoreHorizontal } from "lucide-react";
+import { MoreHorizontal } from "@/components/prototype/kit/brand-icons";
 
 /** 微信小程序右上角系统胶囊：更多菜单 + 返回微信 */
 export function MiniProgramCapsuleV7() {
@@ -9,7 +9,7 @@ export function MiniProgramCapsuleV7() {
         aria-label="更多"
         className="flex h-full flex-1 items-center justify-center rounded-l-full active:bg-ink/[0.05]"
       >
-        <MoreHorizontal className="size-[18px]" strokeWidth={2.5} />
+        <MoreHorizontal className="size-[18px]" strokeWidth={2} />
       </button>
       <span aria-hidden="true" className="h-4 w-px bg-ink/[0.12]" />
       <button

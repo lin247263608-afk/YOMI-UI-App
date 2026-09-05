@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Check, ChevronLeft, MoreHorizontal } from "lucide-react";
+import { Check, ChevronLeft, MoreHorizontal } from "@/components/prototype/kit/brand-icons";
 import { PrimaryButton } from "@/components/prototype/kit/PrimaryButton";
 import { YomiIconButton } from "@/components/prototype/kit/YomiIcon";
 import { Card, RouteLine, TripTag } from "./trip/TripKit";
@@ -83,7 +83,7 @@ export function PassengerCancelOrderV7({
                         : "border-ink/20 bg-card",
                     )}
                   >
-                    {active ? <Check className="size-3" strokeWidth={3} /> : null}
+                    {active ? <Check className="size-3" strokeWidth={2} /> : null}
                   </span>
                   <span className="text-[13px] text-ink">{reason}</span>
                 </button>

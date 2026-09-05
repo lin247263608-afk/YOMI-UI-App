@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { Home, FileText, MessageSquare, User } from "lucide-react";
+import { Home, FileText, MessageSquare, User } from "@/components/prototype/kit/brand-icons";
 import { DeviceFrame } from "@/components/prototype/DeviceFrame";
 import { PlaceholderScreen } from "@/components/prototype/PlaceholderScreen";
 import { TabBarHaze } from "@/components/style-guide/v7/TabBarHaze";

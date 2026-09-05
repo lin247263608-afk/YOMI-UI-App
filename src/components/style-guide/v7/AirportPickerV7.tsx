@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { ArrowLeft, Search, Check } from "lucide-react";
+import { ArrowLeft, Search, Check } from "@/components/prototype/kit/brand-icons";
 import { cn } from "@/lib/utils";
 
 type Airport = { name: string; city: string; code: string };
@@ -84,7 +84,7 @@ export function AirportPickerV7({
                   <span className="flex-1">
                     <span className="flex items-center gap-1 text-[13px] font-semibold text-ink">
                       {a.name}
-                      {active ? <Check className="size-3.5 text-brand" strokeWidth={3} /> : null}
+                      {active ? <Check className="size-3.5 text-brand" strokeWidth={2} /> : null}
                     </span>
                     <span className="mt-1 block text-[11px] text-muted-foreground">{a.city}</span>
                   </span>

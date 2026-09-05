@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { X, Check, ArrowLeft, User, Briefcase } from "lucide-react";
+import { X, Check, ArrowLeft, User, Briefcase } from "@/components/prototype/kit/brand-icons";
 import { cn } from "@/lib/utils";
 import vehicleEconomy from "@/assets/vehicle-economy.png";
 import vehicleComfort from "@/assets/vehicle-comfort.png";
@@ -309,7 +309,7 @@ export function CouponSheet({
                 <div className="flex-1 text-right">
                   <p className="flex items-center justify-end gap-1 text-[13px] leading-[18px] font-semibold text-ink">
                     {c.title}
-                    {active ? <Check className="size-4 text-brand" strokeWidth={3} /> : null}
+                    {active ? <Check className="size-4 text-brand" strokeWidth={2} /> : null}
                   </p>
                   <span className="mt-1 inline-block rounded bg-secondary px-1.5 py-0.5 text-[10px] font-bold text-ink-soft">
                     {c.kind}

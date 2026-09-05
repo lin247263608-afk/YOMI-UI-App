@@ -3,6 +3,7 @@ import {
   ArrowRight,
   Camera,
   Car,
+  CarPrivate,
   CheckCircle2,
   ChevronRight,
   Clock3,
@@ -10,25 +11,26 @@ import {
   Globe2,
   Home,
   MapPin,
-  MessageCircleMore,
   PencilLine,
   Plane,
   Share2,
   ShieldCheck,
   Smartphone,
   User,
-} from "lucide-react";
+} from "@/components/prototype/kit/brand-icons";
 import bannerAirport from "@/assets/banner-airport.jpg";
 import routeHeathrow from "@/assets/route-heathrow.jpg";
 import routeLondon from "@/assets/route-london.jpg";
 import routeManchester from "@/assets/route-manchester.jpg";
 import chatAvatarSprite from "@/assets/chat-avatar-sprite.jpg";
 import yomiLogo from "@/assets/yomi-logo.svg";
+import yomiMark from "@/assets/yomi-mark.svg";
 import { BrandIntro } from "@/components/prototype/kit/BrandIntro";
 import { InputShell, TextField } from "@/components/prototype/kit/InputShell";
 import { NavBar } from "@/components/prototype/kit/NavBar";
 import { PrimaryButton } from "@/components/prototype/kit/PrimaryButton";
-import { SelectionCheck, YomiIcon } from "@/components/prototype/kit/YomiIcon";
+import { SelectionCheck, WeChatLogo, YomiIcon } from "@/components/prototype/kit/YomiIcon";
+import { YomiWordmark } from "@/components/prototype/kit/YomiWordmark";
 import { ChoiceSheetV7 } from "@/components/style-guide/v7/CertificationSheetsV7";
 import { AppUserAvatar } from "./AppUserAvatar";
 import { MiniProgramCapsuleV7 } from "./MiniProgramCapsuleV7";
@@ -51,7 +53,9 @@ function MiniProgramBar({ home = false }: { home?: boolean }) {
       ) : (
         <span className="w-[76px]" />
       )}
-      <h1 className="flex-1 text-center text-[15px] font-bold text-ink">有米出行 YOMI</h1>
+      <h1 className="flex flex-1 items-center justify-center">
+        <YomiWordmark className="h-8" />
+      </h1>
       <span className="flex w-[76px] justify-end">
         <MiniProgramCapsuleV7 />
       </span>
@@ -160,7 +164,7 @@ export function MiniProgramLoginV7({
               onClick={() => setShowWechatAuthorization(true)}
               className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#07C160] text-[15px] font-semibold text-white shadow-[0_13px_30px_-14px_rgba(7,193,96,0.62)] transition-all active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-45"
             >
-              <MessageCircleMore className="size-5" strokeWidth={2.35} />
+              <WeChatLogo className="size-5" fill="#FFFFFF" />
               微信授权一键登录
             </button>
           ) : (
@@ -177,7 +181,7 @@ export function MiniProgramLoginV7({
             )}
           >
             {mode === "wechat" ? null : (
-              <MessageCircleMore className="size-[18px]" strokeWidth={2.3} />
+              <WeChatLogo className="size-[18px]" fill="#07C160" />
             )}
             {mode === "wechat" ? "手机号验证登录" : "微信授权一键登录"}
           </button>
@@ -193,7 +197,7 @@ export function MiniProgramLoginV7({
               <span className="flex size-6 items-center justify-center overflow-hidden rounded-[5px] bg-[#f3f3f3]">
                 <img src={yomiLogo} alt="有米出行" className="size-5 object-contain" />
               </span>
-              <span className="text-[14px] font-semibold">有米出行 YOMI</span>
+              <YomiWordmark className="h-7" />
             </div>
             <h2 className="mt-5 text-[18px] font-bold">申请获取并验证你的手机号</h2>
             <p className="mt-1 text-[12px] leading-5 text-[#777]">
@@ -561,7 +565,7 @@ export function MiniProgramEditProfileV7({
           <span className="relative flex size-20 items-center justify-center rounded-full border border-brand/10 bg-card shadow-card">
             <AppUserAvatar size="lg" className="size-20 ring-0" />
             <span className="absolute bottom-0 right-0 flex size-7 items-center justify-center rounded-full border-[3px] border-card bg-brand text-white">
-              <Camera className="size-3.5" strokeWidth={2.2} />
+              <Camera className="size-3.5" strokeWidth={2} />
             </span>
           </span>
           <span className="text-[12px] font-medium text-ink-soft">点击更换头像</span>
@@ -633,10 +637,12 @@ export function MiniProgramChoiceV7({
             aria-label="返回首页"
             className="flex size-9 items-center justify-start text-ink"
           >
-            <Home className="size-[18px]" strokeWidth={2.2} />
+            <Home className="size-[18px]" strokeWidth={2} />
           </button>
         </span>
-        <h1 className="flex-1 text-center text-[15px] font-bold text-ink">有米出行 YOMI</h1>
+        <h1 className="flex flex-1 items-center justify-center">
+          <YomiWordmark className="h-8" />
+        </h1>
         <span className="flex w-[76px] justify-end">
           <MiniMenuAction />
         </span>
@@ -816,7 +822,7 @@ export function MiniProgramRouteV7({
             onClick={onShare}
             className="p-2 text-ink-soft"
           >
-            <Share2 className="size-[18px]" strokeWidth={2.2} />
+            <Share2 className="size-[18px]" strokeWidth={2} />
           </button>
         }
       />
@@ -834,7 +840,7 @@ export function MiniProgramRouteV7({
             </span>
           </div>
           <p className="flex items-center justify-center gap-1.5 py-2.5 text-[11.5px] text-ink-soft/65">
-            <MapPin className="size-3.5 text-brand" strokeWidth={2.2} />
+            <MapPin className="size-3.5 text-brand" strokeWidth={2} />
             起终点范围内任意区域下车
           </p>
         </div>
@@ -941,7 +947,7 @@ export function MiniProgramDownloadV7({ onBack }: { onBack?: (() => void) | unde
     <div
       className="relative flex h-full min-h-0 flex-col bg-white"
       style={{
-        background: "linear-gradient(180deg, #FDF5ED 0%, #FDF5ED 18%, #FFFDFC 66%, #FFFFFF 88%)",
+        background: "linear-gradient(180deg, #FDF5ED 0%, #FDF5ED 30%, #FFFDFC 62%, #FFFFFF 100%)",
       }}
     >
       <div className="relative z-20 shrink-0">
@@ -952,118 +958,179 @@ export function MiniProgramDownloadV7({ onBack }: { onBack?: (() => void) | unde
           sideWidth={76}
         />
       </div>
+      {/* 平面几何装饰：几何圆环 + 实心圆点，取代旧雾面气泡 */}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 top-12 z-0 overflow-hidden">
-        <span className="absolute -right-20 -top-24 size-64 rounded-full bg-brand/[0.045]" />
-        <span className="absolute right-8 top-8 size-24 rounded-full bg-brand/[0.025]" />
-        <span className="absolute -left-16 top-40 size-36 rounded-full bg-brand/[0.03]" />
-        <span className="absolute -right-16 top-[310px] size-44 rounded-full bg-brand/[0.022]" />
-        <span className="absolute left-9 top-[430px] size-16 rounded-full bg-brand/[0.018]" />
-        <span className="absolute -bottom-24 -left-20 size-64 rounded-full bg-brand/[0.02]" />
-        <span className="absolute bottom-20 right-5 size-24 rounded-full bg-brand/[0.018]" />
+        <span className="absolute -right-24 -top-28 size-72 rounded-full border-[10px] border-brand/[0.09]" />
+        <span className="absolute -right-10 top-16 size-3 rounded-full bg-brand/25" />
+        <span className="absolute left-6 top-[404px] size-2.5 rounded-full bg-ink/15" />
+        <span className="absolute -left-14 top-[500px] size-40 rounded-full bg-brand/[0.05]" />
+        <span className="absolute -bottom-20 -right-16 size-56 rounded-full bg-ink/[0.04]" />
       </div>
       <div className="no-scrollbar relative z-10 min-h-0 flex-1 overflow-y-auto">
-        <section className="relative min-h-[250px] px-5 pb-5 pt-5">
-          <div className="relative flex items-center gap-2.5">
-            <span className="flex size-11 items-center justify-center rounded-xl bg-white/75">
-              <img src={yomiLogo} alt="有米出行" className="size-9 object-contain" />
+        {/* 海报头版：超大标题 + 笔刷下划线 */}
+        <section className="px-6 pb-6 pt-5">
+          <div className="flex items-center gap-2.5">
+            <span className="flex size-11 items-center justify-center rounded-2xl bg-card shadow-card ring-1 ring-ink/[0.06]">
+              <img src={yomiMark} alt="有米出行" className="size-7 object-contain" />
             </span>
-            <span>
-              <strong className="block text-[15px] text-ink">有米出行 YOMI</strong>
-              <small className="mt-0.5 block text-[10px] text-ink-soft/65">
-                英国本地接送机与包车拼车服务
+            <span className="flex flex-col">
+              <YomiWordmark className="h-7" />
+              <small className="mt-0.5 text-[9.5px] font-medium tracking-[0.08em] text-ink-soft/60">
+                英国 · 接送机 / 包车 / 拼车
               </small>
             </span>
           </div>
 
-          <div className="relative mt-6 max-w-[270px]">
-            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand">
-              Travel with confidence
-            </p>
-            <h2 className="mt-2 text-[26px] font-extrabold leading-[1.15] tracking-tight text-ink">
-              让英国出行
-              <br />
-              简单一点
-            </h2>
-            <p className="mt-2.5 text-[11.5px] leading-[18px] text-ink-soft/75">
-              完整订单管理、实时行程动态与专属客服支持，都在有米出行 App。
-            </p>
-          </div>
-
-          <div className="relative mt-5 flex items-center px-1 text-[9.5px] font-semibold text-ink-soft">
-            <span className="flex flex-col items-center gap-1">
-              <span className="size-2.5 rounded-full bg-brand" />
-              Airport
-            </span>
-            <span className="relative mx-2 mb-4 h-0.5 flex-1 rounded-full bg-gradient-to-r from-brand/15 via-brand/45 to-ink/15">
-              <Plane className="absolute -top-2.5 left-1/2 size-5 -translate-x-1/2 rotate-12 text-brand" />
-            </span>
-            <span className="flex flex-col items-center gap-1 text-right">
-              <span className="size-2.5 rounded-[2px] bg-ink" />
-              Destination
-            </span>
-          </div>
+          <p className="mt-7 text-[10px] font-bold uppercase tracking-[0.22em] text-brand">
+            Travel with confidence
+          </p>
+          <h2 className="relative mt-2 text-[38px] font-extrabold leading-[1.12] tracking-tight text-ink">
+            让英国出行
+            <br />
+            简单一点
+            <svg
+              className="absolute -bottom-2.5 left-[3px] h-2.5 w-[108px]"
+              viewBox="0 0 108 10"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M2 7.5C20 2.5 44 2 62 4.5c14 2 28 2 44 .5"
+                stroke="#FF7A01"
+                strokeWidth="4.5"
+                strokeLinecap="round"
+              />
+            </svg>
+          </h2>
+          <p className="mt-6 max-w-[260px] text-[12px] leading-[20px] text-ink-soft/80">
+            订单管理、行程动态与中文客服支持，
+            <br />
+            都在有米出行 App。
+          </p>
         </section>
 
-        <section className="grid grid-cols-3 px-3 py-5">
-          {[
-            { icon: Car, label: "接送机", helper: "灵活用车" },
-            { icon: ShieldCheck, label: "行程保障", helper: "安心出行" },
-            { icon: Smartphone, label: "实时动态", helper: "随时掌握" },
-          ].map(({ icon: Icon, label, helper }) => (
-            <div key={label} className="flex flex-col items-center px-1 text-center">
-              <Icon className="size-[19px] text-brand" strokeWidth={2} />
-              <strong className="mt-2 text-[11.5px] text-ink">{label}</strong>
-              <span className="mt-0.5 text-[9.5px] text-ink-soft/55">{helper}</span>
+        {/* 海报路线横条：墨蓝底 + 白色虚线航线 */}
+        <section className="px-5">
+          <div className="relative overflow-hidden rounded-[20px] bg-ink px-5 py-4">
+            <span className="absolute -right-6 -top-10 size-24 rounded-full bg-brand/30" />
+            <span className="absolute -bottom-12 left-10 size-16 rounded-full bg-white/[0.06]" />
+            <p className="relative text-[9px] font-bold uppercase tracking-[0.2em] text-brand-foreground/55">
+              Today&apos;s popular route
+            </p>
+            <div className="relative mt-3 flex items-center text-[10.5px] font-bold text-white">
+              <span className="flex items-center gap-1.5">
+                <span className="size-2 rounded-full bg-brand" />
+                LHR T5
+              </span>
+              <span className="relative mx-3 h-0.5 flex-1">
+                <span className="absolute inset-x-0 top-0 border-t-2 border-dashed border-white/35" />
+                <Plane className="absolute -top-[7px] left-1/2 size-4 -translate-x-1/2 rotate-45 text-brand" />
+              </span>
+              <span className="flex items-center gap-1.5">
+                <span className="size-2 rounded-[3px] bg-white/85" />
+                Kings Cross
+              </span>
             </div>
-          ))}
+          </div>
         </section>
 
-        <section className="relative px-5 py-5">
+        {/* 编辑排版式特性清单：01/02/03 编号 + 扁平图标块 */}
+        <section className="mt-7 px-6">
+          <div className="flex items-end justify-between">
+            <h3 className="text-[15px] font-extrabold text-ink">为什么选择有米</h3>
+            <span className="text-[9px] font-bold uppercase tracking-[0.18em] text-ink-soft/45">
+              Why YOMI
+            </span>
+          </div>
+          <ul className="mt-1">
+            {[
+              { no: "01", icon: CarPrivate, label: "接送机 · 包车", helper: "一口价无隐藏费用，行李无忧" },
+              { no: "02", icon: ShieldCheck, label: "行程保障", helper: "正规运营资质，全程行程保险" },
+              { no: "03", icon: Smartphone, label: "实时动态", helper: "司机位置与航班动态实时同步" },
+            ].map(({ no, icon: Icon, label, helper }, i) => (
+              <li
+                key={no}
+                className={cn(
+                  "flex items-center gap-4 py-3.5",
+                  i > 0 && "border-t border-ink/[0.08]",
+                )}
+              >
+                <span className="w-7 shrink-0 font-mono text-[15px] font-bold text-brand">{no}</span>
+                <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-brand-soft">
+                  <Icon className="size-5 text-ink" strokeWidth={2} />
+                </span>
+                <span className="min-w-0 flex-1">
+                  <strong className="block text-[12.5px] font-bold text-ink">{label}</strong>
+                  <span className="mt-0.5 block text-[10px] leading-4 text-ink-soft/60">
+                    {helper}
+                  </span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        {/* App 展示：扁平手机插画 + 平铺清单 */}
+        <section className="mt-2 px-6 pb-5">
           <div className="relative flex items-center gap-5">
-            <div className="relative flex h-[112px] w-[78px] shrink-0 flex-col rounded-[19px] bg-ink px-[3px] py-[3px]">
-              <div className="flex size-full flex-col rounded-[16px] bg-white px-2 pb-2 pt-2.5">
-                <span className="mx-auto h-1 w-6 rounded-full bg-ink/20" />
-                <span className="mt-3 h-5 rounded-md bg-brand-soft" />
-                <span className="mt-2 h-2 rounded-full bg-ink/10" />
-                <span className="mt-1.5 h-2 w-4/5 rounded-full bg-ink/10" />
-                <span className="mt-auto h-5 rounded-md bg-brand" />
+            <div className="relative h-[132px] w-[86px] shrink-0 rounded-[22px] bg-ink p-[4px] shadow-float">
+              <div className="flex size-full flex-col overflow-hidden rounded-[18px] bg-haze px-2.5 pb-2.5 pt-2.5">
+                <span className="mx-auto h-1 w-6 rounded-full bg-ink/25" />
+                <div className="mt-2.5 flex items-center gap-1">
+                  <span className="size-1.5 rounded-full bg-brand" />
+                  <span className="h-1.5 w-9 rounded-full bg-ink/20" />
+                </div>
+                <div className="relative mt-2 h-9 overflow-hidden rounded-lg bg-brand">
+                  <span className="absolute bottom-1.5 left-1.5 size-1.5 rounded-full bg-white/90" />
+                  <span className="absolute right-2 top-2.5 size-1.5 rounded-full bg-white/40" />
+                  <span className="absolute bottom-3 right-1.5 h-px w-7 border-t border-dashed border-white/70" />
+                </div>
+                <span className="mt-2 h-1.5 rounded-full bg-ink/[0.12]" />
+                <span className="mt-1 h-1.5 w-3/4 rounded-full bg-ink/[0.12]" />
+                <span className="mt-auto h-5 rounded-md bg-ink" />
               </div>
-              <span className="absolute -right-3 top-8 flex size-7 items-center justify-center rounded-full bg-ink text-white">
-                <CheckCircle2 className="size-4" strokeWidth={2.3} />
+              <span className="absolute -right-3 -top-2 flex size-7 items-center justify-center rounded-full bg-brand shadow-card">
+                <CheckCircle2 className="size-4" strokeWidth={2} tone="inverse" />
+              </span>
+              <span className="absolute -left-3 bottom-6 rounded-full bg-card px-2 py-0.5 text-[8px] font-bold text-ink shadow-card ring-1 ring-ink/[0.06]">
+                中文客服
               </span>
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-brand">
-                YOMI APP
-              </p>
-              <h3 className="mt-1.5 text-[17px] font-extrabold text-ink">把完整旅程装进口袋</h3>
-              <ul className="mt-3 space-y-2 text-[10.5px] text-ink-soft/75">
-                {["集中管理全部订单", "实时接收司机与行程消息", "需要帮助时快速联系平台"].map(
-                  (item) => (
-                    <li key={item} className="flex items-center gap-2">
-                      <span className="size-1.5 rounded-full bg-brand" />
-                      {item}
-                    </li>
-                  ),
-                )}
+              <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-brand">YOMI APP</p>
+              <h3 className="mt-1.5 text-[19px] font-extrabold leading-snug text-ink">
+                把完整旅程
+                <br />
+                装进口袋
+              </h3>
+              <ul className="mt-3 space-y-2">
+                {["集中管理全部订单", "实时接收行程消息", "快速联系中文客服"].map((item) => (
+                  <li key={item} className="flex items-center gap-2 text-[10.5px] text-ink-soft/80">
+                    <span className="size-1.5 shrink-0 rounded-[2px] bg-brand" />
+                    {item}
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
         </section>
       </div>
-      <div className="relative z-10 shrink-0 space-y-2.5 bg-transparent px-6 pb-5 pt-3">
+      <div className="relative z-10 shrink-0 space-y-2.5 border-t border-ink/[0.06] bg-card/85 px-6 pb-5 pt-3 backdrop-blur-sm">
         <button
           type="button"
           onClick={openInstalledApp}
-          className="h-12 w-full rounded-xl border border-ink/15 bg-card text-[14px] font-semibold text-ink shadow-card"
+          className="h-12 w-full rounded-2xl border-2 border-ink/15 bg-transparent text-[14px] font-semibold text-ink transition-colors active:bg-ink/[0.05]"
         >
           已安装有米出行App，去打开
         </button>
-        <PrimaryButton className="h-12 rounded-xl" onClick={downloadApp}>
+        <PrimaryButton className="h-12 rounded-2xl text-[15px]" onClick={downloadApp}>
           <span className="flex items-center justify-center gap-2">
             <Download className="size-[18px]" /> 下载APP
           </span>
         </PrimaryButton>
+        <p className="text-center text-[9.5px] text-ink-soft/55">
+          iOS / Android 均支持 · 下载即代表同意用户协议
+        </p>
       </div>
       {showMiniProgramTip ? (
         <div
@@ -1189,7 +1256,7 @@ export function MiniProgramShareV7({
             className="flex w-16 flex-col items-center gap-1.5 text-[11px] text-ink-soft"
           >
             <span className="flex size-11 items-center justify-center rounded-full bg-[#07C160]/10 text-[#07C160]">
-              <MessageCircleMore className="size-5" strokeWidth={2.2} />
+              <WeChatLogo className="size-5" fill="#07C160" />
             </span>
             微信好友
           </button>
@@ -1198,7 +1265,7 @@ export function MiniProgramShareV7({
             className="flex w-16 flex-col items-center gap-1.5 text-[11px] text-ink-soft"
           >
             <span className="flex size-11 items-center justify-center rounded-full bg-brand-soft text-brand">
-              <Clock3 className="size-5" strokeWidth={2.2} />
+              <Clock3 className="size-5" strokeWidth={2} />
             </span>
             朋友圈
           </button>

@@ -7,8 +7,8 @@ import {
   Send,
   Ticket,
   UsersRound,
-  type LucideIcon,
-} from "lucide-react";
+  type AnyIcon,
+} from "@/components/prototype/kit/brand-icons";
 import summerBanner from "@/assets/announcement-summer-airport.jpg";
 import birminghamBanner from "@/assets/announcement-birmingham-airport.jpg";
 import termsBanner from "@/assets/announcement-terms.jpg";
@@ -56,7 +56,7 @@ export type MessageNoticeItem = {
   body: string;
   time: string;
   unread: number | boolean;
-  icon: LucideIcon;
+  icon: AnyIcon;
 };
 
 export type TripChatItem = {
@@ -192,7 +192,7 @@ export function MessageRow({
   body: string;
   time: string;
   unread: number | boolean;
-  icon?: LucideIcon | undefined;
+  icon?: AnyIcon | undefined;
   visual?: ReactNode;
   onClick?: (() => void) | undefined;
 }) {

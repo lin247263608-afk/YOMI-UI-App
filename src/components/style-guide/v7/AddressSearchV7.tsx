@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { ArrowLeft, Search, Clock, X } from "lucide-react";
+import { ArrowLeft, Search, Clock, X } from "@/components/prototype/kit/brand-icons";
 
 type Spot = { name: string; addr: string; distance: string };
 

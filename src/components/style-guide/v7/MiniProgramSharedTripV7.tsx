@@ -1,4 +1,4 @@
-import { AlertTriangle, Check, Home, Share2 } from "lucide-react";
+import { AlertTriangle, Check, Home, Share2 } from "@/components/prototype/kit/brand-icons";
 import { DriverCard } from "./PassengerOrderDetailV7";
 import { MiniProgramCapsuleV7 } from "./MiniProgramCapsuleV7";
 import {
@@ -67,7 +67,7 @@ function SharedMiniBar({ onHome }: { onHome?: (() => void) | undefined }) {
           aria-label="返回首页"
           className="flex size-9 items-center justify-center rounded-full text-ink active:bg-ink/5"
         >
-          <Home className="size-5" strokeWidth={2.2} />
+          <Home className="size-5" strokeWidth={2} />
         </button>
       </span>
       <h1 className="flex-1 text-center text-[17px] font-semibold text-ink">行程详情</h1>
@@ -82,7 +82,7 @@ function SharedByBanner() {
   return (
     <div className="flex items-center gap-2 rounded-[14px] bg-card px-3 py-2.5 text-[11.5px] text-ink-soft shadow-card ring-1 ring-ink/[0.04]">
       <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-brand-soft text-brand">
-        <Share2 className="size-3.5" strokeWidth={2.2} />
+        <Share2 className="size-3.5" strokeWidth={2} />
       </span>
       <p>
         您正在查看 <span className="font-semibold text-ink">张三</span> 分享的实时行程
@@ -131,7 +131,7 @@ function SharedTransitContent() {
           type="button"
           className="flex h-12 w-full items-center justify-center gap-2 rounded-[16px] border border-destructive/25 bg-destructive/[0.06] text-[15px] font-semibold text-destructive active:scale-[0.99]"
         >
-          <AlertTriangle className="size-4" strokeWidth={2.3} />
+          <AlertTriangle className="size-4" strokeWidth={2} />
           一键报警
         </button>
       </div>

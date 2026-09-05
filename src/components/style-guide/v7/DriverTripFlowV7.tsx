@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import type { KeyboardEvent, PointerEvent } from "react";
-import { AlertTriangle, Check, ChevronRight, Clock3, Navigation, Phone, X } from "lucide-react";
+import { AlertTriangle, Check, ChevronRight, Clock3, Navigation, Phone, X } from "@/components/prototype/kit/brand-icons";
 import { NavBar } from "@/components/prototype/kit/NavBar";
 import { PrimaryButton } from "@/components/prototype/kit/PrimaryButton";
 import { YomiIcon } from "@/components/prototype/kit/YomiIcon";
@@ -197,7 +197,7 @@ function SlideConfirm({ label, onConfirm }: { label: string; onConfirm: () => vo
         )}
         style={{ transform: `translate3d(${offset}px, 0, 0) scale(${dragging ? 1.025 : 1})` }}
       >
-        <ChevronRight className="size-5" strokeWidth={2.6} />
+        <ChevronRight className="size-5" strokeWidth={2} tone="inverse" />
       </button>
     </div>
   );
@@ -410,7 +410,7 @@ export function DriverTripFlowV7({
     <div className="flex h-full min-h-0 flex-col bg-background">
       <NavBar title="订单详情" onBack={onBack} />
       <div className="flex h-11 shrink-0 items-center gap-2 bg-ink-gradient px-4 text-[14px] font-bold text-white">
-        {stage === "finished" ? <Check className="size-4" strokeWidth={2.5} /> : null}
+        {stage === "finished" ? <Check className="size-4" strokeWidth={2} tone="inverse" /> : null}
         {statusTitles[stage]}
       </div>
       <OrderSummary finished={stage === "finished"} />

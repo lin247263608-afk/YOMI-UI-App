@@ -1,16 +1,17 @@
-import { Home, FileText, MessageSquare, User, PlaneLanding, Plane, Car, Route } from "lucide-react";
+import { Home, FileText, MessageSquare, User } from "@/components/prototype/kit/brand-icons";
 import { TabBarHaze } from "./TabBarHaze";
 import { RouteLine, TripTag } from "./trip/TripKit";
-import { IconChip } from "@/components/prototype/kit/YomiIcon";
+import { YomiDuotone, type DuoName } from "@/components/prototype/kit/DuotoneIcon";
+import { YomiWordmark } from "@/components/prototype/kit/YomiWordmark";
 import bannerAirport from "@/assets/banner-airport.jpg";
 import { hotRoutes } from "@/components/prototype/data/routes";
 import { AppUserAvatar } from "./AppUserAvatar";
 
-const entries = [
-  { icon: PlaneLanding, title: "接机拼车", sub: "高效便捷" },
-  { icon: Plane, title: "送机拼车", sub: "准时直达" },
-  { icon: Car, title: "独享接送", sub: "尊享专车" },
-  { icon: Route, title: "旅行包车", sub: "深度自由" },
+const entries: { duo: DuoName; title: string; sub: string }[] = [
+  { duo: "plane-in", title: "接机拼车", sub: "高效便捷" },
+  { duo: "plane-out", title: "送机拼车", sub: "准时直达" },
+  { duo: "car-private", title: "独享接送", sub: "尊享专车" },
+  { duo: "route", title: "旅行包车", sub: "深度自由" },
 ];
 
 const routes = hotRoutes;
@@ -30,12 +31,12 @@ export function PassengerHomeV7({
 } = {}) {
   return (
     <div className="flex h-full flex-col bg-background">
-      <header className="flex shrink-0 items-center gap-3 bg-haze-status px-4 py-3">
+      <header className="relative flex shrink-0 items-center gap-3 bg-haze-status px-4 py-3">
         <AppUserAvatar size="sm" />
-        <h1 className="flex-1 text-center text-[17px] font-bold tracking-wide text-ink">
-          有米出行 <span className="text-brand">YOMI</span>
+        <h1 className="pointer-events-none absolute inset-x-0 flex items-center justify-center">
+          <YomiWordmark className="h-[38px]" />
         </h1>
-        <span className="rounded-xl border border-ink/12 bg-card/60 px-2.5 py-1 text-[12px] font-semibold text-ink">
+        <span className="ml-auto rounded-xl border border-ink/12 bg-card/60 px-2.5 py-1 text-[12px] font-semibold text-ink">
           中 / EN
         </span>
       </header>
@@ -81,7 +82,7 @@ export function PassengerHomeV7({
 
         {/* 四大入口 */}
         <section className="-mt-2 grid grid-cols-2 gap-2.5 px-4">
-          {entries.map(({ icon: Icon, title, sub }, i) => (
+          {entries.map(({ duo, title, sub }, i) => (
             <button
               type="button"
               key={title}
@@ -89,7 +90,9 @@ export function PassengerHomeV7({
               className="group relative flex items-center gap-3 overflow-hidden rounded-2xl bg-card p-3 text-left shadow-card ring-1 ring-border/60 transition-transform active:scale-[0.98]"
             >
               <span className="absolute inset-y-0 left-0 w-[3px] bg-brand/70" />
-              <IconChip icon={Icon} size="lg" tone={i % 2 === 0 ? "brand" : "ink"} />
+              <span className="flex size-11 shrink-0 items-center justify-center rounded-[14px] bg-brand-soft">
+                <YomiDuotone name={duo} size={26} tone="brand" />
+              </span>
               <div className="min-w-0">
                 <p className="truncate text-[14px] font-bold text-ink">{title}</p>
                 <p className="truncate text-[11px] text-muted-foreground">{sub}</p>
@@ -172,10 +175,10 @@ export function PassengerHomeV7({
         active={activeTab}
         onSelect={onTab}
         items={[
-          { icon: Home, label: "首页" },
-          { icon: FileText, label: "我的订单" },
-          { icon: MessageSquare, label: "消息" },
-          { icon: User, label: "我的" },
+          { icon: Home, duo: "home", label: "首页" },
+          { icon: FileText, duo: "orders", label: "我的订单" },
+          { icon: MessageSquare, duo: "chat", label: "消息" },
+          { icon: User, duo: "user", label: "我的" },
         ]}
       />
     </div>

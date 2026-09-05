@@ -10,8 +10,9 @@ import {
   Settings,
   Star,
   WalletCards,
-} from "lucide-react";
+} from "@/components/prototype/kit/brand-icons";
 import { IconChip, YomiIcon } from "@/components/prototype/kit/YomiIcon";
+import { YomiWordmark } from "@/components/prototype/kit/YomiWordmark";
 import { cn } from "@/lib/utils";
 import { driverTabs } from "./driverNav";
 import { TabBarHaze } from "./TabBarHaze";
@@ -111,7 +112,7 @@ export function DriverOrdersV7({
   return (
     <div className="flex h-full min-h-0 flex-col bg-background">
       <OrderListHeaderV7
-        title="有米出行YOMI"
+        title={<YomiWordmark className="h-8" />}
         items={driverOrderStatuses.map((item) => ({ id: item, label: item }))}
         value={status}
         onChange={setStatus}

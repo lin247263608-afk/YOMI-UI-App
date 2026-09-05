@@ -1,5 +1,5 @@
-import { AlertTriangle } from "lucide-react";
-import { ChevronLeft } from "lucide-react";
+import { AlertTriangle } from "@/components/prototype/kit/brand-icons";
+import { ChevronLeft } from "@/components/prototype/kit/brand-icons";
 import {
   Card,
   DarkButton,
@@ -32,7 +32,7 @@ function TripNav({
         aria-label="返回"
         className="flex size-9 items-center justify-center rounded-full text-ink active:bg-ink/5"
       >
-        <ChevronLeft className="size-5" strokeWidth={2.4} />
+        <ChevronLeft className="size-5" strokeWidth={2} />
       </button>
       <p className="flex-1 text-center text-[17px] font-semibold text-ink">行程中</p>
       <button
@@ -107,7 +107,7 @@ export function PassengerTripV7({
               onClick={onSos}
               className="flex h-12 w-full items-center justify-center gap-2 rounded-[16px] border border-destructive/25 bg-destructive/[0.06] text-[15px] font-semibold text-destructive active:scale-[0.99]"
             >
-              <AlertTriangle className="size-4" strokeWidth={2.3} />
+              <AlertTriangle className="size-4" strokeWidth={2} />
               一键报警
             </button>
           </div>

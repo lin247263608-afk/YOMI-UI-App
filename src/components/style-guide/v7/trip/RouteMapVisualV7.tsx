@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Navigation2 } from "lucide-react";
+import { Navigation2 } from "@/components/prototype/kit/brand-icons";
 
 export function RouteMapVisualV7({ children }: { children?: ReactNode }) {
   return (
@@ -65,7 +65,7 @@ export function RouteMapVisualV7({ children }: { children?: ReactNode }) {
       </svg>
 
       <span className="absolute left-[49%] top-[47%] flex size-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-4 border-white bg-ink text-white shadow-card">
-        <Navigation2 className="size-4.5 rotate-[18deg]" fill="currentColor" strokeWidth={1.8} />
+        <Navigation2 className="size-4.5 rotate-[18deg]" strokeWidth={2} tone="inverse" />
       </span>
       <span className="absolute bottom-3 right-3 rounded-lg bg-card/95 px-2 py-1 font-mono text-[9px] text-ink-soft shadow-sm ring-1 ring-ink/[0.05]">
         LIVE ROUTE

@@ -1,4 +1,4 @@
-import { Check } from "lucide-react";
+import { Check } from "@/components/prototype/kit/brand-icons";
 import { NavBar } from "@/components/prototype/kit/NavBar";
 import { PrimaryButton } from "@/components/prototype/kit/PrimaryButton";
 import { PersonaAvatarV7 } from "./PersonaAvatarV7";
@@ -21,7 +21,7 @@ export function PassengerCompletedOrderV7({
           <div className="flex items-center justify-between gap-3 border-b border-ink/[0.06] pb-3">
             <p className="font-mono text-[11px] text-ink-soft/70">订单号: YM202403150001</p>
             <span className="inline-flex items-center gap-1 rounded-md bg-go-soft px-2 py-1 text-[10.5px] font-bold text-go">
-              <Check className="size-3" strokeWidth={2.8} />
+              <Check className="size-3" strokeWidth={2} />
               已完成
             </span>
           </div>

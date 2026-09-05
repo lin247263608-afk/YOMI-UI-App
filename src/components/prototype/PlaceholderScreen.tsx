@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Hammer } from "lucide-react";
+import { Hammer } from "@/components/prototype/kit/brand-icons";
 
 /** 尚未设计的页面占位：后续按 Figma 稿逐个替换 */
 export function PlaceholderScreen({
