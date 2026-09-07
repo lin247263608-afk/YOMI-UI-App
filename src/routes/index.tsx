@@ -109,16 +109,16 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "有米出行 YOMI · 可交互原型" },
+      { title: "有米出行 YOMI · 真机UI演示" },
       {
         name: "description",
         content:
-          "英国接送机与包车平台「有米出行」的 375 宽可交互原型：乘客端首页与下单页、司机端首页与订单池，统一 Soft Business 轻商务视觉语言。",
+          "英国接送机与包车平台「有米出行」的 375 宽真机UI演示：乘客端首页与下单页、司机端首页与订单池，统一 Soft Business 轻商务视觉语言。",
       },
-      { property: "og:title", content: "有米出行 YOMI · 可交互原型" },
+      { property: "og:title", content: "有米出行 YOMI · 真机UI演示" },
       {
         property: "og:description",
-        content: "Soft Business 轻商务风格的乘客端与司机端可交互原型，375 宽真机比例。",
+        content: "Soft Business 轻商务风格的乘客端与司机端真机UI演示，375 宽真机比例。",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
