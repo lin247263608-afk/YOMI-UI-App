@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
-import { ArrowLeft, Search, Check } from "@/components/prototype/kit/brand-icons";
+import { Search, Check } from "@/components/prototype/kit/brand-icons";
+import { NavBar } from "@/components/prototype/kit/NavBar";
 import { cn } from "@/lib/utils";
 
 type Airport = { name: string; city: string; code: string };
@@ -39,17 +40,7 @@ export function AirportPickerV7({
 
   return (
     <div className="flex h-full flex-col bg-background">
-      <header className="flex h-11 shrink-0 items-center gap-3 bg-haze-status px-4">
-        <button
-          type="button"
-          onClick={onBack}
-          aria-label="返回"
-          className="rounded-lg p-0.5 active:bg-ink/5"
-        >
-          <ArrowLeft className="size-5 text-ink" />
-        </button>
-        <h1 className="flex-1 text-[16px] font-bold text-ink">选择机场</h1>
-      </header>
+      <NavBar title="选择机场" onBack={onBack} />
 
       <div className="no-scrollbar flex-1 overflow-y-auto px-4 pt-4 pb-6">
         <div className="flex h-11 items-center gap-3 rounded-xl bg-card px-3 shadow-card ring-1 ring-border/60">

@@ -1,3 +1,4 @@
+import { PhoneAreaCode } from "./PhoneAreaCode";
 import { InputShell, TextField } from "./InputShell";
 import { SegmentedTabs } from "./SegmentedTabs";
 import { useCountdown } from "./useCountdown";
@@ -39,9 +40,7 @@ export function AccountVerifyFields({
       <div className="flex flex-col gap-3">
         {channel === "phone" ? (
           <div className="flex gap-2.5">
-            <InputShell className="w-[76px] shrink-0 justify-center px-3">
-              <span className="text-[15px] font-semibold">+44 ▾</span>
-            </InputShell>
+            <PhoneAreaCode />
             <TextField
               className="flex-1"
               value={account}

@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
-import { ArrowLeft, Search, Clock, X } from "@/components/prototype/kit/brand-icons";
+import { Search, Clock, X } from "@/components/prototype/kit/brand-icons";
+import { NavBar } from "@/components/prototype/kit/NavBar";
 
 type Spot = { name: string; addr: string; distance: string };
 
@@ -13,6 +14,7 @@ const SPOTS: Spot[] = [
 ];
 
 export function AddressSearchV7({
+  title = "输入地址",
   onBack,
   onPick,
 }: {
@@ -32,18 +34,7 @@ export function AddressSearchV7({
 
   return (
     <div className="flex h-full flex-col bg-background">
-      <header className="flex h-11 shrink-0 items-center bg-haze-status px-4">
-        <button
-          type="button"
-          onClick={onBack}
-          aria-label="返回"
-          className="rounded-lg p-0.5 active:bg-ink/5"
-        >
-          <ArrowLeft className="size-4 text-ink" />
-        </button>
-        <h1 className="flex-1 text-center text-[16px] font-bold text-ink">输入地址</h1>
-        <span className="w-5" />
-      </header>
+      <NavBar title={title} onBack={onBack} />
 
       <div className="no-scrollbar flex-1 overflow-y-auto px-4 pt-4 pb-6">
         <div className="flex h-10 items-center gap-3 rounded-xl bg-card px-3 shadow-card ring-1 ring-border/60">

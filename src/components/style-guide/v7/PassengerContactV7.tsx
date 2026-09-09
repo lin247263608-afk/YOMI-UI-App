@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { ArrowLeft, AlertCircle } from "@/components/prototype/kit/brand-icons";
+import { AlertCircle } from "@/components/prototype/kit/brand-icons";
+import { NavBar } from "@/components/prototype/kit/NavBar";
 import { cn } from "@/lib/utils";
 
 export type ContactInfo = {
@@ -24,7 +25,9 @@ function LabeledField({
         {label}
         <span className="ml-0.5 text-destructive">*</span>
       </p>
-      {hint ? <p className="mt-1 text-[11px] leading-[15px] text-muted-foreground">{hint}</p> : null}
+      {hint ? (
+        <p className="mt-1 text-[11px] leading-[15px] text-muted-foreground">{hint}</p>
+      ) : null}
       <div className="mt-2 flex h-10 items-center rounded-xl bg-secondary/60 px-3">{children}</div>
     </div>
   );
@@ -55,18 +58,7 @@ export function PassengerContactV7({
 
   return (
     <div className="flex h-full flex-col bg-background">
-      <header className="flex h-11 shrink-0 items-center bg-haze-status px-4">
-        <button
-          type="button"
-          onClick={onBack}
-          aria-label="返回"
-          className="rounded-lg p-0.5 active:bg-ink/5"
-        >
-          <ArrowLeft className="size-4 text-ink" />
-        </button>
-        <h1 className="flex-1 text-center text-[16px] font-bold text-ink">乘车人信息</h1>
-        <span className="w-5" />
-      </header>
+      <NavBar title="乘车人信息" onBack={onBack} />
 
       <div className="no-scrollbar flex-1 overflow-y-auto px-4 pt-4 pb-6">
         <div className="flex items-center gap-2 rounded-xl bg-brand-soft px-2.5 py-2.5">

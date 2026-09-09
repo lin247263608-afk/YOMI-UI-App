@@ -1,6 +1,5 @@
 import { useState } from "react";
 import {
-  ArrowLeft,
   PlaneLanding,
   PlaneTakeoff,
   MapPin,
@@ -12,6 +11,7 @@ import {
   Check,
   AlertCircle,
 } from "@/components/prototype/kit/brand-icons";
+import { NavBar } from "@/components/prototype/kit/NavBar";
 import { TripTag } from "./trip/TripKit";
 import { cn } from "@/lib/utils";
 import { AirportPickerV7 } from "./AirportPickerV7";
@@ -40,6 +40,7 @@ export type OrderPayload = {
   to: string;
   time: string;
   paxLabel: string;
+  paxCount: number;
   vehicleName: string;
 };
 
@@ -220,6 +221,8 @@ export function PassengerOrderFormV7({
   const vehicle = VEHICLES.find((v) => v.id === vehicleId) ?? VEHICLES[0]!;
 
   const seatPrice = 35.5;
+  /** 拼车基础定金 £20/人：定金 = 基础定金 × 出行人数 */
+  const BASE_DEPOSIT = 20;
   const base =
     mode === "share" ? seatPrice * totalPax : Number(vehicle.price.replace(/[^\d.]/g, ""));
   const bigBagFee = Math.max(0, bagBig - 1) * 5;
@@ -230,8 +233,18 @@ export function PassengerOrderFormV7({
   );
   const discount = coupon?.amount ?? 0;
   const total = Math.max(0, base + bigBagFee + serviceFee - discount);
+  const deposit = BASE_DEPOSIT * totalPax;
 
   const fareLines = [
+    ...(mode === "share"
+      ? [
+          {
+            label: `拼车定金 £${BASE_DEPOSIT}/人 *${totalPax}人`,
+            value: `£${deposit.toFixed(2)}`,
+            hint: "未拼成全额可退",
+          },
+        ]
+      : []),
     mode === "share"
       ? {
           label: `拼成行程路费 *${totalPax}人`,
@@ -332,18 +345,7 @@ export function PassengerOrderFormV7({
 
   return (
     <div className="relative flex h-full flex-col overflow-hidden bg-background">
-      <header className="flex shrink-0 items-center gap-3 bg-haze-status px-4 py-3">
-        <button
-          type="button"
-          onClick={onBack}
-          aria-label="返回"
-          className="rounded-lg p-0.5 active:bg-ink/5"
-        >
-          <ArrowLeft className="size-5 text-ink" />
-        </button>
-        <h1 className="flex-1 text-center text-[17px] font-bold text-ink">{dirLabel}</h1>
-        <span className="size-5" />
-      </header>
+      <NavBar title={dirLabel} onBack={onBack} />
 
       <div className="no-scrollbar flex-1 overflow-y-auto">
         <div className="space-y-2.5 px-3.5 pt-3">
@@ -378,7 +380,9 @@ export function PassengerOrderFormV7({
             </div>
             {mode === "share" ? (
               <div className="mt-2 flex items-center">
-                <p className="text-[12px] text-ink-soft">固定定金: £20</p>
+                <p className="text-[12px] text-ink-soft">
+                  定金 £{BASE_DEPOSIT}/人 · 当前 £{deposit.toFixed(2)}
+                </p>
                 <p className="ml-auto text-[12px] text-muted-foreground">至少3人乘车能够成团</p>
               </div>
             ) : null}
@@ -564,7 +568,7 @@ export function PassengerOrderFormV7({
             {mode === "share" ? "支付定金" : "总计费用"}
           </p>
           <p className="font-mono text-[24px] leading-none font-bold text-brand">
-            £{(mode === "share" ? 20 : total).toFixed(2)}
+            £{(mode === "share" ? deposit : total).toFixed(2)}
           </p>
           <button
             type="button"
@@ -580,12 +584,13 @@ export function PassengerOrderFormV7({
             onSubmit?.({
               mode,
               direction,
-              amount: mode === "share" ? 20 : total,
+              amount: mode === "share" ? deposit : total,
               totalFare: total,
               from: isPickup ? airportName : spotName || "伦敦市区出发地",
               to: isPickup ? spotName || "伦敦市区目的地" : airportName,
               time: pickupTime,
               paxLabel: `成人 ${adults} 人${children > 0 ? ` · 儿童 ${children} 人` : ""}`,
+              paxCount: totalPax,
               vehicleName: vehicle.name,
             })
           }
@@ -630,7 +635,7 @@ export function PassengerOrderFormV7({
         <FareDetailSheet
           mode={mode}
           lines={fareLines}
-          total={mode === "share" ? "£20.00" : `£${total.toFixed(2)}`}
+          total={mode === "share" ? `£${deposit.toFixed(2)}` : `£${total.toFixed(2)}`}
           onClose={() => setSheet(null)}
         />
       ) : null}

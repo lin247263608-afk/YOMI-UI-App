@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Check, ChevronLeft, MoreHorizontal } from "@/components/prototype/kit/brand-icons";
+import { Check, MoreHorizontal } from "@/components/prototype/kit/brand-icons";
+import { NavBar } from "@/components/prototype/kit/NavBar";
 import { PrimaryButton } from "@/components/prototype/kit/PrimaryButton";
 import { YomiIconButton } from "@/components/prototype/kit/YomiIcon";
 import { Card, RouteLine, TripTag } from "./trip/TripKit";
@@ -38,11 +39,11 @@ export function PassengerCancelOrderV7({
 
   return (
     <div className="flex h-full min-h-0 flex-col bg-background">
-      <div className="flex h-12 shrink-0 items-center bg-haze-status px-3">
-        <YomiIconButton icon={ChevronLeft} label="返回" onClick={onBack} />
-        <p className="flex-1 text-center text-[17px] font-semibold text-ink">取消订单</p>
-        <YomiIconButton icon={MoreHorizontal} label="更多" />
-      </div>
+      <NavBar
+        title="取消订单"
+        onBack={onBack}
+        action={<YomiIconButton icon={MoreHorizontal} label="更多" />}
+      />
 
       <div className="no-scrollbar min-h-0 flex-1 space-y-3 overflow-y-auto px-4 py-4">
         <Card>

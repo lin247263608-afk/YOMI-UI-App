@@ -16,7 +16,8 @@ const FARE = [
   { label: "拼成行程路费 *2人", value: "£50.00" },
   { label: "增值服务费", value: "£15.00" },
   { label: "优惠券抵扣", value: "-£5.00", tag: "尾款时抵扣" },
-  { label: "已付定金", value: "-£20.00", negative: true },
+  // 定金 = 基础定金 £20 × 2 人
+  { label: "已付定金（£20/人 × 2人）", value: "-£40.00", negative: true },
 ];
 
 export function PassengerBalancePayV7({
@@ -82,7 +83,7 @@ export function PassengerBalancePayV7({
         <p className="mb-2.5 text-center text-[12px] text-ink-soft">
           请行程开始前支付尾款，否则司导无法正常开始行程
         </p>
-        <PrimaryButton onClick={onPay}>确认支付尾款 £40.00</PrimaryButton>
+        <PrimaryButton onClick={onPay}>确认支付尾款 £20.00</PrimaryButton>
         <p className="mt-2 text-center text-[11px] text-ink-soft/70">
           交易安全由 Stripe 托管提供保障
         </p>

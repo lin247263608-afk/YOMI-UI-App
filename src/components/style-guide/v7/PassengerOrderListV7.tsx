@@ -89,7 +89,7 @@ export const MY_ORDERS: OrderItem[] = [
     to: "牛津大学城",
     time: "2024-02-28 11:20",
     pax: "2人 · 2件行李",
-    amount: "£56.00",
+    amount: "£60.00",
     amountLabel: "实付金额",
     driver: { name: "陈师傅", plate: "OX21 ABC", car: "奔驰 V-Class · 白色", rating: "5.0" },
   },

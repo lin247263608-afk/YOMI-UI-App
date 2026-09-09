@@ -42,6 +42,9 @@ const CONFIG = {
   },
 };
 
+const GROUP_CAPACITY = 5;
+const GROUP_MARKS = Array.from({ length: GROUP_CAPACITY }, (_, index) => index + 1);
+
 function WeChatShare({ onClick }: { onClick?: (() => void) | undefined }) {
   return (
     <button
@@ -79,7 +82,7 @@ export function PassengerCarpoolingV7({
   const h = Math.floor(left / 3600);
   const m = Math.floor((left % 3600) / 60);
   const s = left % 60;
-  const progress = Math.min(100, (cfg.current / 5) * 100);
+  const progress = Math.min(100, (cfg.current / GROUP_CAPACITY) * 100);
 
   return (
     <>
@@ -102,14 +105,39 @@ export function PassengerCarpoolingV7({
             </p>
             <p className="text-[12px] text-ink-soft/80">最低{cfg.min}人成团，满5人立即成团</p>
           </div>
-          <div className="relative mt-2.5 h-2.5 w-full overflow-hidden rounded-full bg-ink/[0.07]">
-            <div
-              className="h-full rounded-full bg-gradient-to-r from-brand/70 to-brand transition-all duration-500"
-              style={{ width: `${progress}%` }}
-            />
-            <div className="absolute inset-0 flex">
-              {[1, 2, 3, 4].map((i) => (
-                <span key={i} className="flex-1 border-r border-card/80 last:border-0" />
+          <div
+            className="mt-2.5"
+            role="progressbar"
+            aria-label="拼车成团人数"
+            aria-valuemin={1}
+            aria-valuemax={GROUP_CAPACITY}
+            aria-valuenow={cfg.current}
+          >
+            <div className="relative h-2.5 w-full overflow-hidden rounded-full bg-ink/[0.07]">
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-brand/70 to-brand transition-all duration-500"
+                style={{ width: `${progress}%` }}
+              />
+              <div className="absolute inset-0 grid grid-cols-5">
+                {GROUP_MARKS.map((mark) => (
+                  <span
+                    key={mark}
+                    className="border-r border-card/90 last:border-r-0"
+                  />
+                ))}
+              </div>
+            </div>
+            <div className="mt-1.5 grid grid-cols-5" aria-hidden="true">
+              {GROUP_MARKS.map((mark) => (
+                <span
+                  key={mark}
+                  className={cn(
+                    "text-center font-mono text-[10px] font-semibold",
+                    mark <= cfg.current ? "text-brand" : "text-ink-soft/55",
+                  )}
+                >
+                  {mark}
+                </span>
               ))}
             </div>
           </div>

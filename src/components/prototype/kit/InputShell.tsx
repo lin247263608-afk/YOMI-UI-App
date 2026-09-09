@@ -16,7 +16,7 @@ export function InputShell({
   onClick?: (() => void) | undefined;
 }) {
   const classes = cn(
-    "shadow-card flex h-[52px] items-center gap-2 rounded-2xl border border-ink/[0.04] bg-surface px-4 text-[15px] text-ink",
+    "shadow-card flex h-[52px] min-w-0 items-center gap-2 rounded-2xl border border-ink/[0.04] bg-surface px-4 text-[15px] text-ink",
     className,
   );
   if (as === "button") {

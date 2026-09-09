@@ -28,6 +28,7 @@ import yomiMark from "@/assets/yomi-mark.svg";
 import { BrandIntro } from "@/components/prototype/kit/BrandIntro";
 import { InputShell, TextField } from "@/components/prototype/kit/InputShell";
 import { NavBar } from "@/components/prototype/kit/NavBar";
+import { PhoneAreaCode } from "@/components/prototype/kit/PhoneAreaCode";
 import { PrimaryButton } from "@/components/prototype/kit/PrimaryButton";
 import { SelectionCheck, WeChatLogo, YomiIcon } from "@/components/prototype/kit/YomiIcon";
 import { YomiWordmark } from "@/components/prototype/kit/YomiWordmark";
@@ -126,9 +127,7 @@ export function MiniProgramLoginV7({
             </div>
             <div className="mt-5 space-y-3">
               <div className="flex gap-2">
-                <InputShell className="w-[68px] shrink-0 justify-center px-2">
-                  <span className="text-[13px] font-semibold">+44 ▾</span>
-                </InputShell>
+                <PhoneAreaCode />
                 <TextField
                   className="flex-1"
                   value={phone}

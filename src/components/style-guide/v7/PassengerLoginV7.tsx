@@ -3,6 +3,7 @@ import { Eye, EyeOff } from "@/components/prototype/kit/brand-icons";
 import { BrandIntro } from "@/components/prototype/kit/BrandIntro";
 import { InputShell, TextField } from "@/components/prototype/kit/InputShell";
 import { LoginFooter } from "@/components/prototype/kit/LoginFooter";
+import { PhoneAreaCode } from "@/components/prototype/kit/PhoneAreaCode";
 import { PrimaryButton } from "@/components/prototype/kit/PrimaryButton";
 import { SegmentedTabs } from "@/components/prototype/kit/SegmentedTabs";
 import { YomiIcon } from "@/components/prototype/kit/YomiIcon";
@@ -66,11 +67,9 @@ export function PassengerLoginV7({
         <div className="flex flex-col gap-3">
           {channel === "phone" ? (
             <div className="flex gap-2.5">
-              <InputShell className="w-[76px] shrink-0 justify-center px-3">
-                <span className="text-[15px] font-semibold">+44 ▾</span>
-              </InputShell>
+              <PhoneAreaCode />
               <TextField
-                className="flex-1"
+                className="min-w-0 flex-1"
                 value={phone}
                 onChange={setPhone}
                 placeholder="请输入手机号"
@@ -89,7 +88,7 @@ export function PassengerLoginV7({
           {method === "code" ? (
             <div className="flex gap-2.5">
               <TextField
-                className="flex-1"
+                className="min-w-0 flex-1"
                 value={code}
                 onChange={setCode}
                 placeholder="请输入验证码"

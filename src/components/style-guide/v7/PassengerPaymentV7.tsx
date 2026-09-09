@@ -20,9 +20,7 @@ const METHODS = [
 function PayMark({ id }: { id: string }) {
   if (id === "visa") {
     return (
-      <span className="text-[13px] font-black italic tracking-[-0.02em] text-[#1A1F71]">
-        VISA
-      </span>
+      <span className="text-[13px] font-black italic tracking-[-0.02em] text-[#1A1F71]">VISA</span>
     );
   }
   if (id === "mastercard") {
@@ -167,6 +165,7 @@ export function PassengerPaymentV7({
   const isShare = mode === "share";
   const fare = totalFare ?? 68;
   const pay = amount ?? (isShare ? 20 : Math.max(0, fare + addonFee - couponOff));
+  const depositPerPerson = pay / Math.max(1, paxCount);
   const [left, setLeft] = useState(15 * 60 - 1);
 
   useEffect(() => {
@@ -233,7 +232,10 @@ export function PassengerPaymentV7({
 
           <div>
             {isShare ? (
-              <FareRow label={`拼成行程路费 *${paxCount}人订金`} value={`£${pay.toFixed(2)}`} />
+              <FareRow
+                label={`拼车定金 £${depositPerPerson.toFixed(2)}/人 × ${paxCount}人`}
+                value={`£${pay.toFixed(2)}`}
+              />
             ) : (
               <>
                 <FareRow

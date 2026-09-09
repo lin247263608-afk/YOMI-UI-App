@@ -54,6 +54,7 @@ import {
   PassengerOrderListV7,
   type OrderItem,
 } from "@/components/style-guide/v7/PassengerOrderListV7";
+import { FareDetailSheet, type FareLine } from "@/components/style-guide/v7/OrderSheetsV7";
 import { PassengerCancelOrderV7 } from "@/components/style-guide/v7/PassengerCancelOrderV7";
 import { PassengerCompletedOrderV7 } from "@/components/style-guide/v7/PassengerCompletedOrderV7";
 import {
@@ -161,6 +162,103 @@ const stageLabel: Record<Stage, string> = {
   "P-014": "评价司机",
 };
 
+/** 「查看费用明细」跳转数据（P-006h 拼车费用明细 / P-006i 独享费用明细） */
+type FareView = {
+  mode: "share" | "private";
+  lines: FareLine[];
+  total: string;
+  totalLabel?: string | undefined;
+  typeBadge?: string | undefined;
+};
+
+/** 订单列表/订单详情入口：由 OrderItem 推导费用明细 */
+function fareViewForOrder(order: OrderItem): FareView {
+  const pax = Number(/(\d+)/.exec(order.pax)?.[1] ?? 1);
+  if (order.mode === "share") {
+    if (order.amountLabel.includes("尾款")) {
+      // 拼车定金 = £20 × 出行人数；尾款 = 50(路费) + 15(服务费) - 5(券) - 定金
+      const deposit = 20 * pax;
+      const tail = Math.max(0, 50 + 15 - 5 - deposit);
+      return {
+        mode: "share",
+        lines: [
+          { label: `拼成行程路费 *${pax}人`, value: "£50.00" },
+          { label: "增值服务费", value: "£15.00" },
+          { label: "优惠券抵扣", value: "£5.00", minus: true, hint: "尾款时抵扣" },
+          { label: "已付定金", value: `£${deposit.toFixed(2)}`, minus: true },
+        ],
+        total: `£${tail.toFixed(2)}`,
+        totalLabel: "需付尾款",
+        typeBadge: "拼车尾款",
+      };
+    }
+    return {
+      mode: "share",
+      lines: [{ label: "拼车定金（未拼成全额可退）", value: order.amount }],
+      total: order.amount,
+      totalLabel: "已付定金",
+      typeBadge: "拼车定金",
+    };
+  }
+  return {
+    mode: "private",
+    lines: [{ label: `专车行程费 *${pax}人`, value: order.amount }],
+    total: order.amount,
+  };
+}
+
+/** 独享下单流程入口：由下单 payload（金额/车型/人数）推导费用明细 */
+function fareViewForPrivate(totalFare: number, vehicleName: string, paxCount: number): FareView {
+  const total = `£${totalFare.toFixed(2)}`;
+  return {
+    mode: "private",
+    lines: [{ label: `${vehicleName}行程费 *${paxCount}人`, value: total }],
+    total,
+  };
+}
+
+/** 拼车下单流程入口（P-011）：定金 = £20 × 人数，尾款 = 路费 + 服务费 - 券 - 定金（缺省演示 2 人） */
+function shareP011Fare(paxCount = 2): FareView {
+  const pax = paxCount;
+  const deposit = 20 * pax;
+  const tail = Math.max(0, 50 + 15 - 5 - deposit);
+  return {
+    mode: "share",
+    lines: [
+      { label: `拼成行程路费 *${pax}人`, value: "£50.00" },
+      { label: "增值服务费", value: "£15.00" },
+      { label: "优惠券抵扣", value: "£5.00", minus: true, hint: "尾款时抵扣" },
+      { label: "已付定金", value: `£${deposit.toFixed(2)}`, minus: true },
+    ],
+    total: `£${tail.toFixed(2)}`,
+    totalLabel: "需付尾款",
+    typeBadge: "拼车尾款",
+  };
+}
+
+/** 独享下单流程入口兜底样例（开发面板直达 MP-011 时无下单 payload） */
+const PRIVATE_FARE_FALLBACK: FareView = {
+  mode: "private",
+  lines: [{ label: "7座商务行程费 *3人", value: "£126.00" }],
+  total: "£126.00",
+};
+
+/** 首页“最近订单”使用独立数据，避免误打开订单列表中类型不同的待出行订单。 */
+const RECENT_HOME_ORDER: OrderItem = {
+  no: "YM202608100001",
+  type: "接机 · 拼车",
+  mode: "share",
+  status: "waiting",
+  statusText: "待出行",
+  from: "希思罗机场 T5 航站楼",
+  to: "伦敦市中心国王十字车站",
+  time: "2026-08-10 14:30",
+  pax: "2人 · 1标准 1大件行李",
+  amount: "£60.00",
+  amountLabel: "已付全额",
+  driver: { name: "王师傅", plate: "AB12 CDE", car: "7座商务 · 黑色", rating: "4.9" },
+};
+
 type PrivateStage = "MP-011-001" | "MP-011-002" | "MP-012" | "MP-013";
 
 const privateStageFlow: PrivateStage[] = ["MP-011-001", "MP-011-002", "MP-012", "MP-013"];
@@ -243,6 +341,8 @@ function Prototype() {
   const [groupChat, setGroupChat] = useState(false);
   const [orderView, setOrderView] = useState<OrderItem | null>(null);
   const [cancelOrder, setCancelOrder] = useState<OrderItem | null>(null);
+  const [fareView, setFareView] = useState<FareView | null>(null);
+  const [lastPayment, setLastPayment] = useState<OrderPayload | null>(null);
   const [loggedIn, setLoggedIn] = useState(false);
   const [hasRecentOrder, setHasRecentOrder] = useState(true);
   const [authScreen, setAuthScreen] = useState<AuthScreen>("login");
@@ -348,56 +448,60 @@ function Prototype() {
         : role === "passenger"
           ? driverCertification
             ? (driverCertificationSubpageCode ?? driverCertificationCode[driverCertification])
-            : cancelOrder
-              ? "P-017"
-              : orderView
-                ? orderView.status === "done"
-                  ? "P-016"
-                  : "P-011"
-                : privateStage
-                  ? privateStage
-                  : stage
-                    ? stage
-                    : payment
-                      ? editingOrder
-                        ? "P-007-003"
-                        : payment.mode === "share"
-                          ? "P-007-001"
-                          : "P-007-002"
-                      : routeView
-                        ? "P-005"
-                        : charterView
-                          ? charterView === "list"
-                            ? "P-027"
-                            : "P-027-001"
-                          : accountView
-                            ? accountView === "profile"
-                              ? "D-003"
-                              : accountView === "coupons"
-                                ? "P-023"
-                                : accountView === "security"
-                                  ? "P-030"
-                                  : accountView === "delete"
-                                    ? "P-031"
-                                    : accountView === "apply-driver"
-                                      ? "P-024"
-                                      : accountView === "settings" || accountView === "about"
-                                        ? "P-029"
-                                        : submittedFeedback
-                                          ? "P-028-002"
-                                          : "P-028-001"
-                            : orderType
-                              ? editingOrder
-                                ? "P-006-003"
-                                : (orderConfig[orderType]?.code ?? "P-006")
-                              : passengerTab === 2
-                                ? messageCode
-                                : [
-                                    hasRecentOrder ? "P-004-002" : "P-004-001",
-                                    "P-015",
-                                    "P-019-001",
-                                    driverProfile ? "P-022-002" : "P-022-001",
-                                  ][passengerTab]
+            : fareView
+              ? fareView.mode === "share"
+                ? "P-006h"
+                : "P-006i"
+              : cancelOrder
+                ? "P-017"
+                : orderView
+                  ? orderView.status === "done"
+                    ? "P-016"
+                    : "P-011"
+                  : privateStage
+                    ? privateStage
+                    : stage
+                      ? stage
+                      : payment
+                        ? editingOrder
+                          ? "P-007-003"
+                          : payment.mode === "share"
+                            ? "P-007-001"
+                            : "P-007-002"
+                        : routeView
+                          ? "P-005"
+                          : charterView
+                            ? charterView === "list"
+                              ? "P-027"
+                              : "P-027-001"
+                            : accountView
+                              ? accountView === "profile"
+                                ? "D-003"
+                                : accountView === "coupons"
+                                  ? "P-023"
+                                  : accountView === "security"
+                                    ? "P-030"
+                                    : accountView === "delete"
+                                      ? "P-031"
+                                      : accountView === "apply-driver"
+                                        ? "P-024"
+                                        : accountView === "settings" || accountView === "about"
+                                          ? "P-029"
+                                          : submittedFeedback
+                                            ? "P-028-002"
+                                            : "P-028-001"
+                              : orderType
+                                ? editingOrder
+                                  ? "P-006-003"
+                                  : (orderConfig[orderType]?.code ?? "P-006")
+                                : passengerTab === 2
+                                  ? messageCode
+                                  : [
+                                      hasRecentOrder ? "P-004-002" : "P-004-001",
+                                      "P-015",
+                                      "P-019-001",
+                                      driverProfile ? "P-022-002" : "P-022-001",
+                                    ][passengerTab]
           : driverView
             ? (driverEditCode ??
               (
@@ -567,6 +671,21 @@ function Prototype() {
         />
       );
     }
+    if (fareView) {
+      // relative 包一层：定位基准 = 状态栏下方内容区，避免覆盖 9:41 状态栏
+      return (
+        <div className="relative h-full">
+          <FareDetailSheet
+            mode={fareView.mode}
+            lines={fareView.lines}
+            total={fareView.total}
+            totalLabel={fareView.totalLabel}
+            typeBadge={fareView.typeBadge}
+            onClose={() => setFareView(null)}
+          />
+        </div>
+      );
+    }
     if (cancelOrder) {
       return (
         <PassengerCancelOrderV7
@@ -593,6 +712,8 @@ function Prototype() {
       return (
         <PassengerOrderDetailV7
           key={orderView.no}
+          mode={orderView.mode}
+          order={orderView}
           variant={
             orderView.status === "waiting" || orderView.statusText === "待出发"
               ? "departing"
@@ -600,6 +721,7 @@ function Prototype() {
           }
           onBack={() => setOrderView(null)}
           onCancel={() => setCancelOrder(orderView)}
+          onFare={() => setFareView(fareViewForOrder(orderView))}
         />
       );
     }
@@ -622,6 +744,17 @@ function Prototype() {
               setOrderType("独享接送");
             }}
             onContactDriver={nextPrivate}
+            onFare={() =>
+              setFareView(
+                lastPayment
+                  ? fareViewForPrivate(
+                      lastPayment.totalFare,
+                      lastPayment.vehicleName,
+                      lastPayment.paxCount,
+                    )
+                  : PRIVATE_FARE_FALLBACK,
+              )
+            }
           />
         );
       }
@@ -669,11 +802,13 @@ function Prototype() {
         return (
           <PassengerOrderDetailV7
             key={stage}
+            mode="share"
             variant={stage === "P-011-001" ? "dispatch" : "departing"}
             onBack={() => setStage(null)}
             onCancel={() => setStage(null)}
             onContactDriver={() => next(stage)}
             onGroupChat={openChat}
+            onFare={() => setFareView(shareP011Fare(lastPayment?.paxCount))}
           />
         );
       }
@@ -711,10 +846,12 @@ function Prototype() {
           to={payment.to}
           time={payment.time}
           paxLabel={payment.paxLabel}
+          paxCount={payment.paxCount}
           vehicleName={payment.vehicleName}
           onBack={() => setPayment(null)}
           onPaid={() => {
             const isPrivate = payment.mode === "private";
+            setLastPayment(payment);
             setPayment(null);
             setOrderType(null);
             setEditingOrder(false);
@@ -782,6 +919,9 @@ function Prototype() {
             setEditingOrder(false);
             if (type === "旅行包车") setCharterView("list");
             else setOrderType(type);
+          }}
+          onOpenOrderDetail={() => {
+            setOrderView(RECENT_HOME_ORDER);
           }}
         />
       );
@@ -1177,12 +1317,16 @@ function Prototype() {
                 setPrivateStage(null);
                 setOrderView(null);
                 setCancelOrder(null);
+                setFareView(null);
+                setGroupChat(false);
                 setMessageView(null);
                 setAccountView(null);
                 setDriverCertification(null);
+                setDriverCertificationSubpageCode(null);
                 setDriverSharePreview(false);
                 setDriverView(null);
                 setDriverEditCode(null);
+                setSubmittedFeedback(null);
               }}
               aria-current={role === r.id}
               className={cn(
@@ -1211,6 +1355,8 @@ function Prototype() {
                 setPrivateStage(null);
                 setOrderView(null);
                 setCancelOrder(null);
+                setFareView(null);
+                setGroupChat(false);
                 setMessageView(null);
                 setAccountView(null);
                 setDriverCertification(null);
@@ -1266,13 +1412,17 @@ function Prototype() {
                       setRouteView(null);
                       setOrderView(null);
                       setCancelOrder(null);
+                      setFareView(null);
+                      setGroupChat(false);
                       setMessageView(null);
                       setAccountView(null);
                     }}
-                    aria-current={passengerTab === 0 && hasRecentOrder === item.hasOrder}
+                    aria-current={
+                      currentCode === (item.hasOrder ? "P-004-002" : "P-004-001")
+                    }
                     className={cn(
                       "rounded-xl px-3 py-1.5 text-[12px] font-semibold transition-colors",
-                      passengerTab === 0 && hasRecentOrder === item.hasOrder
+                      currentCode === (item.hasOrder ? "P-004-002" : "P-004-001")
                         ? "bg-brand-soft text-brand"
                         : "border border-border bg-card text-ink-soft hover:text-ink",
                     )}
@@ -1294,11 +1444,13 @@ function Prototype() {
                       setOrderType(null);
                       setCharterView(null);
                       setRouteView(null);
+                      setFareView(null);
+                      setGroupChat(false);
                     }}
-                    aria-current={stage === sg}
+                    aria-current={currentCode === sg}
                     className={cn(
                       "rounded-xl px-3 py-1.5 text-[12px] font-semibold transition-colors",
-                      stage === sg
+                      currentCode === sg
                         ? "bg-brand-soft text-brand"
                         : "border border-border bg-card text-ink-soft hover:text-ink",
                     )}
@@ -1320,11 +1472,13 @@ function Prototype() {
                       setOrderType(null);
                       setCharterView(null);
                       setRouteView(null);
+                      setFareView(null);
+                      setGroupChat(false);
                     }}
-                    aria-current={privateStage === privateItem}
+                    aria-current={currentCode === privateItem}
                     className={cn(
                       "rounded-xl px-3 py-1.5 text-[12px] font-semibold transition-colors",
-                      privateStage === privateItem
+                      currentCode === privateItem
                         ? "bg-brand-soft text-brand"
                         : "border border-border bg-card text-ink-soft hover:text-ink",
                     )}
@@ -1351,11 +1505,13 @@ function Prototype() {
                       setStage(null);
                       setPayment(null);
                       setOrderType(null);
+                      setFareView(null);
+                      setGroupChat(false);
                     }}
-                    aria-current={driverCertification === item.id}
+                    aria-current={currentCode === driverCertificationCode[item.id]}
                     className={cn(
                       "rounded-xl px-3 py-1.5 text-[12px] font-semibold transition-colors",
-                      driverCertification === item.id
+                      currentCode === driverCertificationCode[item.id]
                         ? "bg-brand-soft text-brand"
                         : "border border-border bg-card text-ink-soft hover:text-ink",
                     )}

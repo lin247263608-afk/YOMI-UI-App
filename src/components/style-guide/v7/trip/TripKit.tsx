@@ -1,5 +1,12 @@
 import type { ReactNode } from "react";
-import { ChevronRight, MessagesSquare, Sparkles, ShieldCheck, Users, X } from "@/components/prototype/kit/brand-icons";
+import {
+  ChevronRight,
+  MessagesSquare,
+  Sparkles,
+  ShieldCheck,
+  Users,
+  X,
+} from "@/components/prototype/kit/brand-icons";
 import { PersonaAvatarV7 } from "@/components/style-guide/v7/PersonaAvatarV7";
 import { cn } from "@/lib/utils";
 
@@ -102,15 +109,25 @@ export function OrderInfoCard({
   badge,
   title,
   services,
+  orderNo,
+  from,
+  to,
+  fields,
 }: {
   badge?: string;
   title?: string;
   services?: string[];
+  orderNo?: string;
+  from?: string;
+  to?: string;
+  fields?: { label: string; value: string }[];
 }) {
   return (
     <Card>
       <div className="flex items-center justify-between gap-3 pb-2.5">
-        <p className="font-mono text-[11.5px] tracking-tight text-ink-soft/80">订单号 {ORDER.no}</p>
+        <p className="font-mono text-[11.5px] tracking-tight text-ink-soft/80">
+          订单号 {orderNo ?? ORDER.no}
+        </p>
         {badge ? (
           <span className="rounded-full bg-brand-soft px-2 py-0.5 text-[11px] font-medium text-brand">
             {badge}
@@ -118,7 +135,13 @@ export function OrderInfoCard({
         ) : null}
       </div>
       <div className="border-t border-dashed border-ink/[0.08] pt-3">
-        <TripBody {...(title ? { title } : {})} {...(services ? { services } : {})} />
+        <TripBody
+          {...(title ? { title } : {})}
+          {...(services ? { services } : {})}
+          {...(from ? { from } : {})}
+          {...(to ? { to } : {})}
+          {...(fields ? { fields } : {})}
+        />
       </div>
     </Card>
   );
@@ -219,10 +242,14 @@ export function TripBody({
   fields,
   services = ORDER.services,
   title = ORDER.title,
+  from,
+  to,
 }: {
   fields?: { label: string; value: string }[];
   services?: string[];
   title?: string;
+  from?: string;
+  to?: string;
 }) {
   const lines = fields ?? [
     { label: "出发时间：", value: ORDER.time },
@@ -233,7 +260,7 @@ export function TripBody({
   return (
     <>
       <TripTag>{title}</TripTag>
-      <RouteLine className="mt-2.5" />
+      <RouteLine className="mt-2.5" {...(from ? { from } : {})} {...(to ? { to } : {})} />
       <div className="mt-3 space-y-2">
         {lines.map((l) => (
           <InfoLine key={l.label} label={l.label} value={l.value} />

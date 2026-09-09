@@ -2,6 +2,7 @@ import { useState } from "react";
 import { AlertCircle, ShieldCheck } from "@/components/prototype/kit/brand-icons";
 import { InputShell, TextField } from "@/components/prototype/kit/InputShell";
 import { NavBar } from "@/components/prototype/kit/NavBar";
+import { PhoneAreaCode } from "@/components/prototype/kit/PhoneAreaCode";
 import { PrimaryButton } from "@/components/prototype/kit/PrimaryButton";
 import { useCountdown } from "@/components/prototype/kit/useCountdown";
 
@@ -37,9 +38,7 @@ export function PassengerBindPhoneV7({
 
           <div className="flex flex-col gap-3">
             <div className="flex gap-2.5">
-              <InputShell className="w-[76px] shrink-0 justify-center px-3">
-                <span className="text-[15px] font-semibold">+44 ▾</span>
-              </InputShell>
+              <PhoneAreaCode />
               <TextField
                 className="flex-1"
                 value={phone}

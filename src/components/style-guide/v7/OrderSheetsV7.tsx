@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { X, Check, ArrowLeft, User, Briefcase } from "@/components/prototype/kit/brand-icons";
+import { X, Check, User, Briefcase } from "@/components/prototype/kit/brand-icons";
+import { NavBar } from "@/components/prototype/kit/NavBar";
 import { cn } from "@/lib/utils";
 import vehicleEconomy from "@/assets/vehicle-economy.png";
 import vehicleComfort from "@/assets/vehicle-comfort.png";
@@ -86,20 +87,7 @@ function SheetButton({
 
 /** 二级页头（状态栏由 DeviceFrame 提供） */
 function PageHeader({ title, onBack }: { title: string; onBack?: (() => void) | undefined }) {
-  return (
-    <header className="flex h-11 shrink-0 items-center bg-haze-status px-4">
-      <button
-        type="button"
-        onClick={onBack}
-        aria-label="返回"
-        className="rounded-lg p-0.5 active:bg-ink/5"
-      >
-        <ArrowLeft className="size-4 text-ink" />
-      </button>
-      <h1 className="flex-1 text-center text-[16px] font-bold text-ink">{title}</h1>
-      <span className="w-5" />
-    </header>
-  );
+  return <NavBar title={title} onBack={onBack} />;
 }
 
 /* ---------------- P-006g 选择用车时间弹窗 ---------------- */
@@ -188,12 +176,7 @@ export function TimePickerSheet({
       <div className="relative py-1.5">
         <div className="pointer-events-none absolute inset-x-0 top-1/2 h-11 -translate-y-1/2 rounded-xl bg-secondary/70" />
         <div className="relative flex items-start justify-center">
-          <WheelColumn
-            items={DAYS}
-            value={day}
-            onChange={setDay}
-            width="w-[160px]"
-          />
+          <WheelColumn items={DAYS} value={day} onChange={setDay} width="w-[160px]" />
           <WheelColumn
             items={HOURS.map((h) => ({ key: h, label: h }))}
             value={hour}
@@ -298,9 +281,7 @@ export function CouponSheet({
                     : "bg-card ring-border/60 shadow-card",
               )}
             >
-              {active ? (
-                <span className="absolute inset-y-0 left-0 w-1 bg-brand" />
-              ) : null}
+              {active ? <span className="absolute inset-y-0 left-0 w-1 bg-brand" /> : null}
               <div className="flex items-start">
                 <div className="w-[110px] shrink-0">
                   <p className="text-[22px] leading-[29px] font-bold text-brand">{c.faceLabel}</p>
@@ -458,10 +439,7 @@ export function LuggageInfoSheet({ onClose }: { onClose?: (() => void) | undefin
         <div className="flex h-[114px] flex-1 items-end justify-around">
           {LUGGAGE_BARS.map((b) => (
             <div key={b.size} className="flex flex-col items-center gap-1">
-              <span
-                className="w-6 rounded-t-[3px] bg-brand/80"
-                style={{ height: `${b.h}px` }}
-              />
+              <span className="w-6 rounded-t-[3px] bg-brand/80" style={{ height: `${b.h}px` }} />
               <span className="text-[10px] text-ink-soft">{b.size}</span>
             </div>
           ))}
@@ -486,10 +464,7 @@ export function LuggageInfoSheet({ onClose }: { onClose?: (() => void) | undefin
               {r.row}
             </span>
             {r.values.map((v, i) => (
-              <span
-                key={`${r.row}-${i}`}
-                className="flex-1 py-2 text-center text-[11px] text-ink"
-              >
+              <span key={`${r.row}-${i}`} className="flex-1 py-2 text-center text-[11px] text-ink">
                 {v}
               </span>
             ))}

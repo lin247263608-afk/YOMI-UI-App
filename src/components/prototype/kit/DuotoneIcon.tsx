@@ -14,6 +14,8 @@ import { cn } from "@/lib/utils";
 type DuoPaths = {
   primary: React.ReactNode;
   accent?: React.ReactNode;
+  /** true 时 accent 先渲染作为底色（hero 反比例构图：大橙几何在下、墨蓝主形叠压在上） */
+  accentUnder?: boolean;
 };
 
 const DUO: Record<string, DuoPaths> = {
@@ -119,6 +121,197 @@ const DUO: Record<string, DuoPaths> = {
       <g>
         <circle cx="5.4" cy="5.6" r="2.7" />
         <circle cx="18.1" cy="20" r="2.7" />
+      </g>
+    ),
+  },
+  // —— 金刚区 Hero 变体：大面积品牌橙几何底 + 墨蓝主形态叠压，与常规双色比例反转 ——
+  "plane-in-hero": {
+    accentUnder: true,
+    primary: (
+      <g transform="translate(7.2 7.6) scale(0.66)">
+        <path d="M9.68 13.27l4.35 1.16 5.31 1.42c.8.21 1.62-.26 1.84-1.06.21-.8-.26-1.62-1.06-1.84l-5.31-1.42-2.76-9.02-1.93-.51v8.28L5.15 8.95l-.93-2.32-1.45-.39v5.17l1.6.43 5.31 1.43z" />
+      </g>
+    ),
+    accent: (
+      <g>
+        <circle cx="8.2" cy="7.8" r="7.2" />
+        <rect x="4" y="20.2" width="17" height="2.2" rx="1.1" />
+      </g>
+    ),
+  },
+  "plane-out-hero": {
+    accentUnder: true,
+    primary: (
+      <g transform="translate(-0.2 7.6) scale(0.66)">
+        <path d="M22.07 9.64c-.21-.8-1.04-1.28-1.84-1.06L14.92 10 8.03 3.57 6.1 4.08l4.14 7.17-4.97 1.33-1.97-1.54-1.45.39 2.59 4.49s7.12-1.9 16.57-4.43c.81-.23 1.28-1.05 1.06-1.85z" />
+      </g>
+    ),
+    accent: (
+      <g>
+        <circle cx="15.8" cy="7.8" r="7.2" />
+        <rect x="3" y="20.2" width="17" height="2.2" rx="1.1" />
+      </g>
+    ),
+  },
+  "car-private-hero": {
+    accentUnder: true,
+    primary: (
+      <g transform="translate(-1.2 1.6) scale(0.92)">
+        <path
+          fillRule="evenodd"
+          d="M3.4 16.6Q2.6 16.6 2.6 15.7L2.6 13.8Q2.6 12.8 3.6 12.5L6.8 11.7L8.8 8.4Q9.2 7.7 10 7.7L14.5 7.7Q15.4 7.7 15.9 8.5L17.9 11.7L20.3 12.3Q21.4 12.6 21.4 13.7L21.4 15.7Q21.4 16.6 20.5 16.6L18.9 16.6A2.15 2.15 0 0 0 14.6 16.6L9.4 16.6A2.15 2.15 0 0 0 5.1 16.6ZM9.9 9.2L12.1 9.2L12.1 11.4L8.5 11.4ZM13.1 9.2L14.3 9.2L16.4 11.4L13.1 11.4Z"
+        />
+        <circle cx="7.25" cy="16.6" r="2.1" />
+        <circle cx="16.75" cy="16.6" r="2.1" />
+      </g>
+    ),
+    accent: (
+      <g>
+        <circle cx="17.6" cy="6.4" r="6.4" />
+        <rect x="2.5" y="20.2" width="19" height="2.2" rx="1.1" />
+      </g>
+    ),
+  },
+  "route-hero": {
+    accentUnder: true,
+    primary: (
+      <g transform="translate(1.5 2.2) scale(0.88)">
+        <path
+          d="M8.3 5.6h5a3.6 3.6 0 0 1 0 7.2h-2.6a3.6 3.6 0 0 0 0 7.2h4.4"
+          fill="none"
+          stroke="var(--duo-primary)"
+          strokeWidth="3.6"
+          strokeLinecap="round"
+        />
+      </g>
+    ),
+    accent: (
+      <g>
+        <circle cx="8.8" cy="7.1" r="6.2" />
+        <circle cx="17.1" cy="19.8" r="2.6" />
+      </g>
+    ),
+  },
+  // —— 金刚区 Pro 变体（乘客首页四大入口）：与基础双色同一家族（墨蓝主形+橙点缀，不反转），
+  //    升级点 = 橙色由 2px 细线升级为「圆角功能件」+ 墨形微幅加饱满；接/送机共享“跑道垫”母题并随出行方向偏移
+  "plane-in-pro": {
+    // 接机：飞机 +3% 上收拢，跑道垫偏右靠鼻端（落地=前进方向末端锚点）
+    primary: (
+      <g transform="translate(-0.4 -0.5) scale(1.03)">
+        <path d="M9.68 13.27l4.35 1.16 5.31 1.42c.8.21 1.62-.26 1.84-1.06.21-.8-.26-1.62-1.06-1.84l-5.31-1.42-2.76-9.02-1.93-.51v8.28L5.15 8.95l-.93-2.32-1.45-.39v5.17l1.6.43 5.31 1.43z" />
+      </g>
+    ),
+    accent: <rect x="6.6" y="19.4" width="13" height="3" rx="1.5" />,
+  },
+  "plane-out-pro": {
+    // 送机：与接机镜像成对，跑道垫偏左靠尾端（起飞起步）
+    primary: (
+      <g transform="translate(-0.1 -0.5) scale(1.03)">
+        <path d="M22.07 9.64c-.21-.8-1.04-1.28-1.84-1.06L14.92 10 8.03 3.57 6.1 4.08l4.14 7.17-4.97 1.33-1.97-1.54-1.45.39 2.59 4.49s7.12-1.9 16.57-4.43c.81-.23 1.28-1.05 1.06-1.85z" />
+      </g>
+    ),
+    accent: <rect x="4.3" y="19.4" width="13" height="3" rx="1.5" />,
+  },
+  "car-private-pro": {
+    // 独享：车体 +2% 上移，尊享星放大 1.25×，路垫加粗圆角
+    primary: (
+      <g transform="translate(0 -0.35) scale(1.02)">
+        <path
+          fillRule="evenodd"
+          d="M3.4 16.6Q2.6 16.6 2.6 15.7L2.6 13.8Q2.6 12.8 3.6 12.5L6.8 11.7L8.8 8.4Q9.2 7.7 10 7.7L14.5 7.7Q15.4 7.7 15.9 8.5L17.9 11.7L20.3 12.3Q21.4 12.6 21.4 13.7L21.4 15.7Q21.4 16.6 20.5 16.6L18.9 16.6A2.15 2.15 0 0 0 14.6 16.6L9.4 16.6A2.15 2.15 0 0 0 5.1 16.6ZM9.9 9.2L12.1 9.2L12.1 11.4L8.5 11.4ZM13.1 9.2L14.3 9.2L16.4 11.4L13.1 11.4Z"
+        />
+        <circle cx="7.25" cy="16.6" r="2.1" />
+        <circle cx="16.75" cy="16.6" r="2.1" />
+      </g>
+    ),
+    accent: (
+      <g>
+        <g transform="translate(20.4 4.93) scale(1.25) translate(-20.4 -4.93)">
+          <path d="M19.5 3.2l.7 1.73 1.73.7-1.73.7-.7 1.73-.7-1.73-1.73-.7 1.73-.7z" />
+        </g>
+        <rect x="2.7" y="19.6" width="19" height="2.8" rx="1.4" />
+      </g>
+    ),
+  },
+  "route-pro": {
+    // 包车：S 路线加粗 3.4→4.0，起终点橙点放大为站点分量
+    primary: (
+      <path
+        d="M8.3 5.6h5a3.6 3.6 0 0 1 0 7.2h-2.6a3.6 3.6 0 0 0 0 7.2h4.4"
+        fill="none"
+        stroke="var(--duo-primary)"
+        strokeWidth="4"
+        strokeLinecap="round"
+      />
+    ),
+    accent: (
+      <g>
+        <circle cx="5.4" cy="5.6" r="3.1" />
+        <circle cx="17.9" cy="19.6" r="3.1" />
+      </g>
+    ),
+  },
+  // —— 金刚区 Neo 变体（乘客首页四大入口 · 放宽原双色比例约束，四枚共用统一构图模板）——
+  // 模板 = 墨蓝主形（上层）+ 统一「行程地面线」(x2.6 y20 w18.8 h2.4) + 统一「站点圆点」(r2.2 坐在线上，随语义变位)
+  "plane-in-neo": {
+    // 接机：降落机形 + 站点在右（落地到达端）
+    primary: (
+      <path d="M9.68 13.27l4.35 1.16 5.31 1.42c.8.21 1.62-.26 1.84-1.06.21-.8-.26-1.62-1.06-1.84l-5.31-1.42-2.76-9.02-1.93-.51v8.28L5.15 8.95l-.93-2.32-1.45-.39v5.17l1.6.43 5.31 1.43z" />
+    ),
+    accent: (
+      <g>
+        <rect x="2.6" y="20" width="18.8" height="2.4" rx="1.2" />
+        <circle cx="18.9" cy="20" r="2.2" />
+      </g>
+    ),
+  },
+  "plane-out-neo": {
+    // 送机：起飞机形 + 站点在左（出发起始端）
+    primary: (
+      <path d="M22.07 9.64c-.21-.8-1.04-1.28-1.84-1.06L14.92 10 8.03 3.57 6.1 4.08l4.14 7.17-4.97 1.33-1.97-1.54-1.45.39 2.59 4.49s7.12-1.9 16.57-4.43c.81-.23 1.28-1.05 1.06-1.85z" />
+    ),
+    accent: (
+      <g>
+        <rect x="2.6" y="20" width="18.8" height="2.4" rx="1.2" />
+        <circle cx="5.1" cy="20" r="2.2" />
+      </g>
+    ),
+  },
+  "car-private-neo": {
+    // 独享：专车侧影（车窗镂空+车轮）+ 站点居中（门到门）
+    primary: (
+      <g>
+        <path
+          fillRule="evenodd"
+          d="M3.4 16.6Q2.6 16.6 2.6 15.7L2.6 13.8Q2.6 12.8 3.6 12.5L6.8 11.7L8.8 8.4Q9.2 7.7 10 7.7L14.5 7.7Q15.4 7.7 15.9 8.5L17.9 11.7L20.3 12.3Q21.4 12.6 21.4 13.7L21.4 15.7Q21.4 16.6 20.5 16.6L18.9 16.6A2.15 2.15 0 0 0 14.6 16.6L9.4 16.6A2.15 2.15 0 0 0 5.1 16.6ZM9.9 9.2L12.1 9.2L12.1 11.4L8.5 11.4ZM13.1 9.2L14.3 9.2L16.4 11.4L13.1 11.4Z"
+        />
+        <circle cx="7.25" cy="16.6" r="2.1" />
+        <circle cx="16.75" cy="16.6" r="2.1" />
+      </g>
+    ),
+    accent: (
+      <g>
+        <rect x="2.6" y="20" width="18.8" height="2.4" rx="1.2" />
+        <circle cx="12" cy="20" r="2.2" />
+      </g>
+    ),
+  },
+  "route-neo": {
+    // 包车：S 路线连接地面线两端站点（起点+终点双站点圆）
+    primary: (
+      <path
+        d="M7.9 4.2h4.2a3.3 3.3 0 0 1 0 6.6h-2.2a3.3 3.3 0 0 0 0 6.6h7"
+        fill="none"
+        stroke="var(--duo-primary)"
+        strokeWidth="4"
+        strokeLinecap="round"
+      />
+    ),
+    accent: (
+      <g>
+        <rect x="2.6" y="20" width="18.8" height="2.4" rx="1.2" />
+        <circle cx="5.1" cy="20" r="2.2" />
+        <circle cx="18.9" cy="20" r="2.2" />
       </g>
     ),
   },
@@ -952,6 +1145,7 @@ export function YomiDuotone({
   const px = typeof size === "number" ? size : duoSizes[size];
   const node = DUO[name];
   if (!node) return null;
+  const accentNode = node.accent ? <g fill="var(--duo-accent)">{node.accent}</g> : null;
   return (
     <svg
       aria-hidden="true"
@@ -962,8 +1156,11 @@ export function YomiDuotone({
       style={duoToneVars[tone]}
       fill="var(--duo-primary)"
     >
+      {/* accentUnder：底色橙块先画，墨蓝主形叠压其上（hero 反比例） */}
+      {node.accentUnder ? accentNode : null}
       {node.primary}
-      {node.accent ? <g fill="var(--duo-accent)">{node.accent}</g> : null}
+      {/* 常规双色：墨形打底，橙色点睛小元素压在最上 */}
+      {!node.accentUnder ? accentNode : null}
     </svg>
   );
 }
