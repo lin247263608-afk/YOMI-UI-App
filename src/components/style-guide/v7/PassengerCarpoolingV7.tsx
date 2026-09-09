@@ -127,19 +127,6 @@ export function PassengerCarpoolingV7({
                 ))}
               </div>
             </div>
-            <div className="mt-1.5 grid grid-cols-5" aria-hidden="true">
-              {GROUP_MARKS.map((mark) => (
-                <span
-                  key={mark}
-                  className={cn(
-                    "text-center font-mono text-[10px] font-semibold",
-                    mark <= cfg.current ? "text-brand" : "text-ink-soft/55",
-                  )}
-                >
-                  {mark}
-                </span>
-              ))}
-            </div>
           </div>
           <WeChatShare />
         </Card>
