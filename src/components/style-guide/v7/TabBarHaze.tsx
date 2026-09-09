@@ -19,7 +19,7 @@ export function TabBarHaze({
   onSelect?: ((index: number) => void) | undefined;
 }) {
   return (
-    <nav className="flex h-[76px] shrink-0 items-start justify-around border-t border-ink/8 bg-haze-bottom px-2 pt-2.5">
+    <nav className="flex h-[72px] min-h-[72px] max-h-[72px] shrink-0 items-start justify-around border-t border-ink/8 bg-haze-bottom px-2 pt-2">
       {items.map((it, i) => (
         <button
           type="button"
@@ -27,14 +27,19 @@ export function TabBarHaze({
           onClick={() => onSelect?.(i)}
           aria-current={i === active}
           className={cn(
-            "flex w-16 flex-col items-center gap-1 rounded-xl py-1 text-[11px] font-medium transition-colors active:bg-ink/5",
+            "flex h-[54px] w-16 flex-col items-center gap-1 rounded-xl py-1 text-[11px] font-medium transition-colors active:bg-ink/5",
             i === active ? "text-brand" : "text-ink-soft/70",
           )}
         >
           {it.duo ? (
-            <YomiDuotone name={it.duo} size="lg" tone={i === active ? "brand" : "muted"} />
+            <YomiDuotone name={it.duo} size={20} tone={i === active ? "brand" : "muted"} />
           ) : (
-            <YomiIcon icon={it.icon} size="lg" tone={i === active ? "brand" : "muted"} />
+            <YomiIcon
+              icon={it.icon}
+              size="lg"
+              tone={i === active ? "brand" : "muted"}
+              className="size-5"
+            />
           )}
           <span>{it.label}</span>
         </button>

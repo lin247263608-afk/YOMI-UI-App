@@ -228,9 +228,7 @@ export function PassengerAboutV7({ onBack }: { onBack?: (() => void) | undefined
       <NavBar title="关于有米出行" onBack={onBack} />
       <div className="flex min-h-0 flex-1 items-center justify-center px-4 pb-28">
         <div className="flex flex-col items-center text-center">
-          <span className="flex size-[100px] items-center justify-center overflow-hidden rounded-2xl border border-ink/[0.06] bg-card shadow-card">
-            <img src={yomiLogo} alt="有米出行" className="size-[82px] object-contain" />
-          </span>
+          <img src={yomiLogo} alt="有米出行" className="size-[100px] object-contain" />
           <p className="mt-4 text-[16px] font-semibold text-ink">有米出行</p>
           <p className="mt-1 font-mono text-[14px] text-ink-soft/80">Version 1.0.0</p>
         </div>

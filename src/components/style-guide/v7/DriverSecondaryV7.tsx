@@ -112,7 +112,7 @@ export function DriverOrdersV7({
   return (
     <div className="flex h-full min-h-0 flex-col bg-background">
       <OrderListHeaderV7
-        title={<YomiWordmark className="h-8" />}
+        title={<YomiWordmark className="h-[38px]" />}
         items={driverOrderStatuses.map((item) => ({ id: item, label: item }))}
         value={status}
         onChange={setStatus}

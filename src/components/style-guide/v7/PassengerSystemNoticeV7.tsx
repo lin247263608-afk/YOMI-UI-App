@@ -154,28 +154,30 @@ export function MessageHeader({
 }) {
   return (
     <header className="shrink-0 border-b border-ink/[0.06] bg-haze-status">
-      <div className="flex h-10 items-center px-4">
-        <h2 className="text-[17px] font-bold text-ink">消息</h2>
-      </div>
-      <div className="no-scrollbar flex h-11 items-end gap-3.5 overflow-x-auto px-4">
+      <nav
+        role="tablist"
+        aria-label="消息分类"
+        className="no-scrollbar flex h-12 items-stretch overflow-x-auto px-4"
+      >
         {MESSAGE_TABS.map((tab) => (
           <button
             key={tab.id}
             type="button"
+            role="tab"
             onClick={() => onSectionChange?.(tab.id)}
-            aria-current={section === tab.id}
+            aria-selected={section === tab.id}
             className={cn(
-              "relative h-11 shrink-0 pb-3 text-[13px] transition-colors",
+              "relative min-w-0 flex-1 whitespace-nowrap px-1 text-[13px] transition-colors",
               section === tab.id ? "font-bold text-ink" : "font-medium text-ink-soft/75",
             )}
           >
             {tab.label}
             {section === tab.id ? (
-              <span className="absolute inset-x-0 bottom-0 h-0.5 rounded-full bg-brand" />
+              <span className="absolute inset-x-2 bottom-0 h-0.5 rounded-full bg-brand" />
             ) : null}
           </button>
         ))}
-      </div>
+      </nav>
     </header>
   );
 }

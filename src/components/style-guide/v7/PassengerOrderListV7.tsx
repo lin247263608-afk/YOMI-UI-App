@@ -2,6 +2,7 @@ import { useState, type ReactNode } from "react";
 import { Clock3, Users, ClipboardList } from "@/components/prototype/kit/brand-icons";
 import { RouteLine, TripTag } from "./trip/TripKit";
 import { OrderListHeaderV7 } from "./OrderListHeaderV7";
+import { YomiWordmark } from "@/components/prototype/kit/YomiWordmark";
 import { cn } from "@/lib/utils";
 
 /** Figma 还原：P-015 我的订单（订单列表） */
@@ -196,7 +197,12 @@ export function PassengerOrderListV7({
 
   return (
     <>
-      <OrderListHeaderV7 title="我的订单" items={filters} value={filter} onChange={setFilter} />
+      <OrderListHeaderV7
+        title={<YomiWordmark className="h-8" />}
+        items={filters}
+        value={filter}
+        onChange={setFilter}
+      />
 
       <div className="no-scrollbar flex-1 space-y-3 overflow-y-auto bg-background px-4 pb-6 pt-3">
         {list.length === 0 ? (
