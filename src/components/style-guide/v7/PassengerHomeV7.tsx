@@ -7,17 +7,18 @@ import airportPickupIcon from "@/assets/home-service-airport-pickup.svg";
 import airportDropoffIcon from "@/assets/home-service-airport-dropoff.svg";
 import privateTransferIcon from "@/assets/home-service-private-transfer.svg";
 import travelCharterIcon from "@/assets/home-service-travel-charter.svg";
+import serviceAccentCircle from "@/assets/home-service-accent-circle.svg";
 import { hotRoutes } from "@/components/prototype/data/routes";
 
 const entries = [
   {
-    icon: airportPickupIcon,
-    title: "接飞拼车",
+    icon: airportDropoffIcon,
+    title: "接机拼车",
     sub: "高效便捷",
     orderType: "接机拼车",
   },
   {
-    icon: airportDropoffIcon,
+    icon: airportPickupIcon,
     title: "送机拼车",
     sub: "准时直达",
     orderType: "送机拼车",
@@ -123,6 +124,12 @@ export function PassengerHomeV7({
               onClick={() => onOpenOrder?.(orderType)}
               className="relative h-[65px] overflow-hidden rounded-[20px] bg-gradient-to-r from-[#fff6ec] to-card pl-4 pr-[72px] text-left transition-transform active:scale-[0.98]"
             >
+              <img
+                src={serviceAccentCircle}
+                alt=""
+                aria-hidden="true"
+                className="pointer-events-none absolute -right-2.5 -bottom-4 h-[51px] w-[52px]"
+              />
               <span className="relative flex h-full min-w-0 flex-col justify-center">
                 <span className="block truncate text-[16px] leading-[22px] font-semibold text-ink">
                   {title}
