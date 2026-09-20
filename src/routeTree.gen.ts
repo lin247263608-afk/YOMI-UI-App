@@ -58,8 +58,8 @@ export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
 
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
+import type { getRouter } from '../../../../Users/y/Library/CloudStorage/OneDrive-个人/工程/有米出行/YOMI-UI/src/router.tsx'
+import type { startInstance } from '../../../../Users/y/Library/CloudStorage/OneDrive-个人/工程/有米出行/YOMI-UI/src/start.ts'
 declare module '@tanstack/react-start' {
   interface Register {
     ssr: true

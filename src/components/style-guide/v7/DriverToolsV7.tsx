@@ -528,6 +528,7 @@ export function DriverVehicleV7({
       <NavBar
         title="车辆信息"
         onBack={onBack}
+        sideWidth={64}
         action={
           <button
             type="button"
@@ -535,7 +536,7 @@ export function DriverVehicleV7({
               setEditing(true);
               onEditCode?.("D-004");
             }}
-            className="text-[12px] font-medium text-brand"
+            className="whitespace-nowrap text-[12px] font-medium text-brand"
           >
             申请编辑
           </button>

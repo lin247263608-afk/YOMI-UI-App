@@ -1,26 +1,43 @@
 import { Home, FileText, MessageSquare, User, MapPin } from "@/components/prototype/kit/brand-icons";
 import { TabBarHaze } from "./TabBarHaze";
 import { RouteLine, TripTag } from "./trip/TripKit";
-import { YomiDuotone, type DuoName } from "@/components/prototype/kit/DuotoneIcon";
 import { YomiWordmark } from "@/components/prototype/kit/YomiWordmark";
 import bannerAirport from "@/assets/banner-airport.jpg";
-import yomiMarkUrl from "@/assets/yomi-logo-yomi.svg";
+import airportPickupIcon from "@/assets/home-service-airport-pickup.svg";
+import airportDropoffIcon from "@/assets/home-service-airport-dropoff.svg";
+import privateTransferIcon from "@/assets/home-service-private-transfer.svg";
+import travelCharterIcon from "@/assets/home-service-travel-charter.svg";
 import { hotRoutes } from "@/components/prototype/data/routes";
 
-const entries: { duo: DuoName; title: string; sub: string }[] = [
-  { duo: "plane-in-neo", title: "接机拼车", sub: "高效便捷" },
-  { duo: "plane-out-neo", title: "送机拼车", sub: "准时直达" },
-  { duo: "car-private-neo", title: "独享接送", sub: "尊享专车" },
-  { duo: "route-neo", title: "旅行包车", sub: "深度自由" },
+const entries = [
+  {
+    icon: airportPickupIcon,
+    title: "接飞拼车",
+    sub: "高效便捷",
+    orderType: "接机拼车",
+  },
+  {
+    icon: airportDropoffIcon,
+    title: "送机拼车",
+    sub: "准时直达",
+    orderType: "送机拼车",
+  },
+  {
+    icon: privateTransferIcon,
+    title: "独享接送",
+    sub: "尊享专车",
+    orderType: "独享接送",
+  },
+  {
+    icon: travelCharterIcon,
+    title: "旅行包车",
+    sub: "深度自由",
+    orderType: "旅行包车",
+  },
 ];
 
 const routes = hotRoutes;
 const currentLocation = "伦敦·威斯敏斯特区";
-
-/** 金刚区大面积悬浮元素变体（待用户定稿）：
- *  - "icon"：各入口自己的图标放大为背景水印（四块各不相同，轮廓有变化）
- *  - "yomi"：YOMI 文字标放大为背景水印（四块统一品牌母题） */
-const TILE_BG: "icon" | "yomi" = "icon";
 
 export function PassengerHomeV7({
   onOpenOrder,
@@ -65,7 +82,7 @@ export function PassengerHomeV7({
 
           {/* 轮播 Banner */}
           <div className="px-4 pt-3">
-            <div className="relative h-[142px] overflow-hidden rounded-3xl shadow-card">
+            <div className="relative h-[142px] overflow-hidden rounded-[28px] shadow-card">
               <img
                 src={bannerAirport}
                 alt="伦敦机场接送专车"
@@ -97,40 +114,29 @@ export function PassengerHomeV7({
           </div>
         </div>
 
-        {/* 四大入口：横排紧凑图块 + 大面积背景水印（TILE_BG 切换变体） */}
+        {/* 四大入口：使用 Figma 定稿中的双色业务插画。 */}
         <section className="-mt-2 grid grid-cols-2 gap-2.5 px-4">
-          {entries.map(({ duo, title, sub }) => (
+          {entries.map(({ icon, title, sub, orderType }) => (
             <button
               type="button"
               key={title}
-              onClick={() => onOpenOrder?.(title)}
-              className="relative flex items-center gap-2.5 overflow-hidden rounded-2xl bg-gradient-to-br from-brand-soft via-card/70 to-brand/[0.14] px-3.5 py-3 text-left shadow-card ring-1 ring-brand/15 transition-transform active:scale-[0.98]"
+              onClick={() => onOpenOrder?.(orderType)}
+              className="relative h-[65px] overflow-hidden rounded-[20px] bg-gradient-to-r from-[#fff6ec] to-card pl-4 pr-[72px] text-left transition-transform active:scale-[0.98]"
             >
-              {/* 背景水印：方案A = 自身图标放大；方案B = YOMI 文字标放大 */}
-              {TILE_BG === "icon" ? (
-                <YomiDuotone
-                  name={duo}
-                  size={60}
-                  tone="brand"
-                  className="pointer-events-none absolute -right-0.5 top-1/2 -translate-y-1/2 opacity-[0.44]"
-                />
-              ) : (
-                <img
-                  src={yomiMarkUrl}
-                  alt=""
-                  aria-hidden="true"
-                  className="pointer-events-none absolute -right-1.5 top-1/2 h-12 w-auto -translate-y-1/2 -rotate-6 opacity-[0.13]"
-                />
-              )}
-              {TILE_BG === "yomi" ? (
-                <YomiDuotone name={duo} size={30} tone="brand" className="relative shrink-0" />
-              ) : null}
-              <span className="relative min-w-0">
-                <span className="block truncate text-[13px] font-bold text-ink">{title}</span>
-                <span className="mt-0.5 block truncate text-[10.5px] font-medium text-ink-soft/75">
+              <span className="relative flex h-full min-w-0 flex-col justify-center">
+                <span className="block truncate text-[16px] leading-[22px] font-semibold text-ink">
+                  {title}
+                </span>
+                <span className="block truncate text-[14px] leading-5 font-normal text-ink-soft/75">
                   {sub}
                 </span>
               </span>
+              <img
+                src={icon}
+                alt=""
+                aria-hidden="true"
+                className="pointer-events-none absolute right-2 top-1/2 h-12 w-[60px] -translate-y-1/2 object-contain object-right"
+              />
             </button>
           ))}
         </section>
@@ -145,7 +151,7 @@ export function PassengerHomeV7({
             <button
               type="button"
               onClick={onOpenOrderDetail}
-              className="mt-2 block w-full overflow-hidden rounded-3xl bg-card text-left shadow-card ring-1 ring-border/60 transition-transform active:scale-[0.98]"
+              className="mt-2 block w-full overflow-hidden rounded-[28px] bg-card text-left shadow-card transition-transform active:scale-[0.98]"
             >
               <div className="flex items-center gap-2 border-b border-ink/[0.06] px-4 py-3">
                 <TripTag>接机 · 拼车</TripTag>
@@ -154,7 +160,7 @@ export function PassengerHomeV7({
               <div className="px-4 py-3.5">
                 <RouteLine from="希思罗机场 T5 航站楼" to="伦敦市中心国王十字车站" plain />
 
-                <div className="mt-3.5 flex flex-wrap items-center gap-x-4 gap-y-1 rounded-2xl bg-secondary/70 px-3 py-2.5">
+                <div className="mt-3.5 flex flex-wrap items-center gap-x-4 gap-y-1 rounded-[24px] bg-secondary/70 px-3 py-2.5">
                   <p className="font-mono text-[12px] font-semibold text-ink">
                     2026年8月10日 14:30
                   </p>
@@ -181,7 +187,7 @@ export function PassengerHomeV7({
                 type="button"
                 key={r.id}
                 onClick={() => onOpenRoute?.(r.id)}
-                className="w-[168px] shrink-0 overflow-hidden rounded-2xl bg-card text-left shadow-card ring-1 ring-border/60 transition-transform active:scale-[0.98]"
+                className="w-[168px] shrink-0 overflow-hidden rounded-[24px] bg-card text-left shadow-card transition-transform active:scale-[0.98]"
               >
                 <div className="relative h-[88px]">
                   <img
@@ -193,7 +199,7 @@ export function PassengerHomeV7({
                     className="absolute inset-0 size-full object-cover saturate-[0.6]"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-ink/55 to-transparent" />
-                  <span className="absolute top-2 left-2 rounded-md bg-card/85 px-2 py-0.5 text-[10px] font-bold text-ink">
+                  <span className="absolute top-2 left-2 rounded-[14px] bg-card/85 px-2 py-0.5 text-[10px] font-bold text-ink">
                     {r.tag}
                   </span>
                 </div>
